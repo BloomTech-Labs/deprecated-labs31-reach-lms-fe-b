@@ -10,11 +10,20 @@ import { Security, LoginCallback, SecureRoute } from '@okta/okta-react';
 
 import 'antd/dist/antd.less';
 
-import { NotFoundPage } from './components/pages/not-found';
-import { LoginPage } from './components/pages/login';
-import { HomePage } from './components/pages/home';
 import { config } from './utils/oktaConfig';
 import { LoadingComponent } from './components/common';
+import {
+  // CourseForm,
+  // CourseView,
+  // LandingPage,
+  // ModuleForm,
+  // ModuleView,
+  // ProgramForm,
+  // ProgramView,
+  HomePage,
+  LoginPage,
+  NotFoundPage,
+} from './components/pages';
 
 ReactDOM.render(
   <Router>
