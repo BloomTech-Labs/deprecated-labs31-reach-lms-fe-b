@@ -1,7 +1,7 @@
 import markdown from './story_descriptions/Form.md';
 
 import React from 'react';
-import { FormInput, FormButton } from '../components/common';
+import { FormInput, FormButton } from '../../components/common';
 import { Form, Input, Button } from 'antd';
 
 import 'antd/dist/antd.css';

@@ -1,7 +1,7 @@
 import markdown from './story_descriptions/List.md';
 
 import React from 'react';
-import { List, LoadingComponent } from '../components/common';
+import { List, LoadingComponent } from '../../components/common';
 import { List as AntList, Card } from 'antd';
 
 import 'antd/dist/antd.css';
