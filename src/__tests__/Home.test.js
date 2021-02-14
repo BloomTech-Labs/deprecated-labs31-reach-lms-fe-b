@@ -34,7 +34,7 @@ describe('<HomeContainer /> testing suite', () => {
     expect(loader).toBeInTheDocument();
 
     await waitFor(async () => {
-      await findByText(/hi sara/i);
+      await findByText(/Welcome sara/i);
     });
     loader = queryByText(/...fetching profile/i);
     expect(loader).toBeNull();
