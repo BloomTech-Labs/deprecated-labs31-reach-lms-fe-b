@@ -63,7 +63,7 @@ function RenderHomePage(props) {
         style={{ padding: 0 }}
       >
         <div className="logo">
-          <h1>(LOGO) Reach LMS</h1>
+          <h1>Reach LMS</h1>
         </div>
       </Header>
 
