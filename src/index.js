@@ -20,7 +20,6 @@ import {
   // ModuleView,
   // ProgramForm,
   // ProgramView,
-  DashboardPage,
   HomePage,
   LoginPage,
   NotFoundPage,
@@ -28,7 +27,6 @@ import {
 import {
   HOME_PATH,
   LOGIN_PATH,
-  DASHBOARD_PATH,
   // SETTINGS_PATH,
   // VIEW_PROGRAM_PATH,
   // EDIT_PROGRAM_PATH,
@@ -70,10 +68,6 @@ function App() {
           path={HOME_PATH}
           exact
           component={() => <HomePage LoadingComponent={LoadingComponent} />}
-        />
-        <SecureRoute
-          path={DASHBOARD_PATH}
-          component={() => <DashboardPage />}
         />
         <Route component={NotFoundPage} />
       </Switch>

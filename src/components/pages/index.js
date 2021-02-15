@@ -1,7 +1,6 @@
 export { CourseForm } from './course-form';
 export { CourseView } from './course-view';
 export { HomePage } from './home';
-export { LandingPage } from './landing';
 export { LoginPage } from './login';
 export { ModuleForm } from './module-form';
 export { ModuleView } from './module-view';
@@ -9,4 +8,3 @@ export { NotFoundPage } from './not-found';
 export { ProgramForm } from './program-form';
 export { ProgramView } from './program-view';
 export { SettingsPage } from './settings';
-export { DashboardPage } from './dashboard';
