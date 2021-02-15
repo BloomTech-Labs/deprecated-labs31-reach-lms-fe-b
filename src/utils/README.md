@@ -1,4 +1,4 @@
-## Utils
+# Utils
 
 - This directory is for any of the business logic that your application may need to use.
 - Simple one-off _helper_ functions that you may need can be defined in this directory.
