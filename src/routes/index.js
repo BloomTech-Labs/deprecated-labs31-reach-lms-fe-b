@@ -1,0 +1,12 @@
+export const HOME_PATH = '/';
+export const LOGIN_PATH = '/login';
+export const DASHBOARD_PATH = '/dashboard';
+export const SETTINGS_PATH = '/settings';
+export const VIEW_PROGRAM_PATH = '/program/view';
+export const EDIT_PROGRAM_PATH = '/program/edit';
+export const CREATE_PROGRAM_PATH = '/create-program';
+export const VIEW_COURSE_PATH = '/course/view';
+export const EDIT_COURSE_PATH = '/course/edit';
+export const CREATE_COURSE_PATH = '/create-course';
+export const VIEW_MODULE_PATH = 'module/view';
+export const EDIT_MODULE_PATH = 'module/edit';
