@@ -48,9 +48,10 @@ const ModuleViewContainer = props => {
   const [isExpanded, setIsExpanded] = useState(false);
 
   return moduleData.map(module => (
-    <ModuleCard title={module.moduleName}>
+    <ModuleCard key={Math.random()} title={module.moduleName}>
       {module.moduleTopics.map(topic => (
         <Card
+          key={Math.random()}
           type="inner"
           title={topic.moduleTopicName}
           extra={
