@@ -1,4 +1,6 @@
 import React from 'react';
+import { Button } from '../../common/index';
+import './programView.css';
 
 //Test Data
 const programData = {
@@ -30,19 +32,31 @@ const programData = {
 const ProgramViewContainer = props => {
   return (
     <>
-      <h2>{programData.programName}</h2>
-      <h3>{programData.programType}</h3>
-      <div>{programData.programDesc}</div>
-      <br />
-      <h4>Courses</h4>
-      <div>
+      {/*Course Title Section*/}
+      <div className="titleContainer">
+        <div>
+          <h2>{programData.programName}</h2>
+          <h3>{programData.programType}</h3>
+        </div>
+        <div>
+          <Button buttonText="Edit" />
+        </div>
+      </div>
+
+      {/*Course Description Section*/}
+      <div className="container">{programData.programDesc}</div>
+
+      {/*Render Course Components Section*/}
+      {/*Will replace with the actual Course component when available*/}
+      <div className="container">
+        <h4>Courses</h4>
         {programData.courses.map(data => (
-          <>
+          <div key={Math.random()}>
             <div>Course Component</div>
             <div>{data.courseName}</div>
             <div>{data.courseDesc}</div>
             <br />
-          </>
+          </div>
         ))}
       </div>
     </>
