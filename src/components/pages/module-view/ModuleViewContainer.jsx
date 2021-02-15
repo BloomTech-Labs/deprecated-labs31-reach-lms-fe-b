@@ -3,7 +3,7 @@ import { Card } from 'antd';
 import styled from 'styled-components';
 
 const ModuleCard = styled(Card)`
-  margin-bottom: 6%;
+  margin-bottom: 4%;
 `;
 
 //Test Data
