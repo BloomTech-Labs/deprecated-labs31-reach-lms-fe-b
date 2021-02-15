@@ -39,7 +39,6 @@ import {
   // VIEW_MODULE_PATH,
   // EDIT_MODULE_PATH,
 } from './routes/';
-import AuthedLoadingWrapper from './components/common/AuthedLoadingWrapper';
 
 ReactDOM.render(
   <Router>
