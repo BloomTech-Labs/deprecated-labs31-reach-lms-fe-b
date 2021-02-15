@@ -7,6 +7,26 @@ import {
   FormOutlined,
   EditOutlined,
 } from '@ant-design/icons';
+import { Link } from 'react-router-dom';
+
+// this will make for easier routing later on. We can just toss in a "path" as a prop to MenuItem
+// and voilá, it'll be wrapped in a link.
+const MenuItem = ({ key, path, icon, children, ...props }) => {
+  if (path) {
+    return (
+      <Link to={path}>
+        <Menu.Item key={key} icon={icon} {...props}>
+          {children}
+        </Menu.Item>
+      </Link>
+    );
+  }
+  return (
+    <Menu.Item key={key} icon={icon} {...props}>
+      {children}
+    </Menu.Item>
+  );
+};
 
 function RenderHomePage(props) {
   const { userInfo, authService } = props;
@@ -30,6 +50,8 @@ function RenderHomePage(props) {
       case '5':
         authService.logout();
         break;
+      default:
+        break;
     }
   };
 
@@ -51,10 +73,10 @@ function RenderHomePage(props) {
           breakpoint="sm"
           collapsedWidth="0"
           onBreakpoint={broken => {
-            console.log(broken);
+            console.log({ broken });
           }}
           onCollapse={(collapsed, type) => {
-            console.log(collapsed, type);
+            console.log({ collapsed, type });
           }}
         >
           {/*Menu Items*/}
@@ -64,21 +86,21 @@ function RenderHomePage(props) {
             defaultSelectedKeys={['1']}
             onClick={handleClick}
           >
-            <Menu.Item key="1" icon={<HomeOutlined />}>
+            <MenuItem key="1" icon={<HomeOutlined />}>
               Dashboard
-            </Menu.Item>
-            <Menu.Item key="2" icon={<FormOutlined />}>
+            </MenuItem>
+            <MenuItem key="2" icon={<FormOutlined />}>
               Create A Program
-            </Menu.Item>
-            <Menu.Item key="3" icon={<EditOutlined />}>
+            </MenuItem>
+            <MenuItem key="3" icon={<EditOutlined />}>
               Modify Program
-            </Menu.Item>
-            <Menu.Item key="4" icon={<SettingFilled />}>
+            </MenuItem>
+            <MenuItem key="4" icon={<SettingFilled />}>
               Settings
-            </Menu.Item>
-            <Menu.Item key="5" icon={<LogoutOutlined />}>
+            </MenuItem>
+            <MenuItem key="5" icon={<LogoutOutlined />}>
               Logout
-            </Menu.Item>
+            </MenuItem>
           </Menu>
         </Sider>
 
