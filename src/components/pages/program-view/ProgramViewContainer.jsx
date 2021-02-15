@@ -1,6 +1,17 @@
 import React from 'react';
 import { Button } from '../../common/index';
-import './programView.css';
+import styled from 'styled-components';
+
+//Styled Components
+const TitleContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 5%;
+`;
+
+const Container = styled.div`
+  margin-bottom: 5%;
+`;
 
 //Test Data
 const programData = {
@@ -33,7 +44,7 @@ const ProgramViewContainer = props => {
   return (
     <>
       {/*Course Title Section*/}
-      <div className="titleContainer">
+      <TitleContainer>
         <div>
           <h2>{programData.programName}</h2>
           <h3>{programData.programType}</h3>
@@ -41,14 +52,14 @@ const ProgramViewContainer = props => {
         <div>
           <Button buttonText="Edit" />
         </div>
-      </div>
+      </TitleContainer>
 
       {/*Course Description Section*/}
-      <div className="container">{programData.programDesc}</div>
+      <Container>{programData.programDesc}</Container>
 
       {/*Render Course Components Section*/}
       {/*Will replace with the actual Course component when available*/}
-      <div className="container">
+      <Container>
         <h4>Courses</h4>
         {programData.courses.map(data => (
           <div key={Math.random()}>
@@ -58,7 +69,7 @@ const ProgramViewContainer = props => {
             <br />
           </div>
         ))}
-      </div>
+      </Container>
     </>
   );
 };

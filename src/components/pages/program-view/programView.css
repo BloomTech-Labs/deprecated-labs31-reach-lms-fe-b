@@ -1,8 +1,0 @@
-.titleContainer {
-    display: flex;
-    justify-content: space-between;
-}
-
-.titleContainer, .container {
-    margin-bottom: 5%;
-}
