@@ -1,5 +1,6 @@
 import React from 'react';
 import { Button } from '../../common/index';
+import { CourseView } from '../index';
 import styled from 'styled-components';
 
 //Styled Components
@@ -17,7 +18,7 @@ const Container = styled.div`
 const programData = {
   programName: 'Test Program Name',
   programType: 'Education K-12',
-  programDesc: `"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+  programDescription: `"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
   eiusmod tempor incididunt ut labore et dolore magna aliqua. Duis
   at consectetur lorem donec. Venenatis tellus in metus vulputate eu
   scelerisque felis imperdiet. Sapien faucibus et molestie ac
@@ -26,16 +27,32 @@ const programData = {
 
   courses: [
     {
-      courseName: 'Test Course Name 1',
-      courseDesc: 'Test Description 12345',
+      courseid: 0,
+      coursecode: '1',
+      coursename: 'Test Course Name 1',
+      coursedesciption: 'Test Description 12345',
+      modules: [
+        {
+          moduleId: 0,
+          moduleName: 'Test Module 1',
+          moduleDescription: 'Module Description',
+          moduleContent: 'Module Content Goes Here',
+        },
+      ],
     },
     {
-      courseName: 'Test Course Name 2',
-      courseDesc: 'Test Description 54321',
-    },
-    {
-      courseName: 'Test Course Name 3',
-      courseDesc: 'Test Description 00000',
+      courseid: 0,
+      coursecode: '1',
+      coursename: 'Test Course Name 2',
+      coursedesciption: 'Test Description 12345',
+      modules: [
+        {
+          moduleId: 0,
+          moduleName: 'Test Module 2',
+          moduleDescription: 'Module Description',
+          moduleContent: 'Module Content Goes Here',
+        },
+      ],
     },
   ],
 };
@@ -55,11 +72,12 @@ const ProgramViewContainer = props => {
       </TitleContainer>
 
       {/*Course Description Section*/}
-      <Container>{programData.programDesc}</Container>
+      <Container>{programData.programDescription}</Container>
 
       {/*Render Course Components Section*/}
       {/*Will replace with the actual Course component when available*/}
       <Container>
+        <CourseView></CourseView>
         <h4>Courses</h4>
         {programData.courses.map(data => (
           <div key={Math.random()}>
