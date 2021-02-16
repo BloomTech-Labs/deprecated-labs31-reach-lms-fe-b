@@ -38,6 +38,18 @@ const CourseViewContainer = props => {
             'View Course Stream'
           </span>
         </Card>
+        <Card title="ViewCourseStream">
+          <span onClick={() => setIsExpanded(!isExpanded)}>
+            {!isExpanded ? 'more' : 'less'}
+            'View Course Calendar'
+          </span>
+        </Card>
+        <Card title="ViewCourseStream">
+          <span onClick={() => setIsExpanded(!isExpanded)}>
+            {!isExpanded ? 'more' : 'less'}
+            'View Course Notifications'
+          </span>
+        </Card>
       </div>
     </>
   );
