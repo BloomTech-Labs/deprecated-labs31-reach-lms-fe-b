@@ -2,69 +2,40 @@ import React, { useState } from 'react';
 import { Card } from 'antd';
 import styled from 'styled-components';
 
+//Component Styles
 const ModuleCard = styled(Card)`
   margin-bottom: 4%;
 `;
 
-//Test Data
-const moduleData = [
-  {
-    moduleName: 'Python Basics',
-    moduleTopics: [
-      {
-        moduleTopicName: 'Warmup',
-        moduleTopicContent: 'Test Description 12345',
-      },
-      {
-        moduleTopicName: 'Use Print Statement',
-        moduleTopicContent: 'Test Description 12345',
-      },
-      {
-        moduleTopicName: 'List Operations',
-        moduleTopicContent: 'Test Description 12345',
-      },
-    ],
-  },
-  {
-    moduleName: 'Linked Lists',
-    moduleTopics: [
-      {
-        moduleTopicName: 'Warmup',
-        moduleTopicContent: 'Test Description 12345',
-      },
-      {
-        moduleTopicName: 'Use Print Statement',
-        moduleTopicContent: 'Test Description 12345',
-      },
-      {
-        moduleTopicName: 'List Operations',
-        moduleTopicContent: 'Test Description 12345',
-      },
-    ],
-  },
-];
+const Description = styled.div`
+  margin-bottom: 2%;
+`;
 
 const ModuleViewContainer = props => {
   const [isExpanded, setIsExpanded] = useState(false);
 
-  return moduleData.map(module => (
-    <ModuleCard key={Math.random()} title={module.moduleName}>
-      {module.moduleTopics.map(topic => (
-        <Card
-          key={Math.random()}
-          type="inner"
-          title={topic.moduleTopicName}
-          extra={
-            <span onClick={() => setIsExpanded(!isExpanded)}>
-              {!isExpanded ? 'more' : 'less'}
-            </span>
-          }
-        >
-          {isExpanded && topic.moduleTopicContent}
-        </Card>
-      ))}
+  //Props passed from CourseView Component
+  const { moduleName, moduleDescription, moduleContent } = props;
+
+  return (
+    <ModuleCard
+      key={Math.random()}
+      title={moduleName}
+      extra={
+        <span onClick={() => setIsExpanded(!isExpanded)}>
+          {!isExpanded ? 'more' : 'less'}
+        </span>
+      }
+    >
+      {/* If expanded button is clicked, show module information, otherwise collapse card */}
+      {isExpanded && (
+        <>
+          <Description>{moduleDescription}</Description>
+          <div>{moduleContent}</div>
+        </>
+      )}
     </ModuleCard>
-  ));
+  );
 };
 
 export default ModuleViewContainer;
