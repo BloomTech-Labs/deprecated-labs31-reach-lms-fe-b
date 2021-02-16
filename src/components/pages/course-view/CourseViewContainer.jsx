@@ -3,6 +3,7 @@ import { Card } from 'antd';
 import { ModuleView } from '../index';
 import styled from 'styled-components';
 
+//Component Styles
 const CourseCard = styled(Card)`
   margin-bottom: 4%;
 `;
@@ -13,6 +14,8 @@ const Description = styled.div`
 
 const CourseViewContainer = props => {
   const [isExpanded, setIsExpanded] = useState(false);
+
+  //Props passed from ProgramView Component
   const { courseName, courseDescription, modules } = props;
 
   return (
@@ -26,9 +29,11 @@ const CourseViewContainer = props => {
           </span>
         }
       >
+        {/* If expanded button is clicked, show course information, otherwise collapse card */}
         {isExpanded && (
           <>
             <Description>{courseDescription}</Description>
+            {/* Maps over course module data and renders ModuleView components*/}
             {modules.map(module => (
               <ModuleView
                 key={Math.random()}
