@@ -35,19 +35,19 @@ const CourseViewContainer = props => {
         <Card title="ViewCourseStream">
           <span onClick={() => setIsExpanded(!isExpanded)}>
             {!isExpanded ? 'more' : 'less'}
-            'View Course Stream'
+            View Course Stream
           </span>
         </Card>
         <Card title="ViewCourseStream">
           <span onClick={() => setIsExpanded(!isExpanded)}>
             {!isExpanded ? 'more' : 'less'}
-            'View Course Calendar'
+            View Course Calendar
           </span>
         </Card>
         <Card title="ViewCourseStream">
           <span onClick={() => setIsExpanded(!isExpanded)}>
             {!isExpanded ? 'more' : 'less'}
-            'View Course Notifications'
+            View Course Notifications
           </span>
         </Card>
       </div>
