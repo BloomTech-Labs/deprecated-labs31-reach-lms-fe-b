@@ -7,14 +7,19 @@ import {
   FormOutlined,
   EditOutlined,
 } from '@ant-design/icons';
+import {
+  CREATE_PROGRAM_PATH,
+  EDIT_PROGRAM_PATH,
+  SETTINGS_PATH,
+} from '../../../routes';
 import { Link } from 'react-router-dom';
 
 // this will make for easier routing later on. We can just toss in a "path" as a prop to MenuItem
 // and voilá, it'll be wrapped in a link.
-const MenuItem = ({ key, path, icon, children, ...props }) => {
-  if (path) {
+const MenuItem = ({ key, to, icon, children, ...props }) => {
+  if (to) {
     return (
-      <Link to={path}>
+      <Link to={to}>
         <Menu.Item key={key} icon={icon} {...props}>
           {children}
         </Menu.Item>
@@ -72,12 +77,8 @@ function RenderHomePage(props) {
         <Sider
           breakpoint="sm"
           collapsedWidth="0"
-          onBreakpoint={broken => {
-            console.log({ broken });
-          }}
-          onCollapse={(collapsed, type) => {
-            console.log({ collapsed, type });
-          }}
+          // onBreakpoint={broken => { }}
+          // onCollapse={(collapsed, type) => { }}
         >
           {/*Menu Items*/}
           <Menu
@@ -89,13 +90,13 @@ function RenderHomePage(props) {
             <MenuItem key="1" icon={<HomeOutlined />}>
               Dashboard
             </MenuItem>
-            <MenuItem key="2" icon={<FormOutlined />}>
+            <MenuItem key="2" icon={<FormOutlined />} to={CREATE_PROGRAM_PATH}>
               Create A Program
             </MenuItem>
-            <MenuItem key="3" icon={<EditOutlined />}>
+            <MenuItem key="3" icon={<EditOutlined />} to={EDIT_PROGRAM_PATH}>
               Modify Program
             </MenuItem>
-            <MenuItem key="4" icon={<SettingFilled />}>
+            <MenuItem key="4" icon={<SettingFilled />} to={SETTINGS_PATH}>
               Settings
             </MenuItem>
             <MenuItem key="5" icon={<LogoutOutlined />}>
