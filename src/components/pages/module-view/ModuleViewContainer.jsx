@@ -15,11 +15,10 @@ const ModuleViewContainer = props => {
   const [isExpanded, setIsExpanded] = useState(false);
 
   //Props passed from CourseView Component
-  const { moduleName, moduleDescription, moduleContent } = props;
+  const { moduleId, moduleName, moduleDescription, moduleContent } = props;
 
   return (
     <ModuleCard
-      key={Math.random()}
       title={moduleName}
       extra={
         <span onClick={() => setIsExpanded(!isExpanded)}>
