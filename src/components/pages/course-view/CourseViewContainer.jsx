@@ -21,7 +21,6 @@ const CourseViewContainer = props => {
   return (
     <>
       <CourseCard
-        key={Math.random()}
         title={courseName}
         extra={
           <span onClick={() => setIsExpanded(!isExpanded)}>
