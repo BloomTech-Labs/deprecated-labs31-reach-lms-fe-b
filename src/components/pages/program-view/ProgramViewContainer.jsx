@@ -30,7 +30,9 @@ const programData = {
       courseid: 0,
       coursecode: '1',
       coursename: 'Test Course Name 1',
-      coursedescription: 'Test Description 12345',
+      coursedescription: `'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+      eiusmod tempor incididunt ut labore et dolore magna aliqua. Duis
+      at consectetur lorem donec. Venenatis tellus in metus vulputate eu'`,
       modules: [
         {
           moduleId: 0,
@@ -44,8 +46,16 @@ const programData = {
       courseid: 0,
       coursecode: '1',
       coursename: 'Test Course Name 2',
-      coursedescription: 'Test Description 12345',
+      coursedescription: `'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+      eiusmod tempor incididunt ut labore et dolore magna aliqua. Duis
+      at consectetur lorem donec. Venenatis tellus in metus vulputate eu'`,
       modules: [
+        {
+          moduleId: 0,
+          moduleName: 'Test Module 2',
+          moduleDescription: 'Module Description',
+          moduleContent: 'Module Content Goes Here',
+        },
         {
           moduleId: 0,
           moduleName: 'Test Module 2',
