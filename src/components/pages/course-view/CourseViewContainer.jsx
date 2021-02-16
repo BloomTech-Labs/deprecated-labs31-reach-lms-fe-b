@@ -20,6 +20,8 @@ const courseData = [
 
 const CourseViewContainer = props => {
   const [isExpanded, setIsExpanded] = useState(false);
+  const { courseName, courseDescription, modules } = props;
+
   return (
     <>
       <div>

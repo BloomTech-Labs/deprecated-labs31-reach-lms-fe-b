@@ -30,7 +30,7 @@ const programData = {
       courseid: 0,
       coursecode: '1',
       coursename: 'Test Course Name 1',
-      coursedesciption: 'Test Description 12345',
+      coursedescription: 'Test Description 12345',
       modules: [
         {
           moduleId: 0,
@@ -44,7 +44,7 @@ const programData = {
       courseid: 0,
       coursecode: '1',
       coursename: 'Test Course Name 2',
-      coursedesciption: 'Test Description 12345',
+      coursedescription: 'Test Description 12345',
       modules: [
         {
           moduleId: 0,
@@ -81,7 +81,7 @@ const ProgramViewContainer = props => {
           <CourseView
             key={Math.random()}
             courseName={data.coursename}
-            courseDescription={data.coursedesciption}
+            courseDescription={data.coursedescription}
             modules={data.modules}
           />
         ))}
