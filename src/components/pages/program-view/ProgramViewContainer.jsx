@@ -1,6 +1,6 @@
 import React from 'react';
 import { Button } from '../../common/index';
-import { CourseView } from '../index';
+import { CourseView } from '../';
 import styled from 'styled-components';
 
 //Styled Components

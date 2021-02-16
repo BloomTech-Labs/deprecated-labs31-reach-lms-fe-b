@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Card } from 'antd';
-import { ModuleView } from '../index';
+import { ModuleView } from '../';
 import styled from 'styled-components';
 
 //Component Styles
