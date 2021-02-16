@@ -75,17 +75,15 @@ const ProgramViewContainer = props => {
       <Container>{programData.programDescription}</Container>
 
       {/*Render Course Components Section*/}
-      {/*Will replace with the actual Course component when available*/}
       <Container>
-        <CourseView></CourseView>
         <h4>Courses</h4>
         {programData.courses.map(data => (
-          <div key={Math.random()}>
-            <div>Course Component</div>
-            <div>{data.courseName}</div>
-            <div>{data.courseDesc}</div>
-            <br />
-          </div>
+          <CourseView
+            key={Math.random()}
+            courseName={data.coursename}
+            courseDescription={data.coursedesciption}
+            modules={data.modules}
+          />
         ))}
       </Container>
     </>
