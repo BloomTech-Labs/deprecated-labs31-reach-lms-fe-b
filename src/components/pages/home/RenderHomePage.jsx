@@ -7,8 +7,6 @@ import {
   FormOutlined,
   EditOutlined,
 } from '@ant-design/icons';
-import { ProgramView } from '../';
-import programData from '../program-view/dummydata';
 import { Link } from 'react-router-dom';
 
 // this will make for easier routing later on. We can just toss in a "path" as a prop to MenuItem
@@ -112,7 +110,6 @@ function RenderHomePage(props) {
             className="site-layout-background"
             style={{ padding: 24, minHeight: 360 }}
           >
-            <ProgramView programData={programData} />
             <h2>Welcome {userInfo.name}</h2>
             <p>
               Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
