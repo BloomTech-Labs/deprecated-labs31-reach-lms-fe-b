@@ -39,7 +39,7 @@ const ProgramViewContainer = props => {
         <h4>Courses</h4>
         {programData.courses.map(data => (
           <CourseView
-            key={Math.random()}
+            key={data.courseid}
             courseName={data.coursename}
             courseDescription={data.coursedescription}
             modules={data.modules}
