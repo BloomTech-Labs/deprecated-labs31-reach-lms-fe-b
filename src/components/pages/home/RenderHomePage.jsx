@@ -62,7 +62,7 @@ function RenderHomePage(props) {
         className="site-layout-sub-header-background"
         style={{ padding: 0 }}
       >
-        <div className="logo">
+        <div>
           <h1>(LOGO) Reach LMS</h1>
         </div>
       </Header>

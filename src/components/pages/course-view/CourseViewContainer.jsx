@@ -1,56 +1,49 @@
 import React, { useState } from 'react';
 import { Card } from 'antd';
+import { ModuleView } from '../';
 import styled from 'styled-components';
 
+//Component Styles
 const CourseCard = styled(Card)`
   margin-bottom: 4%;
 `;
 
-const courseData = [
-  {
-    courseName: 'Python Basics',
-  },
-  {
-    courseName: 'Problem Solving',
-  },
-  {
-    courseName: 'Time and Space Complexity',
-  },
-];
+const Description = styled.div`
+  margin-bottom: 2%;
+`;
 
 const CourseViewContainer = props => {
   const [isExpanded, setIsExpanded] = useState(false);
+
+  //Props passed from ProgramView Component
+  const { courseName, courseDescription, modules } = props;
+
   return (
     <>
-      <div>
-        {courseData.map(course => (
-          <CourseCard
-            key={Math.random()}
-            title={course.courseName}
-          ></CourseCard>
-        ))}
-        ;
-      </div>
-      <div>
-        <Card title="ViewCourseStream">
+      <CourseCard
+        title={courseName}
+        extra={
           <span onClick={() => setIsExpanded(!isExpanded)}>
             {!isExpanded ? 'more' : 'less'}
-            View Course Stream
           </span>
-        </Card>
-        <Card title="ViewCourseStream">
-          <span onClick={() => setIsExpanded(!isExpanded)}>
-            {!isExpanded ? 'more' : 'less'}
-            View Course Calendar
-          </span>
-        </Card>
-        <Card title="ViewCourseStream">
-          <span onClick={() => setIsExpanded(!isExpanded)}>
-            {!isExpanded ? 'more' : 'less'}
-            View Course Notifications
-          </span>
-        </Card>
-      </div>
+        }
+      >
+        {/* If expanded button is clicked, show course information, otherwise collapse card */}
+        {isExpanded && (
+          <>
+            <Description>{courseDescription}</Description>
+            {/* Maps over course module data and renders ModuleView components*/}
+            {modules.map(module => (
+              <ModuleView
+                key={module.moduleId}
+                moduleName={module.moduleName}
+                moduleDescription={module.moduleDescription}
+                moduleContent={module.moduleContent}
+              />
+            ))}
+          </>
+        )}
+      </CourseCard>
     </>
   );
 };
