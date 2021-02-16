@@ -2,6 +2,8 @@ import React, { useEffect } from 'react';
 import OktaSignIn from '@okta/okta-signin-widget';
 import '@okta/okta-signin-widget/dist/css/okta-sign-in.min.css';
 
+// import reachlmsLogo from './reachlmsLogo.png'
+
 import { config } from '../../../utils/oktaConfig';
 
 const LoginContainer = () => {
@@ -17,7 +19,7 @@ const LoginContainer = () => {
       },
       features: { registration: false },
       // turning this feature on allows your widget to use Okta for user registration
-      logo: '/ReachLogo.png',
+      logo: '/reachlmsLogo.png',
       // add your custom logo to your signing/register widget here.
       i18n: {
         en: {

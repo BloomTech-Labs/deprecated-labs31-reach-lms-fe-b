@@ -8,7 +8,14 @@ import {
   EditOutlined,
 } from '@ant-design/icons';
 import { Link } from 'react-router-dom';
+import styled from 'styled-components';
+import logo from '../login/reachlmsLogo.png';
 
+const StyledHeader = styled(Layout.Header)`
+  display: flex;
+  flex-flow: row nowrap;
+  background-color: white;
+`;
 // this will make for easier routing later on. We can just toss in a "path" as a prop to MenuItem
 // and voilá, it'll be wrapped in a link.
 const MenuItem = ({ key, path, icon, children, ...props }) => {
@@ -58,14 +65,15 @@ function RenderHomePage(props) {
   return (
     <Layout>
       {/*Header Area*/}
-      <Header
+      <StyledHeader
         className="site-layout-sub-header-background"
         style={{ padding: 0 }}
       >
+        <img src={logo} alt="logo" />
         <div className="logo">
           <h1>Reach LMS</h1>
         </div>
-      </Header>
+      </StyledHeader>
 
       <Layout>
         {/*Sidebar Navigation Container*/}
