@@ -1,9 +1,8 @@
 import React from 'react';
-import { Form, Input, Modal, Button, Select } from 'antd';
+import { Form, Input, Modal } from 'antd';
 import { useResetFormOnCloseModal } from './useResetFormOnCloseModal';
 
-//id, name, description, content
-
+// Module Form Container component
 export default ({ visible, onCancel }) => {
   const [form] = Form.useForm();
 
@@ -18,10 +17,6 @@ export default ({ visible, onCancel }) => {
     form.setFieldsValue({ [name]: value });
   };
 
-  const onFinish = () => {
-    console.log(form.getFieldsValue());
-  };
-
   return (
     <Modal
       title="Module Modal"
@@ -30,13 +25,7 @@ export default ({ visible, onCancel }) => {
       onCancel={onCancel}
     >
       <h1>Module</h1>
-      <Form
-        form={form}
-        name="moduleForm"
-        onFinish={onFinish}
-        layout="vertical"
-        size="large"
-      >
+      <Form form={form} name="moduleForm" layout="vertical" size="large">
         <Form.Item
           name="modulename"
           label="Module Name"
@@ -63,14 +52,6 @@ export default ({ visible, onCancel }) => {
         >
           <Input.TextArea name="modulecontent" />
         </Form.Item>
-
-        {/* <Form.Item>
-            <Form.Item>
-              <Button type="primary" htmlType="submit">
-                Finish Module
-              </Button>
-            </Form.Item>
-          </Form.Item> */}
       </Form>
     </Modal>
   );

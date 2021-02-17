@@ -11,7 +11,7 @@ import {
   CREATE_PROGRAM_PATH,
   EDIT_PROGRAM_PATH,
   SETTINGS_PATH,
-  CREATE_COURSE_PATH,
+  // CREATE_COURSE_PATH,
   CREATE_COURSE_PAGE_PATH,
 } from '../../../routes';
 import { Link } from 'react-router-dom';

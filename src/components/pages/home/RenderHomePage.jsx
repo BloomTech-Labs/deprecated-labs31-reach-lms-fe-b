@@ -1,12 +1,11 @@
 import React from 'react';
 import { Layout } from 'antd';
-import { NavBar } from '../navbar';
 import { DashWrapper } from '../dash-wrapper';
 
 /* cSpell:disable */
 function RenderHomePage(props) {
-  const { userInfo, authService } = props;
-  const { Header, Content, Footer } = Layout;
+  const { userInfo } = props;
+  const { Content } = Layout;
 
   return (
     <DashWrapper>

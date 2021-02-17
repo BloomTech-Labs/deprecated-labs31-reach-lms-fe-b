@@ -1,6 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { Form, Input, Button, Space, Divider } from 'antd';
-import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons';
+import React, { useState } from 'react';
+import { Form, Input, Button, Space } from 'antd';
 import { ModuleForm, ModuleCard } from '../module-form';
 import styled from 'styled-components';
 
@@ -13,9 +12,6 @@ const StyledDivider = styled(Space)`
 const FormItem = styled(Form.Item)`
   &&& {
     width: 100%;
-    /* input {
-      width: 90%;
-    }  */
   }
 `;
 
@@ -32,19 +28,9 @@ export default props => {
 
   const showUserModal = () => setModalVisible(true);
   const hideUserModal = () => setModalVisible(false);
-  // const fields = form.getFields();
-  useEffect(() => {
-    if (!modalVisible) {
-      console.log({ form_fields: form.getFieldsValue() });
-    }
-  }, [modalVisible, form]);
 
   const onFinish = values => {
     console.log({ values });
-  };
-
-  const handleChange = () => {
-    form.setFieldsValue({ modules: [] });
   };
 
   return (
@@ -53,15 +39,12 @@ export default props => {
       <Form.Provider
         onFormFinish={(name, { values, forms }) => {
           if (name === 'moduleForm') {
-            console.log({ name, values, forms });
             const { courseForm } = forms;
             const modules = courseForm.getFieldValue('modules') || [];
             form.setFieldsValue({
-              modules: [...modules, { ...values }],
+              modules: [...modules, values],
             });
             setModalVisible(false);
-            console.log(form.getFieldValue('modules'));
-            console.log(form.getFieldsValue());
           }
         }}
       >

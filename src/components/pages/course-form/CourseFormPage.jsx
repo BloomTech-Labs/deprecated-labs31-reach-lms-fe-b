@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { DashWrapper } from '../dash-wrapper';
 import { CourseForm } from './';
 
