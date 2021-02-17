@@ -8,3 +8,5 @@ export { NotFoundPage } from './not-found';
 export { ProgramForm } from './program-form';
 export { ProgramView } from './program-view';
 export { SettingsPage } from './settings';
+export { DashboardView } from './dashboard-view';
+export { DashWrapper } from './dash-wrapper';
