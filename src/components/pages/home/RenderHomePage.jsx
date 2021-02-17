@@ -4,11 +4,11 @@ import { DashWrapper } from '../dash-wrapper';
 
 /* cSpell:disable */
 function RenderHomePage(props) {
-  const { userInfo } = props;
+  const { userInfo, authService } = props;
   const { Content } = Layout;
 
   return (
-    <DashWrapper>
+    <DashWrapper authService={authService}>
       {/*Main Content Area*/}
       <Content style={{ margin: '24px 16px 0' }}>
         <div

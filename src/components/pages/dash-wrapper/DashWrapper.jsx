@@ -2,7 +2,7 @@ import React from 'react';
 import { Layout } from 'antd';
 import { NavBar } from '../navbar';
 
-export default ({ children, ...restProps }) => {
+export default ({ children, authService, ...restProps }) => {
   const { Header, Content, Footer } = Layout;
   return (
     <Layout>
@@ -15,7 +15,7 @@ export default ({ children, ...restProps }) => {
         </div>
       </Header>
       <Layout>
-        <NavBar />
+        <NavBar logout={authService?.logout} />
         <Content>{children}</Content>
       </Layout>
       <Footer style={{ textAlign: 'center' }}>Reach LMS ©2021</Footer>

@@ -37,7 +37,7 @@ const MenuItem = ({ key, to, icon, children, ...props }) => {
 };
 
 // Reusable NavBar component that will be used throughout many pages in our app
-const NavBar = ({ fireLogout, ...restProps }) => {
+const NavBar = ({ logout, ...restProps }) => {
   return (
     <Layout.Sider breakpoint="sm" collapsedWidth="0">
       <Menu theme="light" mode="inline" defaultSelectedKeys={['1']}>
@@ -56,11 +56,7 @@ const NavBar = ({ fireLogout, ...restProps }) => {
         <MenuItem key="4" icon={<SettingFilled />} to={SETTINGS_PATH}>
           Settings
         </MenuItem>
-        <MenuItem
-          key="5"
-          icon={<LogoutOutlined />}
-          onClick={() => fireLogout()}
-        >
+        <MenuItem key="5" icon={<LogoutOutlined />} onClick={logout}>
           Logout
         </MenuItem>
       </Menu>
