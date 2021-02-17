@@ -47,9 +47,9 @@ const NavBar = ({ logout, ...restProps }) => {
   return (
     <Layout.Sider breakpoint="sm" collapsedWidth="0">
       <Menu theme="light" mode="inline" defaultSelectedKeys={['1']}>
-        <Menu.Item key="1" icon={<HomeOutlined />} to="/">
+        <MenuItem key="1" icon={<HomeOutlined />} to="/">
           Dashboard
-        </Menu.Item>
+        </MenuItem>
         <MenuItem key="2" to={CREATE_PROGRAM_PATH} icon={<FormOutlined />}>
           Create a Program
         </MenuItem>
