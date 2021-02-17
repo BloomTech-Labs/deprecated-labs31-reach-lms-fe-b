@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Card } from 'antd';
-import { ModuleView } from '../index';
+import { ModuleView } from '../';
 import styled from 'styled-components';
 
 //Component Styles
@@ -21,7 +21,6 @@ const CourseViewContainer = props => {
   return (
     <>
       <CourseCard
-        key={Math.random()}
         title={courseName}
         extra={
           <span onClick={() => setIsExpanded(!isExpanded)}>
@@ -36,7 +35,7 @@ const CourseViewContainer = props => {
             {/* Maps over course module data and renders ModuleView components*/}
             {modules.map(module => (
               <ModuleView
-                key={Math.random()}
+                key={module.moduleId}
                 moduleName={module.moduleName}
                 moduleDescription={module.moduleDescription}
                 moduleContent={module.moduleContent}
