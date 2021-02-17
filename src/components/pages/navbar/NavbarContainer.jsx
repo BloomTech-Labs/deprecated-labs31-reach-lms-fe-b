@@ -11,6 +11,8 @@ import {
   CREATE_PROGRAM_PATH,
   EDIT_PROGRAM_PATH,
   SETTINGS_PATH,
+  CREATE_COURSE_PATH,
+  CREATE_COURSE_PAGE_PATH,
 } from '../../../routes';
 import { Link } from 'react-router-dom';
 
@@ -18,6 +20,13 @@ import { Link } from 'react-router-dom';
 // We can just toss in a "to" attribute to MenuItem
 // and it will look like an AntD Menu.Item but act like a Link
 const MenuItem = ({ key, to, icon, children, ...props }) => {
+  if (!to) {
+    return (
+      <Menu.Item key={key} icon={icon} {...props}>
+        {children}
+      </Menu.Item>
+    );
+  }
   return (
     <Link to={to}>
       <Menu.Item key={key} icon={icon} {...props}>
@@ -32,7 +41,7 @@ const NavBar = ({ fireLogout, ...restProps }) => {
   return (
     <Layout.Sider breakpoint="sm" collapsedWidth="0">
       <Menu theme="light" mode="inline" defaultSelectedKeys={['1']}>
-        <Menu.Item key="1" icon={<HomeOutlined />}>
+        <Menu.Item key="1" icon={<HomeOutlined />} to="/">
           Dashboard
         </Menu.Item>
         <MenuItem key="2" to={CREATE_PROGRAM_PATH} icon={<FormOutlined />}>
@@ -40,6 +49,9 @@ const NavBar = ({ fireLogout, ...restProps }) => {
         </MenuItem>
         <MenuItem key="3" icon={<EditOutlined />} to={EDIT_PROGRAM_PATH}>
           Modify Program
+        </MenuItem>
+        <MenuItem icon={<FormOutlined />} to={CREATE_COURSE_PAGE_PATH}>
+          Create Course
         </MenuItem>
         <MenuItem key="4" icon={<SettingFilled />} to={SETTINGS_PATH}>
           Settings

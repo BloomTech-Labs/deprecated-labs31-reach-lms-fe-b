@@ -34,9 +34,11 @@ import {
   VIEW_COURSE_PATH,
   EDIT_COURSE_PATH,
   CREATE_COURSE_PATH,
+  CREATE_COURSE_PAGE_PATH,
   VIEW_MODULE_PATH,
   EDIT_MODULE_PATH,
 } from './routes/';
+import { CoursePage } from './components/pages/course-form';
 
 ReactDOM.render(
   <Router>
@@ -73,6 +75,7 @@ function App() {
           path={CREATE_PROGRAM_PATH}
           component={() => <ProgramForm />}
         />
+        <Route path={CREATE_COURSE_PAGE_PATH} component={CoursePage} />
         <SecureRoute path={VIEW_COURSE_PATH} component={CourseView} />
         <SecureRoute path={EDIT_COURSE_PATH} component={CourseForm} />
         <SecureRoute path={CREATE_COURSE_PATH} component={CourseForm} />

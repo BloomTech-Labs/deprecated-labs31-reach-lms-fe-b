@@ -8,5 +8,6 @@ export const CREATE_PROGRAM_PATH = '/create-program';
 export const VIEW_COURSE_PATH = '/course/view';
 export const EDIT_COURSE_PATH = '/course/edit';
 export const CREATE_COURSE_PATH = '/create-course';
+export const CREATE_COURSE_PAGE_PATH = '/create-course-page';
 export const VIEW_MODULE_PATH = 'module/view';
 export const EDIT_MODULE_PATH = 'module/edit';
