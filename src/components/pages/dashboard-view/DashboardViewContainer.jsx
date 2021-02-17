@@ -1,10 +1,10 @@
-import { Avatar, Button, Card, Col, Row } from 'antd';
+import React from 'react';
+import { Card } from 'antd';
 import {
   EditOutlined,
   EllipsisOutlined,
   SettingOutlined,
 } from '@ant-design/icons';
-import styled from 'styled-components';
 
 const fakeData = [
   {
@@ -44,10 +44,6 @@ const fakeData = [
     program_description: 'this is a test for digital marketing',
   },
 ];
-
-// const StyledCard = styled(Card)`
-//
-// `;
 
 const DashboardViewContainer = () => {
   const { Meta } = Card;
