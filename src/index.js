@@ -23,6 +23,8 @@ import {
   HomePage,
   LoginPage,
   NotFoundPage,
+  DashboardView,
+  DashWrapper,
 } from './components/pages';
 import {
   HOME_PATH,
@@ -37,8 +39,10 @@ import {
   CREATE_COURSE_PAGE_PATH,
   VIEW_MODULE_PATH,
   EDIT_MODULE_PATH,
+  DASHBOARD_PATH,
 } from './routes/';
 import { CoursePage } from './components/pages/course-form';
+import dummyData from './components/pages/program-view/dummydata';
 
 ReactDOM.render(
   <Router>
@@ -65,7 +69,11 @@ function App() {
       <Switch>
         <SecureRoute
           path={VIEW_PROGRAM_PATH}
-          component={() => <ProgramView />}
+          component={() => (
+            <DashWrapper>
+              <ProgramView programData={dummyData} />
+            </DashWrapper>
+          )}
         />
         <SecureRoute
           path={EDIT_PROGRAM_PATH}
@@ -75,6 +83,7 @@ function App() {
           path={CREATE_PROGRAM_PATH}
           component={() => <ProgramForm />}
         />
+        <SecureRoute path="/dash-page" component={DashboardView} />
         <Route path={CREATE_COURSE_PAGE_PATH} component={CoursePage} />
         <SecureRoute path={VIEW_COURSE_PATH} component={CourseView} />
         <SecureRoute path={EDIT_COURSE_PATH} component={CourseForm} />
@@ -89,6 +98,7 @@ function App() {
         <SecureRoute
           path={HOME_PATH}
           exact
+          // component={() => <DashboardView LoadingComponent={LoadingComponent} />}
           component={() => <HomePage LoadingComponent={LoadingComponent} />}
         />
         <Route component={NotFoundPage} />

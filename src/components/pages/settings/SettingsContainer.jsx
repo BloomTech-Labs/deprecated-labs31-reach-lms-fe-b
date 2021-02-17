@@ -17,21 +17,23 @@ const data = [
 ];
 
 const SettingsProfile = props => {
+  // const { info } = props;
+  const info = data[0]; //this will be removed
   return (
     <div className="Profile">
-      {data.map(info => (
-        <Card title="Profile">
-          <div className="image-container">
-            <img src=" " alt="" height="100px" width="100px" />
-          </div>
-          <div className="Info-container">
-            <h2>{info.firstName}</h2>
-            <h2>{info.lastName}</h2>
-            <h2>{info.email}</h2>
-            <h2>{info.phone}</h2>
-          </div>
-        </Card>
-      ))}
+      <Card title="Profile">
+        <div className="image-container">
+          <img src=" " alt="" height="100px" width="100px" />
+        </div>
+        <div className="Info-container">
+          <h2>{info.firstName}</h2>
+          <h2>{info.lastName}</h2>
+          <h2>{info.email}</h2>
+          <h2>{info.phone}</h2>
+        </div>
+      </Card>
+      {/* {data.map(info => (
+      ))} */}
     </div>
   );
 };

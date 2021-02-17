@@ -1,10 +1,12 @@
 import React from 'react';
 import { Card } from 'antd';
+import { GhostLink } from '../../common';
 import {
   EditOutlined,
   EllipsisOutlined,
   SettingOutlined,
 } from '@ant-design/icons';
+import { VIEW_PROGRAM_PATH } from '../../../routes/';
 
 const fakeData = [
   {
@@ -59,25 +61,27 @@ const DashboardViewContainer = () => {
       }}
       key="app-container"
     >
-      {fakeData.map((program) => (
-        <Card
-          key={program.program_id}
-          style={{ width: 300, margin: '10px' }}
-          actions={[
-            <SettingOutlined key={program.programid + 'setting'} />,
-            <EditOutlined key={program.programid + 'edit'} />,
-            <EllipsisOutlined key={program.programid + 'ellipsis'} />,
-          ]}
-        >
-          <Meta
-            key={program.programid + 'meta'}
-            title={program.program_name}
-            description={program.program_description}
-          />
-        </Card>
+      {fakeData.map(program => (
+        <GhostLink to={VIEW_PROGRAM_PATH}>
+          <Card
+            key={program.program_id}
+            style={{ width: 300, margin: '10px' }}
+            actions={[
+              <SettingOutlined key={program.programid + 'setting'} />,
+              <EditOutlined key={program.programid + 'edit'} />,
+              <EllipsisOutlined key={program.programid + 'ellipsis'} />,
+            ]}
+          >
+            <Meta
+              key={program.programid + 'meta'}
+              title={program.program_name}
+              description={program.program_description}
+            />
+          </Card>
+        </GhostLink>
       ))}
     </div>
   );
-}
+};
 
 export default DashboardViewContainer;
