@@ -1,9 +1,43 @@
-import React from 'react';
-import { Layout, Form, Input, Button, Space } from 'antd';
+import React, { useState, useEffect } from 'react';
+import { Form, Input, Button, Space, Divider } from 'antd';
 import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons';
+import { ModuleForm, ModuleCard } from '../module-form';
+import styled from 'styled-components';
+
+const StyledDivider = styled(Space)`
+  &&& {
+    width: 100%;
+  }
+`;
+
+const FormItem = styled(Form.Item)`
+  &&& {
+    width: 100%;
+    /* input {
+      width: 90%;
+    }  */
+  }
+`;
+
+const tailLayout = {
+  wrapperCol: {
+    offset: 8,
+    span: 16,
+  },
+};
 
 export default props => {
   const [form] = Form.useForm();
+  const [modalVisible, setModalVisible] = useState(false);
+
+  const showUserModal = () => setModalVisible(true);
+  const hideUserModal = () => setModalVisible(false);
+  // const fields = form.getFields();
+  useEffect(() => {
+    if (!modalVisible) {
+      console.log({ form_fields: form.getFieldsValue() });
+    }
+  }, [modalVisible, form]);
 
   const onFinish = values => {
     console.log({ values });
@@ -14,83 +48,85 @@ export default props => {
   };
 
   return (
-    <Space direction="vertical" align="baseline">
+    <StyledDivider direction="vertical" align="center">
       <h1>Course Form</h1>
-      <Form
-        form={form}
-        name="dynamic_course_form"
-        onFinish={onFinish}
-        autoComplete="off"
+      <Form.Provider
+        onFormFinish={(name, { values, forms }) => {
+          if (name === 'moduleForm') {
+            console.log({ name, values, forms });
+            const { courseForm } = forms;
+            const modules = courseForm.getFieldValue('modules') || [];
+            form.setFieldsValue({
+              modules: [...modules, { ...values }],
+            });
+            setModalVisible(false);
+            console.log(form.getFieldValue('modules'));
+            console.log(form.getFieldsValue());
+          }
+        }}
       >
-        <Form.Item
-          name="coursename"
-          label="Course Name"
-          rules={[{ required: true, message: 'Missing Course Name' }]}
+        <Form
+          form={form}
+          name="courseForm"
+          onFinish={onFinish}
+          autoComplete="off"
+          layout="vertical"
         >
-          <Input />
-        </Form.Item>
+          <FormItem
+            name="coursename"
+            label="Course Name"
+            rules={[{ required: true, message: 'Missing Course Name' }]}
+          >
+            <Input />
+          </FormItem>
 
-        <Form.Item
-          name="coursecode"
-          label="Course Code"
-          rules={[{ required: true, message: 'Missing Course Code' }]}
-        >
-          <Input />
-        </Form.Item>
+          <FormItem
+            name="coursecode"
+            label="Course Code"
+            rules={[{ required: true, message: 'Missing Course Code' }]}
+          >
+            <Input />
+          </FormItem>
 
-        <Form.Item
-          name="coursedescription"
-          label="Course Description"
-          rules={[{ required: true, message: 'Missing Course Name' }]}
-        >
-          <Input.TextArea style={{ resize: 'none' }} rows={2} cols={2} />
-        </Form.Item>
+          <Form.Item
+            name="coursedescription"
+            label="Course Description"
+            rules={[{ required: true, message: 'Missing Course Name' }]}
+          >
+            <Input.TextArea style={{ resize: 'none' }} rows={2} cols={2} />
+          </Form.Item>
 
-        <Form.List name="modules">
-          {(fields, { add, remove }) => (
-            <>
-              {fields.map(field => (
-                <Space key={field.key} align="baseline">
-                  <Form.Item
-                    noStyle
-                    shouldUpdate={(prevValues, curValues) =>
-                      prevValues.modules !== curValues.modules
-                    }
-                  >
-                    {() => (
-                      <Form.Item
-                        {...field}
-                        label="Module"
-                        name={[field.name, 'module']}
-                        rules={[{ required: true, message: 'Missing module!' }]}
-                      >
-                        <Input.TextArea />
-                      </Form.Item>
-                    )}
-                  </Form.Item>
+          <Form.Item
+            label="Module List"
+            shouldUpdate={(prevValues, curValues) =>
+              prevValues.modules !== curValues.modules
+            }
+          >
+            {({ getFieldValue }) => {
+              const modules = getFieldValue('modules') || [];
+              return modules.length ? (
+                modules.map((module, index) => (
+                  <li key={index} className="module">
+                    <ModuleCard {...module} />
+                  </li>
+                ))
+              ) : (
+                <p>No modules yet!</p>
+              );
+            }}
+          </Form.Item>
 
-                  <MinusCircleOutlined onClick={() => remove(field.name)} />
-                </Space>
-              ))}
-              <Form.Item>
-                <Button
-                  type="dashed"
-                  onClick={() => add()}
-                  block
-                  icon={<PlusOutlined />}
-                >
-                  Add Module
-                </Button>
-              </Form.Item>
-            </>
-          )}
-        </Form.List>
-        <Form.Item>
-          <Button type="primary" htmlType="submit">
-            Submit
-          </Button>
-        </Form.Item>
-      </Form>
-    </Space>
+          <Form.Item {...tailLayout}>
+            <Button htmlType="submit" type="primary">
+              Submit
+            </Button>
+            <Button htmlType="button" onClick={showUserModal}>
+              Add Module
+            </Button>
+          </Form.Item>
+        </Form>
+        <ModuleForm visible={modalVisible} onCancel={hideUserModal} />
+      </Form.Provider>
+    </StyledDivider>
   );
 };
