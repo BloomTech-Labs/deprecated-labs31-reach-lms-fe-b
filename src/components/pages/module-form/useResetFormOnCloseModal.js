@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react';
 
-export const useResetFormOnCloseModal = ({ form, visible }) => {
+export const useResetFormOnCloseModal = ({ resetFields, visible }) => {
   const prevVisibleRef = useRef();
 
   useEffect(() => {
@@ -11,7 +11,7 @@ export const useResetFormOnCloseModal = ({ form, visible }) => {
 
   useEffect(() => {
     if (!visible && prevVisible) {
-      form.resetFields();
+      resetFields();
     }
-  }, [visible, form, prevVisible]);
+  }, [visible, prevVisible, resetFields]);
 };

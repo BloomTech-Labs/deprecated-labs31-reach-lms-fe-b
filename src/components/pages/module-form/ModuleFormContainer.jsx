@@ -2,14 +2,20 @@ import React from 'react';
 import { Form, Input, Modal } from 'antd';
 import { useResetFormOnCloseModal } from './useResetFormOnCloseModal';
 
-// Module Form Container component
+// ModuleFormContainer component
+// props come from CourseFormContainer
 export default ({ visible, onCancel, onSubmit }) => {
   const [form] = Form.useForm();
 
-  useResetFormOnCloseModal({ form, visible });
+  const resetFields = () => form.resetFields();
 
+  // this hook will reset fields whenever user closes the modal
+  useResetFormOnCloseModal({ resetFields, visible });
+
+  //this will run if modal is submitted
   const onOk = () => {
     if (onSubmit) {
+      // pass these fields UP to CourseFormContainer
       onSubmit(form.getFieldsValue());
     }
     form.submit();

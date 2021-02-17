@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Form, Input, Button, Space } from 'antd';
+import { Form, Input, Space, Button } from 'antd';
 import { ModuleForm, ModuleCard } from '../module-form';
 import styled from 'styled-components';
 
@@ -9,6 +9,7 @@ const StyledSpace = styled(Space)`
   }
 `;
 
+// CourseFormContainer — No specific parent, props isn't coming down quite yet
 export default props => {
   const [form] = Form.useForm();
   const [modalVisible, setModalVisible] = useState(false);
@@ -17,6 +18,8 @@ export default props => {
   const hideModuleModal = () => setModalVisible(false);
 
   const onFinish = values => {
+    // we will do something different here once
+    // we're ready to hit endpoints!!
     console.log({ values });
   };
 
@@ -57,7 +60,7 @@ export default props => {
         <Form.Item
           name="coursedescription"
           label="Course Description"
-          rules={[{ required: true, message: 'Missing Course Name' }]}
+          rules={[{ required: true, message: 'Missing Course Description' }]}
         >
           <Input.TextArea style={{ resize: 'none' }} rows={2} cols={2} />
         </Form.Item>
@@ -94,7 +97,6 @@ export default props => {
         onCancel={hideModuleModal}
         onSubmit={onModuleAdd}
       />
-      {/* </Form.Provider> */}
     </StyledSpace>
   );
 };
