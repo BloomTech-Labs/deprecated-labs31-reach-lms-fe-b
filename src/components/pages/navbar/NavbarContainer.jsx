@@ -8,13 +8,18 @@ import {
   EditOutlined,
 } from '@ant-design/icons';
 import {
-  CREATE_PROGRAM_PATH,
   EDIT_PROGRAM_PATH,
   SETTINGS_PATH,
   // CREATE_COURSE_PATH,
   CREATE_COURSE_PAGE_PATH,
 } from '../../../routes';
 import { Link } from 'react-router-dom';
+import styled from 'styled-components';
+
+const StyledLink = styled(Link)`
+  text-decoration: none;
+  color: inherit;
+`;
 
 // Wrap `Menu.Item` from AntD in a `Link` from react-router-dom
 // We can just toss in a "to" attribute to MenuItem
@@ -28,11 +33,11 @@ const MenuItem = ({ key, to, icon, children, ...props }) => {
     );
   }
   return (
-    <Link to={to}>
+    <StyledLink to={to}>
       <Menu.Item key={key} icon={icon} {...props}>
         {children}
       </Menu.Item>
-    </Link>
+    </StyledLink>
   );
 };
 
@@ -44,7 +49,11 @@ const NavBar = ({ logout, ...restProps }) => {
         <Menu.Item key="1" icon={<HomeOutlined />} to="/">
           Dashboard
         </Menu.Item>
-        <MenuItem key="2" to={CREATE_PROGRAM_PATH} icon={<FormOutlined />}>
+        <MenuItem
+          key="2"
+          // to={CREATE_PROGRAM_PATH}
+          icon={<FormOutlined />}
+        >
           Create a Program
         </MenuItem>
         <MenuItem key="3" icon={<EditOutlined />} to={EDIT_PROGRAM_PATH}>

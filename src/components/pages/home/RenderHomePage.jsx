@@ -1,6 +1,6 @@
 import React from 'react';
-import { Layout } from 'antd';
 import { DashWrapper } from '../dash-wrapper';
+import { Layout } from 'antd';
 
 /* cSpell:disable */
 function RenderHomePage(props) {

@@ -1,21 +1,45 @@
 import React from 'react';
 import { Layout } from 'antd';
 import { NavBar } from '../navbar';
+import styled from 'styled-components';
+import logo from '../login/RlmsLogo.png';
+
+const StyledHeader = styled(Layout.Header)`
+  display: flex;
+  flex-flow: row nowrap;
+  background-color: white;
+`;
 
 export default ({ children, authService, ...restProps }) => {
-  const { Header, Content, Footer } = Layout;
+  const { Sider, Content, Footer } = Layout;
   return (
     <Layout>
-      <Header
+      <StyledHeader
         className="site-layout-sub-header-background"
         style={{ padding: 0 }}
       >
-        <div>
+        <img src={logo} alt="logo" />
+        <div className="logo">
           <h1>Reach LMS</h1>
         </div>
-      </Header>
+      </StyledHeader>
+
       <Layout>
-        <NavBar logout={authService?.logout} />
+        {/*Sidebar Navigation Container*/}
+        <Sider
+          breakpoint="sm"
+          collapsedWidth="0"
+          onBreakpoint={broken => {
+            console.log({ broken });
+          }}
+          onCollapse={(collapsed, type) => {
+            console.log({ collapsed, type });
+          }}
+        >
+          <NavBar logout={authService?.logout} />
+          {/* <Layout>
+          </Layout> */}
+        </Sider>
         <Content>{children}</Content>
       </Layout>
       <Footer style={{ textAlign: 'center' }}>Reach LMS ©2021</Footer>
