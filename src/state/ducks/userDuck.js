@@ -8,7 +8,6 @@ const LOGIN_RESOLVE = 'LOGIN_RESOLVE';
 export const userActions = {
   loginThunk: () => dispatch => {
     dispatch({ type: LOGIN_START });
-    // ​dispatch({type: LOGIN_START});
     axiosAuth()
       .get('/users/getuserinfo')
       .then(res => {
