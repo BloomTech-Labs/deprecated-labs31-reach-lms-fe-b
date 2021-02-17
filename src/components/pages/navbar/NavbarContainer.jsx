@@ -8,6 +8,7 @@ import {
   EditOutlined,
 } from '@ant-design/icons';
 import {
+  CREATE_PROGRAM_PATH,
   EDIT_PROGRAM_PATH,
   SETTINGS_PATH,
   // CREATE_COURSE_PATH,
@@ -49,11 +50,7 @@ const NavBar = ({ logout, ...restProps }) => {
         <Menu.Item key="1" icon={<HomeOutlined />} to="/">
           Dashboard
         </Menu.Item>
-        <MenuItem
-          key="2"
-          // to={CREATE_PROGRAM_PATH}
-          icon={<FormOutlined />}
-        >
+        <MenuItem key="2" to={CREATE_PROGRAM_PATH} icon={<FormOutlined />}>
           Create a Program
         </MenuItem>
         <MenuItem key="3" icon={<EditOutlined />} to={EDIT_PROGRAM_PATH}>

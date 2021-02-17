@@ -11,7 +11,7 @@ const StyledHeader = styled(Layout.Header)`
 `;
 
 export default ({ children, authService, ...restProps }) => {
-  const { Sider, Content, Footer } = Layout;
+  const { Content, Footer } = Layout;
   return (
     <Layout>
       <StyledHeader
@@ -25,21 +25,7 @@ export default ({ children, authService, ...restProps }) => {
       </StyledHeader>
 
       <Layout>
-        {/*Sidebar Navigation Container*/}
-        <Sider
-          breakpoint="sm"
-          collapsedWidth="0"
-          onBreakpoint={broken => {
-            console.log({ broken });
-          }}
-          onCollapse={(collapsed, type) => {
-            console.log({ collapsed, type });
-          }}
-        >
-          <NavBar logout={authService?.logout} />
-          {/* <Layout>
-          </Layout> */}
-        </Sider>
+        <NavBar logout={authService?.logout} />
         <Content>{children}</Content>
       </Layout>
       <Footer style={{ textAlign: 'center' }}>Reach LMS ©2021</Footer>
