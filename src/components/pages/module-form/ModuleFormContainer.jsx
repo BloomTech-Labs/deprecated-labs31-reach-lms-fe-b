@@ -3,12 +3,15 @@ import { Form, Input, Modal } from 'antd';
 import { useResetFormOnCloseModal } from './useResetFormOnCloseModal';
 
 // Module Form Container component
-export default ({ visible, onCancel }) => {
+export default ({ visible, onCancel, onSubmit }) => {
   const [form] = Form.useForm();
 
   useResetFormOnCloseModal({ form, visible });
 
   const onOk = () => {
+    if (onSubmit) {
+      onSubmit(form.getFieldsValue());
+    }
     form.submit();
   };
 
