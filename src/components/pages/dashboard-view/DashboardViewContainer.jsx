@@ -45,17 +45,6 @@ const fakeData = [
   },
 ];
 
-const typeImgArr = {
-  education_k12:
-    'https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse1.mm.bing.net%2Fth%3Fid%3DOIP.UAxmKUj3hhGcCKYZ_XYW2QHaE3%26pid%3DApi&f=1',
-  education_higher:
-    'https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse3.mm.bing.net%2Fth%3Fid%3DOIP.a39ARZ-_NkHD0L56BxYkowAAAA%26pid%3DApi&f=1',
-  training:
-    'https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse4.mm.bing.net%2Fth%3Fid%3DOIP.gBd8xGd6qtcrWZgtV-BAWQHaE7%26pid%3DApi&f=1',
-  other:
-    'https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse4.mm.bing.net%2Fth%3Fid%3DOIP.gBd8xGd6qtcrWZgtV-BAWQHaE7%26pid%3DApi&f=1',
-};
-
 // const StyledCard = styled(Card)`
 //
 // `;
@@ -78,13 +67,6 @@ const DashboardViewContainer = () => {
         <Card
           key={program.program_id}
           style={{ width: 300, margin: '10px' }}
-          cover={
-            <img
-              key={program.programid + 'img'}
-              alt="example"
-              src={typeImgArr[program.program_type]}
-            />
-          }
           actions={[
             <SettingOutlined key={program.programid + 'setting'} />,
             <EditOutlined key={program.programid + 'edit'} />,
@@ -93,7 +75,6 @@ const DashboardViewContainer = () => {
         >
           <Meta
             key={program.programid + 'meta'}
-            // avatar={<Avatar src='https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png' />}
             title={program.program_name}
             description={program.program_description}
           />
