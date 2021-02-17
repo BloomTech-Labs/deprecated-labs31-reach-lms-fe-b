@@ -15,7 +15,7 @@ const ModuleViewContainer = props => {
   const [isExpanded, setIsExpanded] = useState(false);
 
   //Props passed from CourseView Component
-  const { moduleId, moduleName, moduleDescription, moduleContent } = props;
+  const { moduleName, moduleDescription, moduleContent } = props;
 
   return (
     <ModuleCard

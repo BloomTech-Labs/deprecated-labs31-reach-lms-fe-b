@@ -13,13 +13,13 @@ import 'antd/dist/antd.less';
 import { config } from './utils/oktaConfig';
 import { LoadingComponent } from './components/common';
 import {
-  // CourseForm,
-  // CourseView,
-  // LandingPage,
-  // ModuleForm,
-  // ModuleView,
-  // ProgramForm,
-  // ProgramView,
+  CourseForm,
+  CourseView,
+  ModuleForm,
+  ModuleView,
+  SettingsPage,
+  ProgramForm,
+  ProgramView,
   HomePage,
   LoginPage,
   NotFoundPage,
@@ -27,16 +27,18 @@ import {
 import {
   HOME_PATH,
   LOGIN_PATH,
-  // SETTINGS_PATH,
-  // VIEW_PROGRAM_PATH,
-  // EDIT_PROGRAM_PATH,
-  // CREATE_PROGRAM_PATH,
-  // VIEW_COURSE_PATH,
-  // EDIT_COURSE_PATH,
-  // CREATE_COURSE_PATH,
-  // VIEW_MODULE_PATH,
-  // EDIT_MODULE_PATH,
+  SETTINGS_PATH,
+  VIEW_PROGRAM_PATH,
+  EDIT_PROGRAM_PATH,
+  CREATE_PROGRAM_PATH,
+  VIEW_COURSE_PATH,
+  EDIT_COURSE_PATH,
+  CREATE_COURSE_PATH,
+  CREATE_COURSE_PAGE_PATH,
+  VIEW_MODULE_PATH,
+  EDIT_MODULE_PATH,
 } from './routes/';
+import { CoursePage } from './components/pages/course-form';
 
 ReactDOM.render(
   <Router>
@@ -61,8 +63,28 @@ function App() {
   return (
     <Security {...config} onAuthRequired={authHandler}>
       <Switch>
+        <SecureRoute
+          path={VIEW_PROGRAM_PATH}
+          component={() => <ProgramView />}
+        />
+        <SecureRoute
+          path={EDIT_PROGRAM_PATH}
+          component={() => <ProgramForm />}
+        />
+        <SecureRoute
+          path={CREATE_PROGRAM_PATH}
+          component={() => <ProgramForm />}
+        />
+        <Route path={CREATE_COURSE_PAGE_PATH} component={CoursePage} />
+        <SecureRoute path={VIEW_COURSE_PATH} component={CourseView} />
+        <SecureRoute path={EDIT_COURSE_PATH} component={CourseForm} />
+        <SecureRoute path={CREATE_COURSE_PATH} component={CourseForm} />
+        <SecureRoute path={SETTINGS_PATH} component={() => <SettingsPage />} />
+        <SecureRoute path={VIEW_MODULE_PATH} component={ModuleView} />
+        <SecureRoute path={EDIT_MODULE_PATH} component={ModuleForm} />
         <Route path={LOGIN_PATH} component={LoginPage} />
         <Route path="/implicit/callback" component={LoginCallback} />
+
         {/* any of the routes you need secured should be registered as SecureRoutes */}
         <SecureRoute
           path={HOME_PATH}
