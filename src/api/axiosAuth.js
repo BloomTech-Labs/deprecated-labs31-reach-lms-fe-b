@@ -7,6 +7,6 @@ export const axiosAuth = () => {
     headers: {
       Authorization: `Bearer ${tok}`,
     },
-    baseURL: 'https://reach-team-b-be.herokuapp.com/',
+    baseURL: 'https://reach-team-b-be.herokuapp.com',
   });
 };
