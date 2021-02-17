@@ -9,7 +9,7 @@ import {
 } from '@ant-design/icons';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import logo from '../login/reachlmsLogo.png';
+import logo from '../login/RlmsLogo.png';
 
 const StyledHeader = styled(Layout.Header)`
   display: flex;
