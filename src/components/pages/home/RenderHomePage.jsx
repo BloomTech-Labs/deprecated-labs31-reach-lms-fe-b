@@ -3,16 +3,14 @@ import { DashWrapper } from '../dash-wrapper';
 import { Layout } from 'antd';
 import { DashboardView } from '../dashboard-view';
 import { userActions } from '../../../state/ducks/userDuck';
-import { useDispatch } from 'react-redux';
 
 /* cSpell:disable */
 function RenderHomePage(props) {
   const { userInfo, authService } = props;
   const { Content } = Layout;
-  const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(userActions.loginThunk());
+    userActions.loginThunk();
   }, []);
 
   return (
