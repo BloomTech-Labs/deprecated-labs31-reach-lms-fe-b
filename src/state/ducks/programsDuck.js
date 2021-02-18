@@ -159,7 +159,7 @@ const programsReducer = (state = programsInitialState, action) => {
     case GET_ALLPROGRAMS_SUCCESS:
       return {
         ...state,
-        programs: [action.payload],
+        programs: action.payload,
         status: 'success',
       };
     case GET_ALLPROGRAMS_FAIL:
@@ -190,7 +190,7 @@ const programsReducer = (state = programsInitialState, action) => {
           programName,
           programType,
           programDescription,
-          courses: [courses],
+          courses: courses,
         },
         status: 'success',
       };
