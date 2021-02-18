@@ -19,7 +19,6 @@ export const programsActions = {
     axiosAuth()
       .get('/programs/programs')
       .then(res => {
-        console.log(res);
         dispatch({ type: GET_ALLPROGRAMS_SUCCESS, payload: res.data });
       })
       .catch(err => {
