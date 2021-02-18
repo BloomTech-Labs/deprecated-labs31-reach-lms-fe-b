@@ -1,4 +1,10 @@
-const programsATs = {};
+import { axiosAuth } from '../../api/axiosAuth';
+
+//Action Types
+const GET_PROGRAM_START = 'LOGIN_START';
+const GET_PROGRAM_SUCCESS = 'LOGIN_SUCCESS';
+const GET_PROGRAM_FAIL = 'LOGIN_FAIL';
+const GET_PROGRAM_RESOLVE = 'LOGIN_RESOLVE';
 
 export const programsActions = {};
 
