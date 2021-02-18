@@ -20,6 +20,11 @@ const EDIT_COURSE_SUCCESS = 'EDIT_COURSE_SUCCESS';
 const EDIT_COURSE_FAIL = 'EDIT_COURSE_FAIL';
 const EDIT_COURSE_RESOLVE = 'EDIT_COURSE_RESOLVE';
 
+const DELETE_COURSE_START = 'DELETE_COURSE_START';
+const DELETE_COURSE_SUCCESS = 'DELETE_COURSE_SUCCESS';
+const DELETE_COURSE_FAIL = 'DELETE_COURSE_FAIL';
+const DELETE_COURSE_RESOLVE = 'DELETE_COURSE_RESOLVE';
+
 export const coursesActions = {
   getAllCoursesThunk: () => dispatch => {
     dispatch({ type: GETALL_COURSES_START });
@@ -80,6 +85,21 @@ export const coursesActions = {
         dispatch({ type: EDIT_COURSE_RESOLVE });
       });
   },
+
+  deleteCourseThunk: id => dispatch => {
+    dispatch({ type: DELETE_COURSE_START });
+    axiosAuth()
+      .put(`/courses/course/${id}`)
+      .then(res => {
+        dispatch({ type: DELETE_COURSE_SUCCESS });
+      })
+      .catch(err => {
+        dispatch({ type: DELETE_COURSE_FAIL, payload: err.message });
+      })
+      .finally(() => {
+        dispatch({ type: DELETE_COURSE_RESOLVE });
+      });
+  },
 };
 
 const coursesInitialState = {
@@ -106,6 +126,7 @@ const coursesReducer = (state = coursesInitialState, action) => {
       return { ...state, status: 'error', error: action.payload };
     case GETALL_COURSES_RESOLVE:
       return { ...state, status: 'idle' };
+
     case GET_COURSE_START:
       return { ...state, status: 'pending' };
     case GET_COURSE_SUCCESS:
@@ -121,6 +142,7 @@ const coursesReducer = (state = coursesInitialState, action) => {
       return { ...state, status: 'error', error: action.payload };
     case GET_COURSE_RESOLVE:
       return { ...state, status: 'idle' };
+
     case ADD_COURSE_START:
       return { ...state, status: 'pending' };
     case ADD_COURSE_SUCCESS:
@@ -129,6 +151,7 @@ const coursesReducer = (state = coursesInitialState, action) => {
       return { ...state, status: 'error', error: action.payload };
     case ADD_COURSE_RESOLVE:
       return { ...state, status: 'idle' };
+
     case EDIT_COURSE_START:
       return { ...state, status: 'pending' };
     case EDIT_COURSE_SUCCESS:
@@ -136,6 +159,15 @@ const coursesReducer = (state = coursesInitialState, action) => {
     case EDIT_COURSE_FAIL:
       return { ...state, status: 'error', error: action.payload };
     case EDIT_COURSE_RESOLVE:
+      return { ...state, status: 'idle' };
+
+    case DELETE_COURSE_START:
+      return { ...state, status: 'pending' };
+    case DELETE_COURSE_SUCCESS:
+      return state;
+    case DELETE_COURSE_FAIL:
+      return { ...state, status: 'error', error: action.payload };
+    case DELETE_COURSE_RESOLVE:
       return { ...state, status: 'idle' };
     default:
       return state;
