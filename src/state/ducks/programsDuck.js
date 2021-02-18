@@ -19,6 +19,7 @@ export const programsActions = {
     axiosAuth()
       .get('/programs/programs')
       .then(res => {
+        console.log(res.data);
         dispatch({ type: GET_ALLPROGRAMS_SUCCESS, payload: res.data });
       })
       .catch(err => {
@@ -45,6 +46,22 @@ export const programsActions = {
         dispatch({ type: GET_PROGRAM_RESOLVE });
       });
   },
+};
+
+//Map State to Props
+export const mapStateToProps = state => {
+  return {
+    programs: state.programs,
+    program: {
+      programId: state.program.programId,
+      programName: state.program.programName,
+      programType: state.program.programType,
+      programDescription: state.program.programDescription,
+      courses: state.courses,
+    },
+    status: state.idle,
+    error: state.error,
+  };
 };
 
 //Initial Slice of State
