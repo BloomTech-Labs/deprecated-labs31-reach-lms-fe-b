@@ -36,7 +36,6 @@ export const programsActions = {
     axiosAuth()
       .get(`/programs/program/${programId}`)
       .then(res => {
-        console.log(res);
         dispatch({ type: GET_PROGRAM_SUCCESS, payload: res.data });
       })
       .catch(err => {
