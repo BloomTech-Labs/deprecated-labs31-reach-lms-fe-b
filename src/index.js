@@ -80,7 +80,11 @@ function App() {
         />
         <SecureRoute
           path={EDIT_PROGRAM_PATH}
-          component={() => <ProgramForm />}
+          component={() => (
+            <DashWrapper>
+              <ProgramForm />
+            </DashWrapper>
+          )}
         />
         <SecureRoute
           path={CREATE_PROGRAM_PATH}
@@ -92,9 +96,30 @@ function App() {
         />
         <SecureRoute path="/dash-page" component={DashboardView} />
         <SecureRoute path={VIEW_COURSE_PATH} component={CourseView} />
-        <SecureRoute path={EDIT_COURSE_PATH} component={CourseForm} />
-        <SecureRoute path={CREATE_COURSE_PATH} component={CoursePage} />
-        <SecureRoute path={SETTINGS_PATH} component={() => <SettingsPage />} />
+        <SecureRoute
+          path={EDIT_COURSE_PATH}
+          component={() => (
+            <DashWrapper>
+              <CourseForm />
+            </DashWrapper>
+          )}
+        />
+        <SecureRoute
+          path={CREATE_COURSE_PATH}
+          component={() => (
+            <DashWrapper>
+              <CourseForm />
+            </DashWrapper>
+          )}
+        />
+        <SecureRoute
+          path={SETTINGS_PATH}
+          component={() => (
+            <DashWrapper>
+              <SettingsPage />
+            </DashWrapper>
+          )}
+        />
         <SecureRoute path={VIEW_MODULE_PATH} component={ModuleView} />
         <SecureRoute path={EDIT_MODULE_PATH} component={ModuleForm} />
         <Route path={LOGIN_PATH} component={LoginPage} />

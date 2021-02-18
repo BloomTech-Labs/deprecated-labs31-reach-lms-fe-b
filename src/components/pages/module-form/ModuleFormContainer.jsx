@@ -1,11 +1,17 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Form, Input, Modal } from 'antd';
 import { useResetFormOnCloseModal } from './useResetFormOnCloseModal';
+import { useParams } from 'react-router-dom';
 
 // ModuleFormContainer component
 // props come from CourseFormContainer
 export default ({ visible, onCancel, onSubmit }) => {
+  const { id } = useParams();
   const [form] = Form.useForm();
+
+  useEffect(() => {
+    console.log(id ? `EDIT/${id}` : 'CREATE');
+  }, [id]);
 
   const resetFields = () => form.resetFields();
 

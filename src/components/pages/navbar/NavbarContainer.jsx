@@ -58,7 +58,7 @@ const NavBar = ({ logout, ...restProps }) => {
         selectedKeys={[selectedKey]}
         handleClick={handleClick}
       >
-        <MenuItem key="/" icon={<HomeOutlined />} to="/">
+        <MenuItem key="/" to="/" icon={<HomeOutlined />}>
           Dashboard
         </MenuItem>
         <MenuItem
