@@ -20,6 +20,9 @@ export default props => {
   const onFinish = values => {
     // we will do something different here once
     // we're ready to hit endpoints!!
+    if (props.isWrapped) {
+      props.handleSubmit(form.getFieldsValue());
+    }
     console.log({ values });
   };
 

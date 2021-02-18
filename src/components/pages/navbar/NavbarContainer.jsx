@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Layout, Menu } from 'antd';
 import {
   HomeOutlined,
   LogoutOutlined,
-  SettingFilled,
+  SettingOutlined,
   FormOutlined,
   EditOutlined,
 } from '@ant-design/icons';
@@ -25,17 +25,17 @@ const StyledLink = styled(Link)`
 // Wrap `Menu.Item` from AntD in a `Link` from react-router-dom
 // We can just toss in a "to" attribute to MenuItem
 // and it will look like an AntD Menu.Item but act like a Link
-const MenuItem = ({ key, to, icon, children, ...props }) => {
+const MenuItem = ({ key, to, icon, handleClick, children, ...props }) => {
   if (!to) {
     return (
-      <Menu.Item key={key} icon={icon} {...props}>
+      <Menu.Item key={key} icon={icon} onClick={handleClick} {...props}>
         {children}
       </Menu.Item>
     );
   }
   return (
     <StyledLink to={to}>
-      <Menu.Item key={key} icon={icon} {...props}>
+      <Menu.Item key={key} icon={icon} onClick={handleClick} {...props}>
         {children}
       </Menu.Item>
     </StyledLink>
@@ -44,9 +44,20 @@ const MenuItem = ({ key, to, icon, children, ...props }) => {
 
 // Reusable NavBar component that will be used throughout many pages in our app
 const NavBar = ({ logout, ...restProps }) => {
+  const [selectedKey, setSelectedKey] = useState('1');
+  const handleClick = e => {
+    setSelectedKey(e.key);
+  };
+
   return (
     <Layout.Sider breakpoint="sm" collapsedWidth="0">
-      <Menu theme="light" mode="inline" defaultSelectedKeys={['1']}>
+      <Menu
+        theme="light"
+        mode="inline"
+        selectedKeys={[selectedKey]}
+        handleClick={handleClick}
+        // defaultSelectedKeys={'1'}
+      >
         <MenuItem key="1" icon={<HomeOutlined />} to="/">
           Dashboard
         </MenuItem>
@@ -59,7 +70,7 @@ const NavBar = ({ logout, ...restProps }) => {
         <MenuItem icon={<FormOutlined />} to={CREATE_COURSE_PAGE_PATH}>
           Create Course
         </MenuItem>
-        <MenuItem key="4" icon={<SettingFilled />} to={SETTINGS_PATH}>
+        <MenuItem key="4" icon={<SettingOutlined />} to={SETTINGS_PATH}>
           Settings
         </MenuItem>
         <MenuItem key="5" icon={<LogoutOutlined />} onClick={logout}>

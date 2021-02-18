@@ -81,7 +81,11 @@ function App() {
         />
         <SecureRoute
           path={CREATE_PROGRAM_PATH}
-          component={() => <ProgramForm />}
+          component={() => (
+            <DashWrapper>
+              <ProgramForm />
+            </DashWrapper>
+          )}
         />
         <SecureRoute path="/dash-page" component={DashboardView} />
         <Route path={CREATE_COURSE_PAGE_PATH} component={CoursePage} />
