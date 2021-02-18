@@ -14,18 +14,21 @@ export default props => {
     console.log({ values });
   };
 
-  const onClassAdd = newClass => {
-    const existingClasses = form.getFieldValue('classes') || [];
+  const onCourseAdd = newClass => {
+    const existingClasses = form.getFieldValue('courses') || [];
     form.setFieldsValue({
-      classes: [...existingClasses, newClass],
+      courses: [...existingClasses, newClass],
     });
     setModalVisible(false);
+    console.log(form.getFieldValue('courses'));
   };
 
-  const onOk = () => {};
+  const onOk = values => {
+    console.log({ onOk: values });
+  };
 
   return (
-    <Space style={{ width: '100%' }}>
+    <Space direction="vertical" align="center" style={{ width: '100%' }}>
       <h1>Program Form</h1>
       <Form
         form={form}
@@ -88,7 +91,7 @@ export default props => {
         onOk={onOk}
         onCancel={hideClassModal}
       >
-        <CourseForm isWrapped={true} handleSubmit={onClassAdd} />
+        <CourseForm isWrapped={true} onSubmit={onCourseAdd} />
       </Modal>
     </Space>
   );

@@ -36,7 +36,6 @@ import {
   VIEW_COURSE_PATH,
   EDIT_COURSE_PATH,
   CREATE_COURSE_PATH,
-  CREATE_COURSE_PAGE_PATH,
   VIEW_MODULE_PATH,
   EDIT_MODULE_PATH,
   DASHBOARD_PATH,
@@ -88,10 +87,9 @@ function App() {
           )}
         />
         <SecureRoute path="/dash-page" component={DashboardView} />
-        <Route path={CREATE_COURSE_PAGE_PATH} component={CoursePage} />
         <SecureRoute path={VIEW_COURSE_PATH} component={CourseView} />
         <SecureRoute path={EDIT_COURSE_PATH} component={CourseForm} />
-        <SecureRoute path={CREATE_COURSE_PATH} component={CourseForm} />
+        <SecureRoute path={CREATE_COURSE_PATH} component={CoursePage} />
         <SecureRoute path={SETTINGS_PATH} component={() => <SettingsPage />} />
         <SecureRoute path={VIEW_MODULE_PATH} component={ModuleView} />
         <SecureRoute path={EDIT_MODULE_PATH} component={ModuleForm} />

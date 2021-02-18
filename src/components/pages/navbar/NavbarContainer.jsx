@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Layout, Menu } from 'antd';
 import {
   HomeOutlined,
@@ -11,10 +11,9 @@ import {
   CREATE_PROGRAM_PATH,
   EDIT_PROGRAM_PATH,
   SETTINGS_PATH,
-  // CREATE_COURSE_PATH,
-  CREATE_COURSE_PAGE_PATH,
+  CREATE_COURSE_PATH,
 } from '../../../routes';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 
 const StyledLink = styled(Link)`
@@ -44,7 +43,9 @@ const MenuItem = ({ key, to, icon, handleClick, children, ...props }) => {
 
 // Reusable NavBar component that will be used throughout many pages in our app
 const NavBar = ({ logout, ...restProps }) => {
-  const [selectedKey, setSelectedKey] = useState('1');
+  const { pathname } = useLocation();
+  const [selectedKey, setSelectedKey] = useState(pathname);
+
   const handleClick = e => {
     setSelectedKey(e.key);
   };
@@ -56,24 +57,39 @@ const NavBar = ({ logout, ...restProps }) => {
         mode="inline"
         selectedKeys={[selectedKey]}
         handleClick={handleClick}
-        // defaultSelectedKeys={'1'}
       >
-        <MenuItem key="1" icon={<HomeOutlined />} to="/">
+        <MenuItem key="/" icon={<HomeOutlined />} to="/">
           Dashboard
         </MenuItem>
-        <MenuItem key="2" to={CREATE_PROGRAM_PATH} icon={<FormOutlined />}>
+        <MenuItem
+          key={CREATE_PROGRAM_PATH}
+          to={CREATE_PROGRAM_PATH}
+          icon={<FormOutlined />}
+        >
           Create a Program
         </MenuItem>
-        <MenuItem key="3" icon={<EditOutlined />} to={EDIT_PROGRAM_PATH}>
+        <MenuItem
+          key={EDIT_PROGRAM_PATH}
+          to={EDIT_PROGRAM_PATH}
+          icon={<EditOutlined />}
+        >
           Modify Program
         </MenuItem>
-        <MenuItem icon={<FormOutlined />} to={CREATE_COURSE_PAGE_PATH}>
+        <MenuItem
+          key={CREATE_COURSE_PATH}
+          to={CREATE_COURSE_PATH}
+          icon={<FormOutlined />}
+        >
           Create Course
         </MenuItem>
-        <MenuItem key="4" icon={<SettingOutlined />} to={SETTINGS_PATH}>
+        <MenuItem
+          key={SETTINGS_PATH}
+          to={SETTINGS_PATH}
+          icon={<SettingOutlined />}
+        >
           Settings
         </MenuItem>
-        <MenuItem key="5" icon={<LogoutOutlined />} onClick={logout}>
+        <MenuItem key="__LOGOUT__" icon={<LogoutOutlined />} onClick={logout}>
           Logout
         </MenuItem>
       </Menu>

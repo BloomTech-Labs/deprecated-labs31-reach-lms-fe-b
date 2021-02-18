@@ -10,7 +10,7 @@ const StyledSpace = styled(Space)`
 `;
 
 // CourseFormContainer — No specific parent, props isn't coming down quite yet
-export default props => {
+export default ({ isWrapped, onSubmit }) => {
   const [form] = Form.useForm();
   const [modalVisible, setModalVisible] = useState(false);
 
@@ -20,8 +20,8 @@ export default props => {
   const onFinish = values => {
     // we will do something different here once
     // we're ready to hit endpoints!!
-    if (props.isWrapped) {
-      props.handleSubmit(form.getFieldsValue());
+    if (isWrapped) {
+      onSubmit(form.getFieldsValue());
     }
     console.log({ values });
   };
