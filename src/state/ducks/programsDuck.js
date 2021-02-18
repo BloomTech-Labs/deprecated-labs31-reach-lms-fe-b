@@ -48,22 +48,6 @@ export const programsActions = {
   },
 };
 
-//Map State to Props
-export const mapStateToProps = state => {
-  return {
-    programs: state.programs,
-    program: {
-      programId: state.program.programId,
-      programName: state.program.programName,
-      programType: state.program.programType,
-      programDescription: state.program.programDescription,
-      courses: state.courses,
-    },
-    status: state.idle,
-    error: state.error,
-  };
-};
-
 //Initial Slice of State
 const programsInitialState = {
   programs: [],
