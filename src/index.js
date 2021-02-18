@@ -7,6 +7,8 @@ import {
   Switch,
 } from 'react-router-dom';
 import { Security, LoginCallback, SecureRoute } from '@okta/okta-react';
+import { Provider } from 'react-redux';
+import { store } from './state/index';
 
 import 'antd/dist/antd.less';
 
@@ -46,7 +48,9 @@ import dummyData from './components/pages/program-view/dummydata';
 ReactDOM.render(
   <Router>
     <React.StrictMode>
-      <App />
+      <Provider store={store}>
+        <App />
+      </Provider>
     </React.StrictMode>
   </Router>,
   document.getElementById('root')
