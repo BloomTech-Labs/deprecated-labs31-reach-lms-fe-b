@@ -1,6 +1,8 @@
 import { axiosAuth } from '../../api/axiosAuth';
 
+//=========================
 //Action Types
+//=========================
 const GET_PROGRAM_START = ' GET_PROGRAM_START';
 const GET_PROGRAM_SUCCESS = ' GET_PROGRAM_SUCCESS';
 const GET_PROGRAM_FAIL = ' GET_PROGRAM_FAIL';
@@ -26,9 +28,14 @@ const DELETE_PROGRAM_SUCCESS = 'DELETE_PROGRAM_SUCCESS';
 const DELETE_PROGRAM_FAIL = 'DELETE_PROGRAM_FAIL';
 const DELETE_PROGRAM_RESOLVE = 'DELETE_PROGRAM_RESOLVE';
 
+//=========================
 //Action Creators
+//=========================
+
 export const programsActions = {
-  //GET All Programs Action
+  //=========================
+  //Gert All Programs Action
+  //=========================
   getAllProgramsThunk: () => dispatch => {
     dispatch({ type: GET_ALLPROGRAMS_START });
 
@@ -45,7 +52,9 @@ export const programsActions = {
       });
   },
 
-  //GET Individual Program Action
+  //=========================
+  //Get Program Action
+  //=========================
   getProgramThunk: programId => dispatch => {
     dispatch({ type: GET_PROGRAM_START });
 
@@ -63,7 +72,9 @@ export const programsActions = {
   },
 };
 
+//=========================
 //Initial Slice of State
+//=========================
 const programsInitialState = {
   programs: [],
   program: {
@@ -77,10 +88,14 @@ const programsInitialState = {
   error: '',
 };
 
+//=========================
 //Reducers
+//=========================
 const programsReducer = (state = programsInitialState, action) => {
   switch (action.type) {
+    //=========================
     //Get All Programs Reducers
+    //=========================
     case GET_ALLPROGRAMS_START:
       return { ...state, status: 'pending' };
 
@@ -96,7 +111,9 @@ const programsReducer = (state = programsInitialState, action) => {
     case GET_ALLPROGRAMS_RESOLVE:
       return { ...state, status: 'idle' };
 
-    //Get Individual Program Reducers
+    //================================
+    //Get Individual Programs Reducers
+    //================================
     case GET_PROGRAM_START:
       return { ...state, status: 'pending' };
 
@@ -127,7 +144,54 @@ const programsReducer = (state = programsInitialState, action) => {
     case GET_PROGRAM_RESOLVE:
       return { ...state, status: 'idle' };
 
+    //=========================
+    //Add Program Reducers
+    //=========================
+    case ADD_PROGRAM_START:
+      return { ...state, status: 'pending' };
+
+    case ADD_PROGRAM_SUCCESS:
+      return state;
+
+    case ADD_PROGRAM_FAIL:
+      return { ...state, status: 'error', error: action.payload };
+
+    case ADD_PROGRAM_RESOLVE:
+      return { ...state, status: 'idle' };
+
+    //=========================
+    //Edit Program Reducers
+    //=========================
+    case EDIT_PROGRAM_START:
+      return { ...state, status: 'pending' };
+
+    case EDIT_PROGRAM_SUCCESS:
+      return state;
+
+    case EDIT_PROGRAM_FAIL:
+      return { ...state, status: 'error', error: action.payload };
+
+    case EDIT_PROGRAM_RESOLVE:
+      return { ...state, status: 'idle' };
+
+    //=========================
+    //Delete Program Reducers
+    //=========================
+    case DELETE_PROGRAM_START:
+      return { ...state, status: 'pending' };
+
+    case DELETE_PROGRAM_SUCCESS:
+      return state;
+
+    case DELETE_PROGRAM_FAIL:
+      return { ...state, status: 'error', error: action.payload };
+
+    case DELETE_PROGRAM_RESOLVE:
+      return { ...state, status: 'idle' };
+
+    //=========================
     //Default Case
+    //=========================
     default:
       return state;
   }
