@@ -71,7 +71,7 @@ const programsReducer = (state = programsInitialState, action) => {
     case GET_ALLPROGRAMS_SUCCESS:
       return {
         ...state,
-        programs: [...state.programs, action.payload],
+        programs: [action.payload],
         status: 'success',
       };
     case GET_ALLPROGRAMS_FAIL:
