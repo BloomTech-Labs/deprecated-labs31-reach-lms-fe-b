@@ -39,8 +39,29 @@ const programsInitialState = {
   error: '',
 };
 
+//Reducers
 const programsReducer = (state = programsInitialState, action) => {
   switch (action.type) {
+    case GET_PROGRAM_START:
+      return { ...state, status: 'pending' };
+    case GET_PROGRAM_SUCCESS:
+      return {
+        ...state,
+        program: {
+          ...state.program,
+          programId: action.payload.programId,
+          programName: action.payload.programName,
+          programType: action.payload.programType,
+          programDescription: action.payload.programDescription,
+          courses: [...state.program.courses, action.payload.courses],
+        },
+        loggedIn: true,
+        status: 'success',
+      };
+    case GET_PROGRAM_FAIL:
+      return { ...state, status: 'error', error: action.payload };
+    case GET_PROGRAM_RESOLVE:
+      return { ...state, status: 'idle' };
     default:
       return state;
   }
