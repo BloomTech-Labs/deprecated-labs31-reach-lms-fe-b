@@ -1,39 +1,33 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import { Card } from 'antd';
-
-const data = [
-  {
-    firstName: 'Wayne',
-    lastName: 'Abbruscato',
-    email: 'lambda@school.com',
-    phone: '340-151-3246',
-  },
-  {
-    firstName: 'Lord',
-    lastName: 'Helmet',
-    email: 'spaceballs@schwarz.com',
-    phone: '802-555-7951',
-  },
-];
+import { userActions } from '../../../state/ducks/userDuck';
 
 const SettingsProfile = props => {
-  // const { info } = props;
-  const info = data[0]; //this will be removed
+  const { user } = useSelector(state => state.user);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (!user) {
+      dispatch(userActions.loginThunk());
+    }
+  }, [user, dispatch]);
+
   return (
     <div className="Profile">
-      <Card title="Profile">
-        <div className="image-container">
-          <img src=" " alt="" height="100px" width="100px" />
-        </div>
-        <div className="Info-container">
-          <h2>{info.firstName}</h2>
-          <h2>{info.lastName}</h2>
-          <h2>{info.email}</h2>
-          <h2>{info.phone}</h2>
-        </div>
-      </Card>
-      {/* {data.map(info => (
-      ))} */}
+      {user ? (
+        <Card title="Profile">
+          <div>
+            <h2>
+              {user.firstName} {user.lastName}
+            </h2>
+            <p>Username: {user.username}</p>
+            <p>Phone: {user.phone}</p>
+          </div>
+        </Card>
+      ) : (
+        <p>Loading...</p>
+      )}
     </div>
   );
 };

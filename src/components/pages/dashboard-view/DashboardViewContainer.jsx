@@ -8,7 +8,6 @@ import {
 } from '@ant-design/icons';
 import { useDispatch, useSelector } from 'react-redux';
 import { programsActions } from '../../../state/ducks/programsDuck';
-import { VIEW_PROGRAM_PATH } from '../../../routes/';
 
 const DashboardViewContainer = () => {
   const { Meta } = Card;
@@ -32,27 +31,30 @@ const DashboardViewContainer = () => {
       }}
       key="app-container"
     >
-      {programs.map(program => (
-        <GhostLink to={`/program/view/${program[0].programId}`}>
-          <Card
-            key={program[0].programId}
-            style={{ width: 300, margin: '10px' }}
-            actions={[
-              <GhostLink to={`/program/edit/${program[0].programId}`}>
-                <EditOutlined key={program[0].programId + 'edit'} />
-              </GhostLink>,
-              <SettingOutlined key={program[0].programId + 'setting'} />,
-              <EllipsisOutlined key={program[0].programId + 'ellipsis'} />,
-            ]}
-          >
-            <Meta
-              key={program[0].programId + 'meta'}
-              title={program[0].programName}
-              description={program[0].programDescription}
-            />
-          </Card>
-        </GhostLink>
-      ))}
+      {programs.map(program => {
+        const { programId } = program[0];
+        return (
+          <GhostLink to={`/program/view/${programId}`}>
+            <Card
+              key={programId}
+              style={{ width: 300, margin: '10px' }}
+              actions={[
+                <GhostLink to={`/program/edit/${programId}`}>
+                  <EditOutlined key={programId + 'edit'} />
+                </GhostLink>,
+                <SettingOutlined key={programId + 'setting'} />,
+                <EllipsisOutlined key={programId + 'ellipsis'} />,
+              ]}
+            >
+              <Meta
+                key={program[0].programId + 'meta'}
+                title={program[0].programName}
+                description={program[0].programDescription}
+              />
+            </Card>
+          </GhostLink>
+        );
+      })}
     </div>
   );
 };
