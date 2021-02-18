@@ -79,12 +79,13 @@ export default props => {
           {form.getFieldValue('courses')?.length > 0 ? (
             form
               .getFieldValue('courses')
-              .map(({ coursename, coursedescription }, index) => (
+              .map(({ coursename, coursedescription, ...rest }, index) => (
                 <li key={index}>
                   <CourseCard
                     key={index}
                     name={coursename}
                     description={coursedescription}
+                    {...rest}
                   />
                 </li>
               ))
