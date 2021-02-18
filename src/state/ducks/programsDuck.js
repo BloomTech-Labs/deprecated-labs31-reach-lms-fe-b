@@ -12,7 +12,7 @@ const GET_ALLPROGRAMS_RESOLVE = 'GET_ALLPROGRAMS_RESOLVE';
 
 //Action Creators
 export const programsActions = {
-  getProgramsThunk: programId => dispatch => {
+  getProgramThunk: programId => dispatch => {
     dispatch({ type: GET_PROGRAM_START });
 
     axiosAuth()
@@ -46,8 +46,26 @@ const programsInitialState = {
 //Reducers
 const programsReducer = (state = programsInitialState, action) => {
   switch (action.type) {
+    //Get All Programs Reducers
+    case GET_ALLPROGRAMS_START:
+      return { ...state, status: 'pending' };
+
+    case GET_ALLPROGRAMS_SUCCESS:
+      return {
+        ...state,
+        programs: [...state.programs, action.payload.programs],
+        status: 'success',
+      };
+    case GET_ALLPROGRAMS_FAIL:
+      return { ...state, status: 'error', error: action.payload };
+
+    case GET_ALLPROGRAMS_RESOLVE:
+      return { ...state, status: 'idle' };
+
+    //Get Individual Program Reducers
     case GET_PROGRAM_START:
       return { ...state, status: 'pending' };
+
     case GET_PROGRAM_SUCCESS:
       return {
         ...state,
@@ -59,13 +77,16 @@ const programsReducer = (state = programsInitialState, action) => {
           programDescription: action.payload.programDescription,
           courses: [...state.program.courses, action.payload.courses],
         },
-        loggedIn: true,
         status: 'success',
       };
+
     case GET_PROGRAM_FAIL:
       return { ...state, status: 'error', error: action.payload };
+
     case GET_PROGRAM_RESOLVE:
       return { ...state, status: 'idle' };
+
+    //Default Case
     default:
       return state;
   }
