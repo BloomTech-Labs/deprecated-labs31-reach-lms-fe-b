@@ -35,35 +35,35 @@ const DashboardViewContainer = () => {
     >
       {programs.map(program =>
         role === 'ADMIN' ? (
-          <GhostLink to={`/program/view/${program[0].programId}`}>
+          <GhostLink to={`/program/view/${program.programId}`}>
             <Card
-              key={program[0].programId}
+              key={program.programId}
               style={{ width: 300, margin: '10px' }}
               actions={[
-                <GhostLink to={`/program/edit/${program[0].programId}`}>
-                  <EditOutlined key={program[0].programId + 'edit'} />
+                <GhostLink to={`/program/edit/${program.programId}`}>
+                  <EditOutlined key={program.programId + 'edit'} />
                 </GhostLink>,
-                <SettingOutlined key={program[0].programId + 'setting'} />,
-                <EllipsisOutlined key={program[0].programId + 'ellipsis'} />,
+                <SettingOutlined key={program.programId + 'setting'} />,
+                <EllipsisOutlined key={program.programId + 'ellipsis'} />,
               ]}
             >
               <Meta
-                key={program[0].programId + 'meta'}
-                title={program[0].programName}
-                description={program[0].programDescription}
+                key={program.programId + 'meta'}
+                title={program.programName}
+                description={program.programDescription}
               />
             </Card>
           </GhostLink>
         ) : (
-          <GhostLink to={`/program/view/${program[0].programId}`}>
+          <GhostLink to={`/program/view/${program.programId}`}>
             <Card
-              key={program[0].programId}
+              key={program.programId}
               style={{ width: 300, margin: '10px' }}
             >
               <Meta
-                key={program[0].programId + 'meta'}
-                title={program[0].programName}
-                description={program[0].programDescription}
+                key={program.programId + 'meta'}
+                title={program.programName}
+                description={program.programDescription}
               />
             </Card>
           </GhostLink>
