@@ -40,10 +40,7 @@ import {
   CREATE_COURSE_PATH,
   VIEW_MODULE_PATH,
   EDIT_MODULE_PATH,
-  DASHBOARD_PATH,
 } from './routes/';
-import { CoursePage } from './components/pages/course-form';
-import dummyData from './components/pages/program-view/dummydata';
 
 ReactDOM.render(
   <Router>
@@ -74,7 +71,7 @@ function App() {
           path={VIEW_PROGRAM_PATH}
           component={() => (
             <DashWrapper>
-              <ProgramView programData={dummyData} />
+              <ProgramView />
             </DashWrapper>
           )}
         />

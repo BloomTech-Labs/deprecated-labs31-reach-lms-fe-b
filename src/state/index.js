@@ -1,9 +1,4 @@
-import {
-  combineReducers,
-  createStore,
-  applyMiddleware,
-  createStoreWithMiddlewares,
-} from 'redux';
+import { combineReducers, createStore, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
 
 // import each duck state slice
@@ -12,9 +7,9 @@ import programsReducer from './ducks/programsDuck';
 import coursesReducer from './ducks/coursesDuck';
 import modulesReducer from './ducks/modulesDuck';
 
-const middlewares = [thunk];
+const middleware = [thunk];
 
-const createStoreWithMiddelwares = applyMiddleware(...middlewares)(createStore);
+const createStoreWithMiddleware = applyMiddleware(...middleware)(createStore);
 
 const rootReducer = combineReducers({
   user: userReducer,
@@ -23,9 +18,7 @@ const rootReducer = combineReducers({
   modules: modulesReducer,
 });
 
-// export const store = createStoreWithMiddelwares(rootReducer);
-// to
-export const store = createStoreWithMiddelwares(
+export const store = createStoreWithMiddleware(
   rootReducer,
   window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
 );

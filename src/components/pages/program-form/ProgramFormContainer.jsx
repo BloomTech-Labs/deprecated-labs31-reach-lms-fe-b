@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Modal, Form, Input, Space, Select, Button } from 'antd';
+
 import { CourseForm, CourseCard } from '../course-form';
 import { useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
@@ -79,16 +80,22 @@ export default props => {
           {form.getFieldValue('courses')?.length > 0 ? (
             form
               .getFieldValue('courses')
-              .map(({ coursename, coursedescription, ...rest }, index) => (
-                <li key={index}>
-                  <CourseCard
-                    key={index}
-                    name={coursename}
-                    description={coursedescription}
-                    {...rest}
-                  />
-                </li>
-              ))
+              .map(
+                (
+                  { coursename, coursedescription, courseid, ...rest },
+                  index
+                ) => (
+                  <li key={index}>
+                    <CourseCard
+                      key={index}
+                      id={courseid}
+                      name={coursename}
+                      description={coursedescription}
+                      {...rest}
+                    />
+                  </li>
+                )
+              )
           ) : (
             <p>No courses yet!</p>
           )}

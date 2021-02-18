@@ -1,12 +1,19 @@
 import React from 'react';
 import { Card } from 'antd';
+import { EditOutlined } from '@ant-design/icons';
 import { GhostLink } from '../../common';
 
-export default ({ name, description, ...restProps }) => {
-  const { courseid } = restProps;
+export default ({ name, description, id, ...restProps }) => {
   return (
-    <GhostLink to={`/course/edit/${courseid}`}>
-      <Card title={name}>{description}</Card>
-    </GhostLink>
+    <Card
+      title={name}
+      actions={[
+        <GhostLink to={`/course/edit/${id}`}>
+          <EditOutlined />
+        </GhostLink>,
+      ]}
+    >
+      {description}
+    </Card>
   );
 };
