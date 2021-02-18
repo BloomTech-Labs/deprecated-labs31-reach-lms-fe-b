@@ -12,6 +12,24 @@ const GET_ALLPROGRAMS_RESOLVE = 'GET_ALLPROGRAMS_RESOLVE';
 
 //Action Creators
 export const programsActions = {
+  //GET All Programs Action
+  getAllProgramsThunk: () => dispatch => {
+    dispatch({ type: GET_ALLPROGRAMS_START });
+
+    axiosAuth()
+      .get('/programs/programs')
+      .then(res => {
+        dispatch({ type: GET_ALLPROGRAMS_SUCCESS, payload: res.data });
+      })
+      .catch(err => {
+        dispatch({ type: GET_ALLPROGRAMS_FAIL, payload: err.message });
+      })
+      .finally(() => {
+        dispatch({ type: GET_ALLPROGRAMS_RESOLVE });
+      });
+  },
+
+  //GET Individual Program Action
   getProgramThunk: programId => dispatch => {
     dispatch({ type: GET_PROGRAM_START });
 
