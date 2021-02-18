@@ -55,10 +55,10 @@ const ProgramViewContainer = props => {
 
         {courses.map(courseData => (
           <CourseView
-            key={courseData[0].courseid}
-            courseName={courseData[0].coursename}
-            courseDescription={courseData[0].coursedescription}
-            modules={courseData[0].modules}
+            key={courseData.courseid}
+            courseName={courseData.coursename}
+            courseDescription={courseData.coursedescription}
+            modules={courseData.modules}
           />
         ))}
       </Container>
