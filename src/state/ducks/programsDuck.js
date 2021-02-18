@@ -34,7 +34,7 @@ const DELETE_PROGRAM_RESOLVE = 'DELETE_PROGRAM_RESOLVE';
 
 export const programsActions = {
   //=========================
-  //Gert All Programs Action
+  //Get All Programs Action
   //=========================
   getAllProgramsThunk: () => dispatch => {
     dispatch({ type: GET_ALLPROGRAMS_START });
@@ -68,6 +68,63 @@ export const programsActions = {
       })
       .finally(() => {
         dispatch({ type: GET_PROGRAM_RESOLVE });
+      });
+  },
+
+  //=========================
+  //Add Program Action
+  //=========================
+  addProgramThunk: programObj => dispatch => {
+    dispatch({ type: ADD_PROGRAM_START });
+
+    axiosAuth()
+      .post(`/programs/program/`, programObj)
+      .then(res => {
+        dispatch({ type: ADD_PROGRAM_SUCCESS, payload: res.data });
+      })
+      .catch(err => {
+        dispatch({ type: ADD_PROGRAM_FAIL, payload: err.message });
+      })
+      .finally(() => {
+        dispatch({ type: ADD_PROGRAM_RESOLVE });
+      });
+  },
+
+  //=========================
+  //Edit Program Action
+  //=========================
+  editProgramThunk: programObj => dispatch => {
+    dispatch({ type: EDIT_PROGRAM_START });
+
+    axiosAuth()
+      .put(`/programs/program/${programObj.programId}`, programObj)
+      .then(res => {
+        dispatch({ type: EDIT_PROGRAM_SUCCESS, payload: res.data });
+      })
+      .catch(err => {
+        dispatch({ type: EDIT_PROGRAM_FAIL, payload: err.message });
+      })
+      .finally(() => {
+        dispatch({ type: EDIT_PROGRAM_RESOLVE });
+      });
+  },
+
+  //=========================
+  //Delete Program Action
+  //=========================
+  deleteProgramThunk: programId => dispatch => {
+    dispatch({ type: DELETE_PROGRAM_START });
+
+    axiosAuth()
+      .delete(`/programs/program/${programId}`)
+      .then(res => {
+        dispatch({ type: DELETE_PROGRAM_SUCCESS, payload: res.data });
+      })
+      .catch(err => {
+        dispatch({ type: DELETE_PROGRAM_FAIL, payload: err.message });
+      })
+      .finally(() => {
+        dispatch({ type: DELETE_PROGRAM_RESOLVE });
       });
   },
 };
