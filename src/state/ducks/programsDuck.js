@@ -25,18 +25,18 @@ export const programsActions = {
   },
 };
 
+//Initial Slice of State
 const programsInitialState = {
   programs: [],
-  isFetching: false,
-  error: '',
   program: {
-    id: '',
+    programId: '',
     programName: '',
     programType: '',
     programDescription: '',
     courses: [],
-    // users: [],
   },
+  status: 'idle',
+  error: '',
 };
 
 const programsReducer = (state = programsInitialState, action) => {
