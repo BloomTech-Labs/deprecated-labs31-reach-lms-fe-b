@@ -16,7 +16,6 @@ const DashboardViewContainer = () => {
   //Redux State Managers
   const dispatch = useDispatch();
   const { programs } = useSelector(state => state.programs);
-  useSelector(state => console.log(state.programs));
 
   useEffect(() => {
     dispatch(programsActions.getAllProgramsThunk());
