@@ -93,7 +93,7 @@ const programsReducer = (state = programsInitialState, action) => {
           programName: action.payload.programName,
           programType: action.payload.programType,
           programDescription: action.payload.programDescription,
-          courses: [...state.program.courses, action.payload.courses],
+          courses: [action.payload.courses],
         },
         status: 'success',
       };
