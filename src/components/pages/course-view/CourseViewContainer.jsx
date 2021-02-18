@@ -35,10 +35,10 @@ const CourseViewContainer = props => {
             {/* Maps over course module data and renders ModuleView components*/}
             {modules.map(module => (
               <ModuleView
-                key={module.moduleId}
-                moduleName={module.moduleName}
-                moduleDescription={module.moduleDescription}
-                moduleContent={module.moduleContent}
+                key={module.moduleid}
+                moduleName={module.modulename}
+                moduleDescription={module.moduledescription}
+                moduleContent={module.modulecontent}
               />
             ))}
           </>

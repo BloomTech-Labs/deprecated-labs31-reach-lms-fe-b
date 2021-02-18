@@ -19,6 +19,7 @@ export const programsActions = {
     axiosAuth()
       .get('/programs/programs')
       .then(res => {
+        console.log(res);
         dispatch({ type: GET_ALLPROGRAMS_SUCCESS, payload: res.data });
       })
       .catch(err => {
@@ -72,7 +73,7 @@ const programsReducer = (state = programsInitialState, action) => {
     case GET_ALLPROGRAMS_SUCCESS:
       return {
         ...state,
-        programs: [...state.programs, action.payload.programs],
+        programs: [...state.programs, action.payload],
         status: 'success',
       };
     case GET_ALLPROGRAMS_FAIL:
