@@ -1,7 +1,9 @@
-import React, { useState } from 'react';
-import { Form, Input, Space, Button } from 'antd';
-import { ModuleForm, ModuleCard } from '../module-form';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
+import { Form, Input, Space, Button } from 'antd';
+import { useParams } from 'react-router-dom';
+
+import { ModuleForm, ModuleCard } from '../module-form';
 
 const StyledSpace = styled(Space)`
   &&& {
@@ -10,7 +12,15 @@ const StyledSpace = styled(Space)`
 `;
 
 // CourseFormContainer — No specific parent, props isn't coming down quite yet
-export default props => {
+export default ({ isWrapped, onSubmit }) => {
+  const { id } = useParams();
+
+  useEffect(() => {
+    // if params is undefined, we're creating
+    console.log(id);
+    console.log(id ? `EDIT/${id}` : 'CREATE');
+  }, [id]);
+
   const [form] = Form.useForm();
   const [modalVisible, setModalVisible] = useState(false);
 
@@ -20,6 +30,9 @@ export default props => {
   const onFinish = values => {
     // we will do something different here once
     // we're ready to hit endpoints!!
+    if (isWrapped) {
+      onSubmit(form.getFieldsValue());
+    }
     console.log({ values });
   };
 

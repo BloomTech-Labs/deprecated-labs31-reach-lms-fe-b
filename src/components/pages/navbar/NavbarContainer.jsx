@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Layout, Menu } from 'antd';
 import {
   HomeOutlined,
   LogoutOutlined,
-  SettingFilled,
+  SettingOutlined,
   FormOutlined,
   EditOutlined,
 } from '@ant-design/icons';
@@ -11,10 +11,9 @@ import {
   CREATE_PROGRAM_PATH,
   EDIT_PROGRAM_PATH,
   SETTINGS_PATH,
-  // CREATE_COURSE_PATH,
-  CREATE_COURSE_PAGE_PATH,
+  CREATE_COURSE_PATH,
 } from '../../../routes';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 
 const StyledLink = styled(Link)`
@@ -25,17 +24,17 @@ const StyledLink = styled(Link)`
 // Wrap `Menu.Item` from AntD in a `Link` from react-router-dom
 // We can just toss in a "to" attribute to MenuItem
 // and it will look like an AntD Menu.Item but act like a Link
-const MenuItem = ({ key, to, icon, children, ...props }) => {
+const MenuItem = ({ key, to, icon, handleClick, children, ...props }) => {
   if (!to) {
     return (
-      <Menu.Item key={key} icon={icon} {...props}>
+      <Menu.Item key={key} icon={icon} onClick={handleClick} {...props}>
         {children}
       </Menu.Item>
     );
   }
   return (
     <StyledLink to={to}>
-      <Menu.Item key={key} icon={icon} {...props}>
+      <Menu.Item key={key} icon={icon} onClick={handleClick} {...props}>
         {children}
       </Menu.Item>
     </StyledLink>
@@ -44,25 +43,53 @@ const MenuItem = ({ key, to, icon, children, ...props }) => {
 
 // Reusable NavBar component that will be used throughout many pages in our app
 const NavBar = ({ logout, ...restProps }) => {
+  const { pathname } = useLocation();
+  const [selectedKey, setSelectedKey] = useState(pathname);
+
+  const handleClick = e => {
+    setSelectedKey(e.key);
+  };
+
   return (
     <Layout.Sider breakpoint="sm" collapsedWidth="0">
-      <Menu theme="light" mode="inline" defaultSelectedKeys={['1']}>
-        <MenuItem key="1" icon={<HomeOutlined />} to="/">
+      <Menu
+        theme="light"
+        mode="inline"
+        selectedKeys={[selectedKey]}
+        handleClick={handleClick}
+      >
+        <MenuItem key="/" to="/" icon={<HomeOutlined />}>
           Dashboard
         </MenuItem>
-        <MenuItem key="2" to={CREATE_PROGRAM_PATH} icon={<FormOutlined />}>
+        <MenuItem
+          key={CREATE_PROGRAM_PATH}
+          to={CREATE_PROGRAM_PATH}
+          icon={<FormOutlined />}
+        >
           Create a Program
         </MenuItem>
-        <MenuItem key="3" icon={<EditOutlined />} to={EDIT_PROGRAM_PATH}>
+        <MenuItem
+          key={EDIT_PROGRAM_PATH}
+          to={EDIT_PROGRAM_PATH}
+          icon={<EditOutlined />}
+        >
           Modify Program
         </MenuItem>
-        <MenuItem icon={<FormOutlined />} to={CREATE_COURSE_PAGE_PATH}>
+        <MenuItem
+          key={CREATE_COURSE_PATH}
+          to={CREATE_COURSE_PATH}
+          icon={<FormOutlined />}
+        >
           Create Course
         </MenuItem>
-        <MenuItem key="4" icon={<SettingFilled />} to={SETTINGS_PATH}>
+        <MenuItem
+          key={SETTINGS_PATH}
+          to={SETTINGS_PATH}
+          icon={<SettingOutlined />}
+        >
           Settings
         </MenuItem>
-        <MenuItem key="5" icon={<LogoutOutlined />} onClick={logout}>
+        <MenuItem key="__LOGOUT__" icon={<LogoutOutlined />} onClick={logout}>
           Logout
         </MenuItem>
       </Menu>

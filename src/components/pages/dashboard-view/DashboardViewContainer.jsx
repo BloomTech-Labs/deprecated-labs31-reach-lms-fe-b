@@ -19,7 +19,7 @@ const DashboardViewContainer = () => {
 
   useEffect(() => {
     dispatch(programsActions.getAllProgramsThunk());
-  }, []);
+  }, [dispatch]);
 
   return (
     <div
@@ -33,13 +33,15 @@ const DashboardViewContainer = () => {
       key="app-container"
     >
       {programs.map(program => (
-        <GhostLink to={`/program/${program[0].programId}`}>
+        <GhostLink to={`/program/view/${program[0].programId}`}>
           <Card
             key={program[0].programId}
             style={{ width: 300, margin: '10px' }}
             actions={[
+              <GhostLink to={`/program/edit/${program[0].programId}`}>
+                <EditOutlined key={program[0].programId + 'edit'} />
+              </GhostLink>,
               <SettingOutlined key={program[0].programId + 'setting'} />,
-              <EditOutlined key={program[0].programId + 'edit'} />,
               <EllipsisOutlined key={program[0].programId + 'ellipsis'} />,
             ]}
           >
