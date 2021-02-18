@@ -22,6 +22,7 @@ export default ({ isWrapped, onSubmit }) => {
   }, [id]);
 
   const [form] = Form.useForm();
+
   const [modalVisible, setModalVisible] = useState(false);
 
   const showModuleModal = () => setModalVisible(true);

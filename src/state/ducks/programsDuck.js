@@ -100,7 +100,7 @@ const programsReducer = (state = programsInitialState, action) => {
           programName,
           programType,
           programDescription,
-          courses: [courses],
+          courses: courses,
         },
         status: 'success',
       };

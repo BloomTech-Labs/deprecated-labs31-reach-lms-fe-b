@@ -34,7 +34,7 @@ const DashboardViewContainer = () => {
       {programs.map(program => {
         const { programId } = program[0];
         return (
-          <GhostLink to={`/program/view/${programId}`}>
+          <GhostLink key={programId} to={`/program/view/${programId}`}>
             <Card
               key={programId}
               style={{ width: 300, margin: '10px' }}
