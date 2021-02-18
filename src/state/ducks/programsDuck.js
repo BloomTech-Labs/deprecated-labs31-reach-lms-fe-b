@@ -6,7 +6,24 @@ const GET_PROGRAM_SUCCESS = 'LOGIN_SUCCESS';
 const GET_PROGRAM_FAIL = 'LOGIN_FAIL';
 const GET_PROGRAM_RESOLVE = 'LOGIN_RESOLVE';
 
-export const programsActions = {};
+//Action Creators
+export const programsActions = {
+  getProgramsThunk: programId => dispatch => {
+    dispatch({ type: GET_PROGRAM_START });
+
+    axiosAuth()
+      .get(`/programs/program/${programId}`)
+      .then(res => {
+        dispatch({ type: GET_PROGRAM_SUCCESS, payload: res.data });
+      })
+      .catch(err => {
+        dispatch({ type: GET_PROGRAM_FAIL, payload: err.message });
+      })
+      .finally(() => {
+        dispatch({ type: GET_PROGRAM_RESOLVE });
+      });
+  },
+};
 
 const programsInitialState = {
   programs: [],
