@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { Form, Input, Space, Button } from 'antd';
 import { useParams } from 'react-router-dom';
-
+import { useDispatch, useSelector } from 'react-redux';
+import { coursesActions } from '../../../state/ducks/coursesDuck';
 import { ModuleForm, ModuleCard } from '../module-form';
 
 const StyledSpace = styled(Space)`
@@ -14,16 +15,22 @@ const StyledSpace = styled(Space)`
 // CourseFormContainer — No specific parent, props isn't coming down quite yet
 export default ({ isWrapped, onSubmit }) => {
   const { id } = useParams();
+  const { course, status } = useSelector(state => state.courses);
+  const dispatch = useDispatch();
+  const [form] = Form.useForm();
+  const [modalVisible, setModalVisible] = useState(false);
 
   useEffect(() => {
-    // if params is undefined, we're creating
-    console.log(id);
-    console.log(id ? `EDIT/${id}` : 'CREATE');
-  }, [id]);
-
-  const [form] = Form.useForm();
-
-  const [modalVisible, setModalVisible] = useState(false);
+    if (id) {
+      dispatch(coursesActions.getCourseThunk(id));
+    }
+  }, [id, dispatch]);
+  useEffect(() => {
+    if (status === 'success') {
+      form.setFieldsValue({ ...course });
+    } else if (status === 'error') {
+    }
+  }, [status, course, form]);
 
   const showModuleModal = () => setModalVisible(true);
   const hideModuleModal = () => setModalVisible(false);
@@ -31,10 +38,15 @@ export default ({ isWrapped, onSubmit }) => {
   const onFinish = values => {
     // we will do something different here once
     // we're ready to hit endpoints!!
-    if (isWrapped) {
-      onSubmit(form.getFieldsValue());
+    // if (isWrapped) {
+    //   onSubmit(form.getFieldsValue());
+    // }
+    if (id) {
+      console.log(id);
+      dispatch(coursesActions.editCourseThunk({ ...values, courseid: id }));
+    } else {
+      dispatch(coursesActions.addCourseThunk(values));
     }
-    console.log({ values });
   };
 
   const onModuleAdd = newModule => {

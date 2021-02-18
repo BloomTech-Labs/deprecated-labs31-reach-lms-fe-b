@@ -30,7 +30,11 @@ export default props => {
   const hideClassModal = () => setModalVisible(false);
 
   const onFinish = values => {
-    console.log({ values });
+    if (id) {
+      dispatch(programsActions.editProgramThunk({ ...values, programId: id }));
+    } else {
+      dispatch(programsActions.addProgramThunk(values));
+    }
   };
 
   const onCourseAdd = newClass => {
@@ -39,11 +43,6 @@ export default props => {
       courses: [...existingClasses, newClass],
     });
     setModalVisible(false);
-    console.log(form.getFieldValue('courses'));
-  };
-
-  const onOk = values => {
-    console.log({ onOk: values });
   };
 
   return (
@@ -115,7 +114,7 @@ export default props => {
       <Modal
         title="Course Modal"
         visible={modalVisible}
-        onOk={onOk}
+        // onOk={onCourseAdd}
         onCancel={hideClassModal}
       >
         <CourseForm isWrapped={true} onSubmit={onCourseAdd} />
