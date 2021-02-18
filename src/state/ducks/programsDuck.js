@@ -85,15 +85,22 @@ const programsReducer = (state = programsInitialState, action) => {
       return { ...state, status: 'pending' };
 
     case GET_PROGRAM_SUCCESS:
+      const {
+        programId,
+        programName,
+        programType,
+        programDescription,
+        courses,
+      } = action.payload;
       return {
         ...state,
         program: {
           ...state.program,
-          programId: action.payload.programId,
-          programName: action.payload.programName,
-          programType: action.payload.programType,
-          programDescription: action.payload.programDescription,
-          courses: [action.payload.courses],
+          programId: programId,
+          programName: programName,
+          programType: programType,
+          programDescription: programDescription,
+          courses: [courses],
         },
         status: 'success',
       };
