@@ -1,5 +1,3 @@
-const modulesATs = {};
-
 export const modulesActions = {};
 
 const modulesInitialState = {

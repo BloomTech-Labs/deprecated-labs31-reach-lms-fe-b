@@ -1,17 +1,23 @@
 import React, { useState, useEffect } from 'react';
 import { Modal, Form, Input, Space, Select, Button } from 'antd';
 import { CourseForm, CourseCard } from '../course-form';
+import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
+import { programsActions } from '../../../state/ducks/programsDuck';
 
 export default props => {
   const { id } = useParams();
+  const dispatch = useDispatch();
+  const programs = useSelector(state => state.programs);
 
   useEffect(() => {
-    console.log(id ? `EDIT/${id}` : 'CREATE');
-  }, [id]);
+    if (id) {
+      // dispatch programActions
+      dispatch(programsActions.getProgramThunk(id));
+    }
+  }, [id, dispatch]);
 
   const [form] = Form.useForm();
-
   const [modalVisible, setModalVisible] = useState(false);
 
   const showClassModal = () => setModalVisible(true);
