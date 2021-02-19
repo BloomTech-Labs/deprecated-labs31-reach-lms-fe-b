@@ -2,12 +2,14 @@ import React, { useState, useEffect } from 'react';
 import { Modal, Form, Input, Space, Select, Button } from 'antd';
 
 import { CourseForm, CourseCard } from '../course-form';
-import { useParams } from 'react-router-dom';
+import { useParams, useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { programsActions } from '../../../state/ducks/programsDuck';
 import { userActions } from '../../../state/ducks/userDuck';
 
 export default props => {
+  const history = useHistory();
+
   /** The id of the program. Undefined if adding new program */
   const { id } = useParams();
   const dispatch = useDispatch();
@@ -57,6 +59,7 @@ export default props => {
         admin: { userid }, // this is currently required by backend to make sure user is admin
       };
       dispatch(programsActions.editProgramThunk(validEditedProgram));
+      history.push('/');
     } else {
       // else we must just be creating a new program
       const validProgram = {
@@ -66,6 +69,7 @@ export default props => {
         admin: { userid }, // this is currently required by backend to make sure user is admin
       };
       dispatch(programsActions.addProgramThunk(validProgram));
+      history.push('/');
     }
   };
 
