@@ -1,5 +1,10 @@
 import React from 'react';
 import { Card } from 'antd';
+import styled from 'styled-components';
+
+const SettingsWrapper = styled.div`
+  margin: 0 24px;
+`;
 
 const data = [
   {
@@ -20,7 +25,7 @@ const SettingsProfile = props => {
   // const { info } = props;
   const info = data[0]; //this will be removed
   return (
-    <div className="Profile">
+    <SettingsWrapper className="Profile">
       <Card title="Profile">
         <div className="image-container">
           <img src=" " alt="" height="100px" width="100px" />
@@ -34,7 +39,7 @@ const SettingsProfile = props => {
       </Card>
       {/* {data.map(info => (
       ))} */}
-    </div>
+    </SettingsWrapper>
   );
 };
 
