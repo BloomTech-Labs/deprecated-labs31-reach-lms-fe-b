@@ -76,9 +76,9 @@ export const programsActions = {
   //=========================
   addProgramThunk: programObj => dispatch => {
     dispatch({ type: ADD_PROGRAM_START });
-
+    console.log({ programObj });
     axiosAuth()
-      .post(`/programs/program/`, programObj)
+      .post(`/programs/program`, programObj)
       .then(res => {
         dispatch({ type: ADD_PROGRAM_SUCCESS, payload: res.data });
       })

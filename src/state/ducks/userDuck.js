@@ -23,6 +23,8 @@ export const userActions = {
 };
 
 const userInitialState = {
+  user: null, // we don't need to call out individual properties like below... we can just have one big "user" property.
+  // but I didn't want to make breaking changes so I'll leave below for now
   userid: '',
   username: '',
   role: '',
@@ -38,6 +40,7 @@ const userReducer = (state = userInitialState, action) => {
     case LOGIN_SUCCESS:
       return {
         ...state,
+        user: action.payload, // just put all of our payload in as our user info!!
         userid: action.payload.userid,
         username: action.payload.username,
         role: action.payload.roles[0].role.name,

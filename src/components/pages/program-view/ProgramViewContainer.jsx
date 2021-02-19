@@ -1,9 +1,10 @@
 import React, { useEffect } from 'react';
-import { Button } from '../../common/index';
 import { CourseView } from '../';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { programsActions } from '../../../state/ducks/programsDuck';
+import { Button } from 'antd';
+import { GhostLink as Link } from '../../common';
 import styled from 'styled-components';
 
 //Styled Components
@@ -35,7 +36,7 @@ const ProgramViewContainer = props => {
   //Dispatch Action to Load Program Info
   useEffect(() => {
     dispatch(programsActions.getProgramThunk(id));
-  }, []);
+  }, [id, dispatch]);
 
   return (
     <ProgramWrapper>
@@ -46,7 +47,9 @@ const ProgramViewContainer = props => {
           <h3>{programType}</h3>
         </div>
         <div>
-          <Button buttonText="Edit" />
+          <Link to={`/program/edit/${id}`}>
+            <Button>Edit</Button>
+          </Link>
         </div>
       </TitleContainer>
 

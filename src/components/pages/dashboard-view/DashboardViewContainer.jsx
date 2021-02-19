@@ -8,8 +8,6 @@ import {
 } from '@ant-design/icons';
 import { useDispatch, useSelector } from 'react-redux';
 import { programsActions } from '../../../state/ducks/programsDuck';
-import { VIEW_PROGRAM_PATH } from '../../../routes/';
-import styled from 'styled-components';
 
 const DashboardViewContainer = () => {
   const { Meta } = Card;
