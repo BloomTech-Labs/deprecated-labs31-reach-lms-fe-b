@@ -17,6 +17,10 @@ const Container = styled.div`
   margin-bottom: 5%;
 `;
 
+const ProgramWrapper = styled.div`
+  margin: 0 24px;
+`;
+
 const ProgramViewContainer = props => {
   //Program Id passed from Main Dash param in url
   const { id } = useParams();
@@ -34,7 +38,7 @@ const ProgramViewContainer = props => {
   }, []);
 
   return (
-    <>
+    <ProgramWrapper>
       {/*Course Title Section*/}
       <TitleContainer>
         <div>
@@ -62,7 +66,7 @@ const ProgramViewContainer = props => {
           />
         ))}
       </Container>
-    </>
+    </ProgramWrapper>
   );
 };
 
