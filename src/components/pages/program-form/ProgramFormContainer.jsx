@@ -5,11 +5,14 @@ import { CourseForm, CourseCard } from '../course-form';
 import { useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { programsActions } from '../../../state/ducks/programsDuck';
+import { userActions } from '../../../state/ducks/userDuck';
 
 export default props => {
   const { id } = useParams();
   const dispatch = useDispatch();
   const { program, status } = useSelector(state => state.programs);
+  const userid = useSelector(state => state.user?.user?.userid);
+
   const [form] = Form.useForm();
   const [modalVisible, setModalVisible] = useState(false);
 
@@ -19,6 +22,7 @@ export default props => {
       // in that case, we should populate values with the existing program
       dispatch(programsActions.getProgramThunk(id));
     }
+    dispatch(userActions.loginThunk());
   }, [id, dispatch]);
   useEffect(() => {
     if (status === 'success') {
@@ -31,9 +35,25 @@ export default props => {
 
   const onFinish = values => {
     if (id) {
-      dispatch(programsActions.editProgramThunk({ ...values, programId: id }));
+      console.log({ values });
+      dispatch(
+        programsActions.editProgramThunk({
+          ...values,
+          programId: id,
+          students: [],
+          teachers: [],
+          admin: { userid },
+        })
+      );
     } else {
-      dispatch(programsActions.addProgramThunk(values));
+      console.log({ ADD_SUBMIT: values });
+      const validProgram = {
+        ...values,
+        students: [],
+        teachers: [],
+        admin: { userid },
+      };
+      dispatch(programsActions.addProgramThunk(validProgram));
     }
   };
 
@@ -63,7 +83,11 @@ export default props => {
         >
           <Input />
         </Form.Item>
-        <Form.Item name="programType" label="Program Type">
+        <Form.Item
+          name="programType"
+          label="Program Type"
+          rules={[{ required: true, message: 'Missing Program Type' }]}
+        >
           <Select defaultValue="edu_k12">
             <Select.Option value="edu_k12">Education (K-12)</Select.Option>
             <Select.Option value="edu_higher">Education (Higher)</Select.Option>

@@ -25,10 +25,10 @@ export default ({ isWrapped, onSubmit }) => {
       dispatch(coursesActions.getCourseThunk(id));
     }
   }, [id, dispatch]);
+
   useEffect(() => {
     if (status === 'success') {
       form.setFieldsValue({ ...course });
-    } else if (status === 'error') {
     }
   }, [status, course, form]);
 
@@ -38,9 +38,9 @@ export default ({ isWrapped, onSubmit }) => {
   const onFinish = values => {
     // we will do something different here once
     // we're ready to hit endpoints!!
-    // if (isWrapped) {
-    //   onSubmit(form.getFieldsValue());
-    // }
+    if (isWrapped) {
+      onSubmit(form.getFieldsValue());
+    }
     if (id) {
       console.log(id);
       dispatch(coursesActions.editCourseThunk({ ...values, courseid: id }));
