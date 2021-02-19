@@ -42,7 +42,6 @@ export default ({ isWrapped, onSubmit }) => {
       onSubmit(form.getFieldsValue());
     }
     if (id) {
-      console.log(id);
       dispatch(coursesActions.editCourseThunk({ ...values, courseid: id }));
     } else {
       dispatch(coursesActions.addCourseThunk(values));
