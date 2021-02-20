@@ -1,6 +1,8 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Card } from 'antd';
+import { EditOutlined } from '@ant-design/icons';
+import { GhostLink } from '../../common/';
 import { userActions } from '../../../state/ducks/userDuck';
 
 const SettingsProfile = props => {
@@ -16,7 +18,14 @@ const SettingsProfile = props => {
   return (
     <div className="Profile">
       {user ? (
-        <Card title="Profile">
+        <Card
+          title="Profile"
+          actions={[
+            <GhostLink to="/profile/edit">
+              <EditOutlined />
+            </GhostLink>,
+          ]}
+        >
           <div>
             <h2>
               {user.firstName} {user.lastName}

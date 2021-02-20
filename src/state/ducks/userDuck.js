@@ -62,6 +62,7 @@ const userInitialState = {
   role: '',
   loggedIn: false,
   statusGet: 'idle',
+  statusEdit: 'idle',
   error: '',
 };
 
@@ -97,24 +98,24 @@ const userReducer = (state = userInitialState, action) => {
     case UPDATE_USER_START:
       return {
         ...state,
-        statusUpdate: 'pending',
+        statusEdit: 'pending',
       };
     case UPDATE_USER_SUCCESS:
       return {
         ...state,
-        statusUpdate: 'success',
+        statusEdit: 'success',
         user: action.payload,
       };
     case UPDATE_USER_FAIL:
       return {
         ...state,
-        statusUpdate: 'error',
+        statusEdit: 'error',
         error: action.payload,
       };
     case UPDATE_USER_RESOLVE:
       return {
         ...state,
-        statusUpdate: 'idle',
+        statusEdit: 'idle',
       };
     //-----------------------------
     // DEFAULT
