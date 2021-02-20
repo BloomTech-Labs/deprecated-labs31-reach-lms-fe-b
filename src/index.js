@@ -27,6 +27,7 @@ import {
   LoginPage,
   NotFoundPage,
   DashboardView,
+  ProfileEdit,
   DashWrapper,
 } from './components/pages';
 import {
@@ -41,10 +42,8 @@ import {
   CREATE_COURSE_PATH,
   VIEW_MODULE_PATH,
   EDIT_MODULE_PATH,
-  DASHBOARD_PATH,
+  EDIT_PROFILE_PATH,
 } from './routes/';
-import { CoursePage } from './components/pages/course-form';
-import dummyData from './components/pages/program-view/dummydata';
 
 ReactDOM.render(
   <Router>
@@ -75,7 +74,7 @@ function App() {
           path={VIEW_PROGRAM_PATH}
           component={() => (
             <DashWrapper>
-              <ProgramView programData={dummyData} />
+              <ProgramView />
             </DashWrapper>
           )}
         />
@@ -96,7 +95,14 @@ function App() {
           )}
         />
         <SecureRoute path="/dash-page" component={DashboardView} />
-        <SecureRoute path={VIEW_COURSE_PATH} component={CourseView} />
+        <SecureRoute
+          path={VIEW_COURSE_PATH}
+          component={() => (
+            <DashWrapper>
+              <CourseView />
+            </DashWrapper>
+          )}
+        />
         <SecureRoute
           path={EDIT_COURSE_PATH}
           component={() => (
@@ -123,6 +129,14 @@ function App() {
         />
         <SecureRoute path={VIEW_MODULE_PATH} component={ModuleView} />
         <SecureRoute path={EDIT_MODULE_PATH} component={ModuleForm} />
+        <SecureRoute
+          path={EDIT_PROFILE_PATH}
+          component={() => (
+            <DashWrapper>
+              <ProfileEdit />
+            </DashWrapper>
+          )}
+        />
         <Route path={LOGIN_PATH} component={LoginPage} />
         <Route path="/implicit/callback" component={LoginCallback} />
 

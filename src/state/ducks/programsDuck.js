@@ -76,9 +76,9 @@ export const programsActions = {
   //=========================
   addProgramThunk: programObj => dispatch => {
     dispatch({ type: ADD_PROGRAM_START });
-
+    console.log({ programObj });
     axiosAuth()
-      .post(`/programs/program/`, programObj)
+      .post(`/programs/program`, programObj)
       .then(res => {
         dispatch({ type: ADD_PROGRAM_SUCCESS, payload: res.data });
       })
@@ -141,7 +141,10 @@ const programsInitialState = {
     programDescription: '',
     courses: [],
   },
-  status: 'idle',
+  statusGet: 'idle',
+  statusAdd: 'idle',
+  statusEdit: 'idle',
+  statusDelete: 'idle',
   error: '',
 };
 
@@ -154,25 +157,25 @@ const programsReducer = (state = programsInitialState, action) => {
     //Get All Programs Reducers
     //=========================
     case GET_ALLPROGRAMS_START:
-      return { ...state, status: 'pending' };
+      return { ...state, statusGet: 'pending' };
 
     case GET_ALLPROGRAMS_SUCCESS:
       return {
         ...state,
         programs: action.payload,
-        status: 'success',
+        statusGet: 'success',
       };
     case GET_ALLPROGRAMS_FAIL:
-      return { ...state, status: 'error', error: action.payload };
+      return { ...state, statusGet: 'error', error: action.payload };
 
     case GET_ALLPROGRAMS_RESOLVE:
-      return { ...state, status: 'idle' };
+      return { ...state, statusGet: 'idle' };
 
     //================================
     //Get Individual Programs Reducers
     //================================
     case GET_PROGRAM_START:
-      return { ...state, status: 'pending' };
+      return { ...state, statusGet: 'pending' };
 
     case GET_PROGRAM_SUCCESS:
       const {
@@ -192,59 +195,59 @@ const programsReducer = (state = programsInitialState, action) => {
           programDescription,
           courses: courses,
         },
-        status: 'success',
+        statusGet: 'success',
       };
 
     case GET_PROGRAM_FAIL:
-      return { ...state, status: 'error', error: action.payload };
+      return { ...state, statusGet: 'error', error: action.payload };
 
     case GET_PROGRAM_RESOLVE:
-      return { ...state, status: 'idle' };
+      return { ...state, statusGet: 'idle' };
 
     //=========================
     //Add Program Reducers
     //=========================
     case ADD_PROGRAM_START:
-      return { ...state, status: 'pending' };
+      return { ...state, statusAdd: 'pending' };
 
     case ADD_PROGRAM_SUCCESS:
-      return state;
+      return { ...state, statusAdd: 'success' };
 
     case ADD_PROGRAM_FAIL:
-      return { ...state, status: 'error', error: action.payload };
+      return { ...state, statusAdd: 'error', error: action.payload };
 
     case ADD_PROGRAM_RESOLVE:
-      return { ...state, status: 'idle' };
+      return { ...state, statusAdd: 'idle' };
 
     //=========================
     //Edit Program Reducers
     //=========================
     case EDIT_PROGRAM_START:
-      return { ...state, status: 'pending' };
+      return { ...state, statusEdit: 'pending' };
 
     case EDIT_PROGRAM_SUCCESS:
-      return state;
+      return { ...state, statusEdit: 'success' };
 
     case EDIT_PROGRAM_FAIL:
-      return { ...state, status: 'error', error: action.payload };
+      return { ...state, statusEdit: 'error', error: action.payload };
 
     case EDIT_PROGRAM_RESOLVE:
-      return { ...state, status: 'idle' };
+      return { ...state, statusEdit: 'idle' };
 
     //=========================
     //Delete Program Reducers
     //=========================
     case DELETE_PROGRAM_START:
-      return { ...state, status: 'pending' };
+      return { ...state, statusDelete: 'pending' };
 
     case DELETE_PROGRAM_SUCCESS:
-      return state;
+      return { ...state, statusDelete: 'success' };
 
     case DELETE_PROGRAM_FAIL:
-      return { ...state, status: 'error', error: action.payload };
+      return { ...state, statusDelete: 'error', error: action.payload };
 
     case DELETE_PROGRAM_RESOLVE:
-      return { ...state, status: 'idle' };
+      return { ...state, statusDelete: 'idle' };
 
     //=========================
     //Default Case

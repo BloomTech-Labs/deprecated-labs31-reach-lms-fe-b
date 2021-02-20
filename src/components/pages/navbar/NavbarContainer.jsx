@@ -1,15 +1,13 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Layout, Menu } from 'antd';
 import {
   HomeOutlined,
   LogoutOutlined,
   SettingOutlined,
   FormOutlined,
-  EditOutlined,
 } from '@ant-design/icons';
 import {
   CREATE_PROGRAM_PATH,
-  EDIT_PROGRAM_PATH,
   SETTINGS_PATH,
   CREATE_COURSE_PATH,
 } from '../../../routes';
@@ -67,13 +65,6 @@ const NavBar = ({ logout, ...restProps }) => {
           icon={<FormOutlined />}
         >
           Create a Program
-        </MenuItem>
-        <MenuItem
-          key={EDIT_PROGRAM_PATH}
-          to={EDIT_PROGRAM_PATH}
-          icon={<EditOutlined />}
-        >
-          Modify Program
         </MenuItem>
         <MenuItem
           key={CREATE_COURSE_PATH}

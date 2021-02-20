@@ -132,11 +132,13 @@ const coursesReducer = (state = coursesInitialState, action) => {
     case GET_COURSE_SUCCESS:
       return {
         ...state,
-        courseName: action.payload.courseName,
-        courseCode: action.payload.courseCode,
-        courseDescription: action.payload.courseDescription,
-        program: action.payload.program,
-        modules: action.payload.modules,
+        course: action.payload,
+        status: 'success',
+        // courseName: action.payload.courseName,
+        // courseCode: action.payload.courseCode,
+        // courseDescription: action.payload.courseDescription,
+        // program: action.payload.program,
+        // modules: action.payload.modules,
       };
     case GET_COURSE_FAIL:
       return { ...state, status: 'error', error: action.payload };
