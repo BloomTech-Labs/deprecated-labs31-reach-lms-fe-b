@@ -2,18 +2,23 @@ import React, { useState, useEffect } from 'react';
 import { Modal, Form, Input, Space, Select, Button } from 'antd';
 
 import { CourseForm, CourseCard } from '../course-form';
-import { useParams } from 'react-router-dom';
+import { useParams, useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { programsActions } from '../../../state/ducks/programsDuck';
 import { userActions } from '../../../state/ducks/userDuck';
 
 export default props => {
+  const history = useHistory();
+
   /** The id of the program. Undefined if adding new program */
   const { id } = useParams();
   const dispatch = useDispatch();
   /** if ID is defined, we'll populate this form with the
    * contents of `program` as soon as `status === "success"` */
-  const { program, status } = useSelector(state => state.programs);
+  const { program, statusGet, statusEdit } = useSelector(
+    state => state.programs
+  );
+
   /** The id of the current user (will be used for POST or PUT to verify admin user) */
   const userid = useSelector(state => state.user?.user?.userid);
   /** AntD reusable form hook */
@@ -36,11 +41,15 @@ export default props => {
   useEffect(() => {
     // if the status taken from state.program.status is "success",
     // we know that the `getProgramThunk` successfully got a program
-    if (status === 'success') {
+    if (statusGet === 'success') {
       // so we can set our form's values to match the program
       form.setFieldsValue({ ...program });
     }
-  }, [status, form, program]);
+
+    if (statusEdit === 'success') {
+      history.push('/');
+    }
+  }, [statusGet, statusEdit, form, program]);
 
   // just helper functions to show and hide the COURSE FORM modal
   const showCourseModal = () => setModalVisible(true);
