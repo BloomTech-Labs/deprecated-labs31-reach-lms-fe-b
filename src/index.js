@@ -11,6 +11,7 @@ import { Provider } from 'react-redux';
 import { store } from './state/index';
 
 import 'antd/dist/antd.less';
+import './styles/ant-override.css';
 
 import { config } from './utils/oktaConfig';
 import { LoadingComponent } from './components/common';
