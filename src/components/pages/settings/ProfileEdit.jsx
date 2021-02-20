@@ -26,11 +26,7 @@ export default props => {
 
   const onFinish = values => {
     const { userid } = user;
-    if (userid) {
-      dispatch(userActions.updateUserThunk(userid, values));
-    } else {
-      console.error("FUCK, there's been a problem");
-    }
+    dispatch(userActions.updateUserThunk(userid, values));
   };
 
   return (
