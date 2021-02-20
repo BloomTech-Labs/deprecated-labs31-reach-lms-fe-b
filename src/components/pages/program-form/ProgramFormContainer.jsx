@@ -8,14 +8,14 @@ import { programsActions } from '../../../state/ducks/programsDuck';
 import { userActions } from '../../../state/ducks/userDuck';
 
 export default props => {
-  const history = useHistory();
+  const { push } = useHistory();
 
   /** The id of the program. Undefined if adding new program */
   const { id } = useParams();
   const dispatch = useDispatch();
   /** if ID is defined, we'll populate this form with the
    * contents of `program` as soon as `status === "success"` */
-  const { program, statusGet, statusEdit } = useSelector(
+  const { program, statusAdd, statusGet, statusEdit } = useSelector(
     state => state.programs
   );
 
@@ -46,10 +46,10 @@ export default props => {
       form.setFieldsValue({ ...program });
     }
 
-    if (statusEdit === 'success') {
-      history.push('/');
+    if (statusEdit === 'success' || statusAdd === 'success') {
+      push('/');
     }
-  }, [statusGet, statusEdit, form, program]);
+  }, [statusGet, statusEdit, statusAdd, form, program, push]);
 
   // just helper functions to show and hide the COURSE FORM modal
   const showCourseModal = () => setModalVisible(true);
