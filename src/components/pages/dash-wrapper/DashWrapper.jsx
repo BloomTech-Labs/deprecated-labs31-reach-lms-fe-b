@@ -2,7 +2,7 @@ import React from 'react';
 import { Layout } from 'antd';
 import { NavBar } from '../navbar';
 import styled from 'styled-components';
-import logo from '../login/RlmsLogo.png';
+import logo from '../login/Reach.png';
 
 const StyledHeader = styled(Layout.Header)`
   display: flex;

@@ -19,7 +19,7 @@ const LoginContainer = () => {
       },
       features: { registration: false },
       // turning this feature on allows your widget to use Okta for user registration
-      logo: '/RlmsLogo.png',
+      logo: '/Reach.png',
       // add your custom logo to your signing/register widget here.
       i18n: {
         en: {
