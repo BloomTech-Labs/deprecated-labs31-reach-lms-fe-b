@@ -12,6 +12,11 @@ const StyledHeader = styled(Layout.Header)`
   background-color: white;
 `;
 
+const LocationInfo = styled.div`
+  margin-left: 24px;
+  background-color: white;
+`;
+
 export default ({ children, authService, ...restProps }) => {
   const { Content, Footer } = Layout;
   const { pathname } = useLocation();
@@ -24,7 +29,7 @@ export default ({ children, authService, ...restProps }) => {
         style={{ padding: 0 }}
       >
         <img src={logo} alt="logo" />
-        <div>
+        <LocationInfo>
           {
             {
               '/': <h1>{role}: Dashboard</h1>,
@@ -33,7 +38,7 @@ export default ({ children, authService, ...restProps }) => {
               '/settings': <h1>{role}: Settings</h1>,
             }[pathname]
           }
-        </div>
+        </LocationInfo>
       </StyledHeader>
 
       <Layout>
