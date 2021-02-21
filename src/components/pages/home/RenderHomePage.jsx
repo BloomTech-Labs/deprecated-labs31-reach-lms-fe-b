@@ -23,14 +23,8 @@ function RenderHomePage(props) {
   return (
     <DashboardContainer>
       <DashWrapper authService={authService}>
-        {/*Main Content Area*/}
-        <header>
-          <h1>Dashboard</h1>
-          {/* <pre>{userInfo}</pre> */}
-          <pre>Role — Student, Teacher, Admin</pre>
-        </header>
         <Content style={{ margin: '24px 16px 0' }}>
-          {/* HEADER TO TALK ABOUT WHERE YOU ARE */}
+          {/*Main Content Area*/}
           <DashboardView />
         </Content>
       </DashWrapper>
