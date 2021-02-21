@@ -77,6 +77,8 @@ const userReducer = (state = userInitialState, action) => {
     case LOGIN_START:
       return { ...state, statusGet: 'pending' };
     case LOGIN_SUCCESS:
+      console.log(action);
+
       return {
         // this needs to be refactored for consistency — let's wait till Shane updates backend tho
         ...state,

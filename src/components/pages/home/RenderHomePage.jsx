@@ -6,10 +6,6 @@ import { useDispatch } from 'react-redux';
 import { userActions } from '../../../state/ducks/userDuck';
 import styled from 'styled-components';
 
-const DashboardContainer = styled.div`
-  margin: 0 24px;
-`;
-
 /* cSpell:disable */
 function RenderHomePage(props) {
   const { authService } = props;
@@ -21,14 +17,10 @@ function RenderHomePage(props) {
   }, [dispatch]);
 
   return (
-    <DashboardContainer>
-      <DashWrapper authService={authService}>
-        <Content style={{ margin: '24px 16px 0' }}>
-          {/*Main Content Area*/}
-          <DashboardView />
-        </Content>
-      </DashWrapper>
-    </DashboardContainer>
+    <DashWrapper authService={authService}>
+      {/*Main Content Area*/}
+      <DashboardView />
+    </DashWrapper>
   );
 }
 export default RenderHomePage;
