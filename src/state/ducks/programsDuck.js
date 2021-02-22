@@ -40,7 +40,7 @@ export const programsActions = {
     dispatch({ type: GET_ALLPROGRAMS_START });
 
     axiosAuth()
-      .get('/programs/programs')
+      .get('/users/getuserprograms')
       .then(res => {
         dispatch({ type: GET_ALLPROGRAMS_SUCCESS, payload: res.data });
       })
