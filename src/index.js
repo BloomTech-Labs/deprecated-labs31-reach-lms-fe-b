@@ -6,14 +6,10 @@ import {
   useHistory,
   Switch,
 } from 'react-router-dom';
+import { config } from './utils/oktaConfig';
 import { Security, LoginCallback, SecureRoute } from '@okta/okta-react';
 import { Provider } from 'react-redux';
 import { store } from './state/index';
-
-import 'antd/dist/antd.less';
-import './styles/ant-override.css';
-
-import { config } from './utils/oktaConfig';
 import { LoadingComponent } from './components/common';
 import {
   CourseForm,
@@ -44,11 +40,15 @@ import {
   EDIT_MODULE_PATH,
   EDIT_PROFILE_PATH,
 } from './routes/';
+import 'antd/dist/antd.less';
+import './styles/ant-override.css';
+import GlobalStyle from './styles/globalStyles';
 
 ReactDOM.render(
   <Router>
     <React.StrictMode>
       <Provider store={store}>
+        <GlobalStyle />
         <App />
       </Provider>
     </React.StrictMode>
