@@ -18,6 +18,11 @@ const ADD_PROGRAM_SUCCESS = 'ADD_PROGRAM_SUCCESS';
 const ADD_PROGRAM_FAIL = 'ADD_PROGRAM_FAIL';
 const ADD_PROGRAM_RESOLVE = 'ADD_PROGRAM_RESOLVE';
 
+const GET_PROGRAM_COURSES_START = ' GET_PROGRAM_COURSES_START';
+const GET_PROGRAM_COURSES_SUCCESS = ' GET_PROGRAM_COURSES_SUCCESS';
+const GET_PROGRAM_COURSES_FAIL = ' GET_PROGRAM_COURSES_FAIL';
+const GET_PROGRAM_COURSES_RESOLVE = ' GET_PROGRAM_COURSES_RESOLVE';
+
 const EDIT_PROGRAM_START = 'EDIT_PROGRAM_START';
 const EDIT_PROGRAM_SUCCESS = 'EDIT_PROGRAM_SUCCESS';
 const EDIT_PROGRAM_FAIL = 'EDIT_PROGRAM_FAIL';
@@ -40,7 +45,7 @@ export const programsActions = {
     dispatch({ type: GET_ALLPROGRAMS_START });
 
     axiosAuth()
-      .get('/programs/programs')
+      .get('/users/getuserprograms')
       .then(res => {
         dispatch({ type: GET_ALLPROGRAMS_SUCCESS, payload: res.data });
       })
@@ -68,6 +73,27 @@ export const programsActions = {
       })
       .finally(() => {
         dispatch({ type: GET_PROGRAM_RESOLVE });
+      });
+  },
+
+  //=========================
+  //Get Program Courses Action
+  //=========================
+  getProgramCoursesThunk: programId => dispatch => {
+    dispatch({ type: GET_PROGRAM_COURSES_START });
+
+    axiosAuth()
+      .get(`/programs/program/${programId}/courses`)
+
+      .then(res => {
+        console.log(res);
+        dispatch({ type: GET_PROGRAM_COURSES_SUCCESS, payload: res.data });
+      })
+      .catch(err => {
+        dispatch({ type: GET_PROGRAM_COURSES_FAIL, payload: err.message });
+      })
+      .finally(() => {
+        dispatch({ type: GET_PROGRAM_COURSES_RESOLVE });
       });
   },
 
@@ -193,7 +219,6 @@ const programsReducer = (state = programsInitialState, action) => {
           programName,
           programType,
           programDescription,
-          courses: courses,
         },
         statusGet: 'success',
       };
@@ -202,6 +227,28 @@ const programsReducer = (state = programsInitialState, action) => {
       return { ...state, statusGet: 'error', error: action.payload };
 
     case GET_PROGRAM_RESOLVE:
+      return { ...state, statusGet: 'idle' };
+
+    //================================
+    //Get Program Courses Reducers
+    //================================
+    case GET_PROGRAM_COURSES_START:
+      return { ...state, statusGet: 'pending' };
+
+    case GET_PROGRAM_COURSES_SUCCESS:
+      return {
+        ...state,
+        program: {
+          ...state.program,
+          courses: action.payload,
+        },
+        statusGet: 'success',
+      };
+
+    case GET_PROGRAM_COURSES_FAIL:
+      return { ...state, statusGet: 'error', error: action.payload };
+
+    case GET_PROGRAM_COURSES_RESOLVE:
       return { ...state, statusGet: 'idle' };
 
     //=========================
