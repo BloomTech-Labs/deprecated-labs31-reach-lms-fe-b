@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { Modal, Form, Input, Space, Select, Button } from 'antd';
-
 import { CourseForm, CourseCard } from '../course-form';
 import { useParams, useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
@@ -15,9 +14,14 @@ export default props => {
   const dispatch = useDispatch();
   /** if ID is defined, we'll populate this form with the
    * contents of `program` as soon as `status === "success"` */
-  const { program, statusAdd, statusGet, statusEdit } = useSelector(
-    state => state.programs
-  );
+  const {
+    program, // top level program info
+    programCourses, // all courses associated with this program (if any)
+    statusAdd,
+    statusGet,
+    statusEdit,
+    statusGetCourses,
+  } = useSelector(state => state.programs);
 
   /** The id of the current user (will be used for POST or PUT to verify admin user) */
   const userid = useSelector(state => state.user?.user?.userid);
@@ -25,14 +29,17 @@ export default props => {
   const [form] = Form.useForm();
   /** Determines whether the sub-form modal is visible. Initializes to false */
   const [modalVisible, setModalVisible] = useState(false);
+  const [courseToEdit, setCourseToEdit] = useState(null);
+  const [numberAddedCourses, setNumberAddedCourses] = useState(1);
+  const [courseBeingEdited, setCourseBeingEdited] = useState(null);
 
   useEffect(() => {
     // if id is defined, then we are editing this program
     // in that case, we should populate values with the existing program
     if (id) {
-      dispatch(programsActions.getProgramThunk(id));
+      dispatch(programsActions.getProgramThunk(id)); // get top-level program info
+      dispatch(programsActions.getProgramCoursesThunk(id)); // get courses associated with this program
     }
-
     // no matter what (id or not), we have to get the user's information
     // to POST or PUT by way of an id.
     dispatch(userActions.loginThunk());
@@ -44,6 +51,9 @@ export default props => {
     if (statusGet === 'success') {
       // so we can set our form's values to match the program
       form.setFieldsValue({ ...program });
+    }
+    if (statusGetCourses === 'success') {
+      form.setFieldsValue({ ...program, courses: programCourses });
     }
 
     if (statusEdit === 'success' || statusAdd === 'success') {
@@ -79,11 +89,42 @@ export default props => {
   };
 
   const onCourseAdd = newClass => {
+    console.log('ON COURSE ADD START');
+    console.log({ newClass });
     const existingClasses = form.getFieldValue('courses') || [];
+    newClass = { ...newClass, courseid: -Math.abs(numberAddedCourses) };
+    console.log({ newClass });
     form.setFieldsValue({
       courses: [...existingClasses, newClass],
     });
-    setModalVisible(false);
+    hideCourseModal();
+    setNumberAddedCourses(numberAddedCourses + 1);
+    console.log('ON COURSE ADD FINISH');
+  };
+
+  const onCourseEdit = editedClass => {
+    console.log('ON COURSE EDIT START');
+    const existingCourses = form.getFieldValue('courses') || [];
+    console.log({ editedClass });
+
+    form.setFieldsValue({
+      courses: existingCourses.map(existingCourse => {
+        if (existingCourse.courseid !== courseBeingEdited) {
+          return existingCourse;
+        } else {
+          return { ...editedClass, courseid: courseBeingEdited };
+        }
+      }),
+    });
+
+    console.log('ON COURSE EDIT FINISH');
+    hideCourseModal();
+  };
+
+  const triggerEdit = course => {
+    setCourseToEdit(course);
+    setCourseBeingEdited(course.courseid);
+    showCourseModal();
   };
 
   return (
@@ -130,24 +171,27 @@ export default props => {
         {/* List of Course Cards for Each Course in This Program */}
         <Form.Item name="courses" label="Course List">
           {form.getFieldValue('courses')?.length > 0 ? (
-            form
-              .getFieldValue('courses')
-              .map(
-                (
-                  { coursename, coursedescription, courseid, ...rest },
-                  index
-                ) => (
-                  <li key={index}>
-                    <CourseCard
-                      key={index}
-                      id={courseid}
-                      name={coursename}
-                      description={coursedescription}
-                      {...rest}
-                    />
-                  </li>
-                )
-              )
+            form.getFieldValue('courses').map((course, index) => {
+              const {
+                coursename,
+                coursedescription,
+                courseid,
+                ...rest
+              } = course;
+              return (
+                <li key={index}>
+                  <CourseCard
+                    key={index}
+                    id={courseid}
+                    course={course}
+                    name={coursename}
+                    description={coursedescription}
+                    triggerEdit={triggerEdit}
+                    {...rest}
+                  />
+                </li>
+              );
+            })
           ) : (
             // if no courses in program, display that to user
             <p>No courses yet!</p>
@@ -175,7 +219,16 @@ export default props => {
         visible={modalVisible}
         onCancel={hideCourseModal}
       >
-        <CourseForm isWrapped={true} onSubmit={onCourseAdd} />
+        {courseToEdit ? (
+          <CourseForm
+            isWrapped={true}
+            onSubmit={onCourseEdit}
+            courseId={courseToEdit.courseid}
+            courseToEdit={courseToEdit}
+          />
+        ) : (
+          <CourseForm isWrapped={true} onSubmit={onCourseAdd} />
+        )}
       </Modal>
     </Space>
   );

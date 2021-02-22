@@ -3,17 +3,28 @@ import { Card } from 'antd';
 import { EditOutlined } from '@ant-design/icons';
 import { GhostLink } from '../../common';
 
-export default ({ name, description, id, ...restProps }) => {
+export default ({ course, triggerEdit, ...restProps }) => {
+  const { coursename, courseid, coursedescription } = course;
+  if (triggerEdit) {
+    return (
+      <Card
+        title={coursename}
+        actions={[<EditOutlined onClick={() => triggerEdit(course)} />]}
+      >
+        {coursedescription}
+      </Card>
+    );
+  }
   return (
     <Card
-      title={name}
+      title={coursename}
       actions={[
-        <GhostLink to={`/course/edit/${id}`}>
+        <GhostLink to={`/course/edit/${courseid}`}>
           <EditOutlined />
         </GhostLink>,
       ]}
     >
-      {description}
+      {coursedescription}
     </Card>
   );
 };

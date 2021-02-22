@@ -28,6 +28,11 @@ const DELETE_PROGRAM_SUCCESS = 'DELETE_PROGRAM_SUCCESS';
 const DELETE_PROGRAM_FAIL = 'DELETE_PROGRAM_FAIL';
 const DELETE_PROGRAM_RESOLVE = 'DELETE_PROGRAM_RESOLVE';
 
+const GET_PROGRAM_COURSES_START = 'GET_PROGRAM_COURSES_START';
+const GET_PROGRAM_COURSES_SUCCESS = 'GET_PROGRAM_COURSES_SUCCESS';
+const GET_PROGRAM_COURSES_FAIL = 'GET_PROGRAM_COURSES_FAIL';
+const GET_PROGRAM_COURSES_RESOLVE = 'GET_PROGRAM_COURSES_RESOLVE';
+
 //=========================
 //Action Creators
 //=========================
@@ -127,6 +132,22 @@ export const programsActions = {
         dispatch({ type: DELETE_PROGRAM_RESOLVE });
       });
   },
+
+  //=========================
+  // GET Program Courses
+  //=========================
+  getProgramCoursesThunk: programId => dispatch => {
+    dispatch({ type: GET_PROGRAM_COURSES_START });
+    axiosAuth()
+      .get(`/programs/program/${programId}/courses`)
+      .then(res =>
+        dispatch({ type: GET_PROGRAM_COURSES_FAIL, payload: res.data })
+      )
+      .catch(err =>
+        dispatch({ type: GET_PROGRAM_COURSES_FAIL, payload: err.message })
+      )
+      .finally(() => dispatch({ type: GET_PROGRAM_COURSES_RESOLVE }));
+  },
 };
 
 //=========================
@@ -141,6 +162,8 @@ const programsInitialState = {
     programDescription: '',
     courses: [],
   },
+  programCourses: [],
+  statusGetCourses: 'idle',
   statusGet: 'idle',
   statusAdd: 'idle',
   statusEdit: 'idle',
@@ -248,6 +271,32 @@ const programsReducer = (state = programsInitialState, action) => {
 
     case DELETE_PROGRAM_RESOLVE:
       return { ...state, statusDelete: 'idle' };
+
+    //=========================
+    // GET Program Courses Reducers
+    //=========================
+    case GET_PROGRAM_COURSES_START:
+      return {
+        ...state,
+        statusGetCourses: 'pending',
+      };
+    case GET_PROGRAM_COURSES_SUCCESS:
+      return {
+        ...state,
+        statusGetCourses: 'success',
+        programCourses: action.payload,
+      };
+    case GET_PROGRAM_COURSES_FAIL:
+      return {
+        ...state,
+        statusGetCourses: 'fail',
+        error: action.payload,
+      };
+    case GET_PROGRAM_COURSES_RESOLVE:
+      return {
+        ...state,
+        statusGetCourses: 'idle',
+      };
 
     //=========================
     //Default Case
