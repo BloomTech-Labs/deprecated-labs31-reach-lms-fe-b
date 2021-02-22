@@ -36,6 +36,7 @@ const ProgramViewContainer = props => {
   //Dispatch Action to Load Program Info
   useEffect(() => {
     dispatch(programsActions.getProgramThunk(id));
+    dispatch(programsActions.getProgramCoursesThunk(id));
   }, [id, dispatch]);
 
   return (
@@ -59,15 +60,15 @@ const ProgramViewContainer = props => {
       {/*Render Course Components Section*/}
       <Container>
         <h4>Courses</h4>
-
-        {courses.map(courseData => (
-          <CourseView
-            key={courseData.courseid}
-            courseName={courseData.coursename}
-            courseDescription={courseData.coursedescription}
-            modules={courseData.modules}
-          />
-        ))}
+        {[] &&
+          courses.map(courseData => (
+            <CourseView
+              key={courseData.courseid}
+              courseName={courseData.coursename}
+              courseDescription={courseData.coursedescription}
+              courseid={courseData.courseid}
+            />
+          ))}
       </Container>
     </ProgramWrapper>
   );
