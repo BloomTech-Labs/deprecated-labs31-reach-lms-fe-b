@@ -1,6 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Card } from 'antd';
 import { ModuleView } from '../';
+import { useDispatch, useSelector } from 'react-redux';
+import { coursesActions } from '../../../state/ducks/coursesDuck';
+
 import styled from 'styled-components';
 
 //Component Styles
@@ -16,7 +19,17 @@ const CourseViewContainer = props => {
   const [isExpanded, setIsExpanded] = useState(false);
 
   //Props passed from ProgramView Component
-  const { courseName, courseDescription, modules } = props;
+  const { courseName, courseDescription, courseid } = props;
+
+  //Redux State Managers
+  const dispatch = useDispatch();
+
+  const { modules } = useSelector(state => state.courses.course);
+
+  //Dispatch Action to Load Program Info
+  useEffect(() => {
+    dispatch(coursesActions.getCourseModulesThunk(courseid));
+  }, [courseid, dispatch]);
 
   return (
     <>
