@@ -15,7 +15,7 @@ const StyledSpace = styled(Space)`
 // CourseFormContainer — No specific parent, props isn't coming down quite yet
 export default ({ isWrapped, onSubmit, courseId, courseToEdit }) => {
   let { id } = useParams();
-  if (courseId && isWrapped) {
+  if (isWrapped) {
     id = courseId;
   }
   const { course, status } = useSelector(state => state.courses);
@@ -27,7 +27,6 @@ export default ({ isWrapped, onSubmit, courseId, courseToEdit }) => {
     if (id) {
       dispatch(coursesActions.getCourseThunk(id));
     }
-    console.log({ id });
   }, [id, dispatch, isWrapped]);
 
   useEffect(() => {
@@ -42,10 +41,10 @@ export default ({ isWrapped, onSubmit, courseId, courseToEdit }) => {
   const hideModuleModal = () => setModalVisible(false);
 
   const onFinish = values => {
-    if (isWrapped) {
-      onSubmit(form.getFieldsValue());
-    } else if (id) {
+    if (id) {
       dispatch(coursesActions.editCourseThunk({ ...values, courseid: id }));
+    } else if (isWrapped) {
+      onSubmit({ ...form.getFieldsValue(), courseid: courseId });
     } else {
       dispatch(coursesActions.addCourseThunk(values));
     }
