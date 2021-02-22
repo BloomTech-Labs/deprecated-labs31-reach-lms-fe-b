@@ -34,7 +34,6 @@ export default props => {
   /** Determines whether the sub-form modal is visible. Initializes to false */
   const [modalVisible, setModalVisible] = useState(false);
   const [courseToEdit, setCourseToEdit] = useState(null);
-  const [courseBeingEdited, setCourseBeingEdited] = useState(null);
 
   useEffect(() => {
     // if id is defined, then we are editing this program
@@ -47,11 +46,13 @@ export default props => {
 
   useEffect(() => {
     if (statusGet === 'success') {
-      form.setFieldsValue({ ...form.getFieldsValue(), ...program });
+      form.setFieldsValue({
+        ...form.getFieldsValue(),
+        ...program,
+      });
     }
     if (statusGetCourses === 'success') {
       form.setFieldsValue({
-        ...program,
         ...form.getFieldsValue(),
         courses: programCourses,
       });
@@ -120,10 +121,7 @@ export default props => {
         if (existingCourse.courseid !== editedClass.courseid) {
           return existingCourse;
         } else {
-          return {
-            ...editedClass,
-            courseid: courseBeingEdited,
-          };
+          return editedClass;
         }
       }),
     });
@@ -133,7 +131,6 @@ export default props => {
 
   const triggerEdit = course => {
     setCourseToEdit(course);
-    setCourseBeingEdited(course.courseid);
     showCourseModal();
   };
 
