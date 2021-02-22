@@ -29,9 +29,10 @@ const ProgramViewContainer = props => {
   //Redux State Managers
   const dispatch = useDispatch();
 
-  const { programName, programDescription, programType, courses } = useSelector(
+  const { programName, programDescription, programType } = useSelector(
     state => state.programs.program
   );
+  const courses = useSelector(state => state.programs.programCourses);
 
   //Dispatch Action to Load Program Info
   useEffect(() => {

@@ -247,28 +247,6 @@ const programsReducer = (state = programsInitialState, action) => {
     case GET_PROGRAM_RESOLVE:
       return { ...state, statusGet: 'idle' };
 
-    //================================
-    //Get Program Courses Reducers
-    //================================
-    case GET_PROGRAM_COURSES_START:
-      return { ...state, statusGet: 'pending' };
-
-    case GET_PROGRAM_COURSES_SUCCESS:
-      return {
-        ...state,
-        program: {
-          ...state.program,
-          courses: action.payload,
-        },
-        statusGet: 'success',
-      };
-
-    case GET_PROGRAM_COURSES_FAIL:
-      return { ...state, statusGet: 'error', error: action.payload };
-
-    case GET_PROGRAM_COURSES_RESOLVE:
-      return { ...state, statusGet: 'idle' };
-
     //=========================
     //Add Program Reducers
     //=========================
