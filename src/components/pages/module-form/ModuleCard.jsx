@@ -3,17 +3,17 @@ import { Card } from 'antd';
 import { GhostLink } from '../../common';
 import { EditOutlined } from '@ant-design/icons';
 
-export default ({ modulename, moduledescription, moduleid, modulecontent }) => {
+export default ({ moduleName, moduleDescription, moduleId, moduleContent }) => {
   return (
     <Card
-      title={modulename}
+      title={moduleName}
       actions={[
-        <GhostLink to={`/module/edit/${moduleid}`}>
+        <GhostLink to={`/module/edit/${moduleId}`}>
           <EditOutlined />
         </GhostLink>,
       ]}
     >
-      {moduledescription}
+      {moduleDescription}
     </Card>
   );
 };

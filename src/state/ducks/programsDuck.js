@@ -141,7 +141,7 @@ export const programsActions = {
     axiosAuth()
       .get(`/programs/program/${programId}/courses`)
       .then(res =>
-        dispatch({ type: GET_PROGRAM_COURSES_FAIL, payload: res.data })
+        dispatch({ type: GET_PROGRAM_COURSES_SUCCESS, payload: res.data })
       )
       .catch(err =>
         dispatch({ type: GET_PROGRAM_COURSES_FAIL, payload: err.message })

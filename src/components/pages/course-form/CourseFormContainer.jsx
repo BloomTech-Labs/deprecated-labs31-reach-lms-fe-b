@@ -24,9 +24,10 @@ export default ({ isWrapped, onSubmit, courseId, courseToEdit }) => {
   const [modalVisible, setModalVisible] = useState(false);
 
   useEffect(() => {
-    if (id && !isWrapped) {
+    if (id) {
       dispatch(coursesActions.getCourseThunk(id));
     }
+    console.log({ id });
   }, [id, dispatch, isWrapped]);
 
   useEffect(() => {

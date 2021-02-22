@@ -4,7 +4,13 @@ import { CourseForm, CourseCard } from '../course-form';
 import { useParams, useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { programsActions } from '../../../state/ducks/programsDuck';
-import { userActions } from '../../../state/ducks/userDuck';
+
+const {
+  getProgramThunk,
+  getProgramCoursesThunk,
+  editProgramThunk,
+  addProgramThunk,
+} = programsActions;
 
 export default props => {
   const { push } = useHistory();
@@ -23,43 +29,47 @@ export default props => {
     statusGetCourses,
   } = useSelector(state => state.programs);
 
-  /** The id of the current user (will be used for POST or PUT to verify admin user) */
-  const userid = useSelector(state => state.user?.user?.userid);
   /** AntD reusable form hook */
   const [form] = Form.useForm();
   /** Determines whether the sub-form modal is visible. Initializes to false */
   const [modalVisible, setModalVisible] = useState(false);
   const [courseToEdit, setCourseToEdit] = useState(null);
-  const [numberAddedCourses, setNumberAddedCourses] = useState(1);
   const [courseBeingEdited, setCourseBeingEdited] = useState(null);
 
   useEffect(() => {
     // if id is defined, then we are editing this program
     // in that case, we should populate values with the existing program
     if (id) {
-      dispatch(programsActions.getProgramThunk(id)); // get top-level program info
-      dispatch(programsActions.getProgramCoursesThunk(id)); // get courses associated with this program
+      dispatch(getProgramThunk(id)); // get top-level program info
+      dispatch(getProgramCoursesThunk(id)); // get courses associated with this program
     }
-    // no matter what (id or not), we have to get the user's information
-    // to POST or PUT by way of an id.
-    dispatch(userActions.loginThunk());
-  }, [id, dispatch]);
+  }, [id, dispatch, form]);
 
   useEffect(() => {
-    // if the status taken from state.program.status is "success",
-    // we know that the `getProgramThunk` successfully got a program
     if (statusGet === 'success') {
-      // so we can set our form's values to match the program
-      form.setFieldsValue({ ...program });
+      form.setFieldsValue({ ...form.getFieldsValue(), ...program });
     }
     if (statusGetCourses === 'success') {
-      form.setFieldsValue({ ...program, courses: programCourses });
+      form.setFieldsValue({
+        ...program,
+        ...form.getFieldsValue(),
+        courses: programCourses,
+      });
     }
-
     if (statusEdit === 'success' || statusAdd === 'success') {
+      form.resetFields();
       push('/');
     }
-  }, [statusGet, statusEdit, statusAdd, form, program, push]);
+  }, [
+    statusGet,
+    statusGetCourses,
+    statusEdit,
+    statusAdd,
+    programCourses,
+    form,
+    program,
+    push,
+  ]);
 
   // just helper functions to show and hide the COURSE FORM modal
   const showCourseModal = () => setModalVisible(true);
@@ -73,51 +83,45 @@ export default props => {
         programId: id, // the id of the program to update!
         students: program.students || [], // stretch: could implement adding students
         teachers: program.teachers || [], // stretch: could implement adding teachers
-        admin: { userid }, // this is currently required by backend to make sure user is admin
       };
-      dispatch(programsActions.editProgramThunk(validEditedProgram));
+      dispatch(editProgramThunk(validEditedProgram));
     } else {
       // else we must just be creating a new program
       const validProgram = {
         ...values,
         students: [], // stretch: could implement adding students
         teachers: [], // stretch: could implement adding students
-        admin: { userid }, // this is currently required by backend to make sure user is admin
       };
-      dispatch(programsActions.addProgramThunk(validProgram));
+      dispatch(addProgramThunk(validProgram));
     }
   };
 
   const onCourseAdd = newClass => {
-    console.log('ON COURSE ADD START');
-    console.log({ newClass });
     const existingClasses = form.getFieldValue('courses') || [];
-    newClass = { ...newClass, courseid: -Math.abs(numberAddedCourses) };
-    console.log({ newClass });
+
     form.setFieldsValue({
       courses: [...existingClasses, newClass],
     });
+
     hideCourseModal();
-    setNumberAddedCourses(numberAddedCourses + 1);
-    console.log('ON COURSE ADD FINISH');
   };
 
   const onCourseEdit = editedClass => {
-    console.log('ON COURSE EDIT START');
     const existingCourses = form.getFieldValue('courses') || [];
-    console.log({ editedClass });
 
     form.setFieldsValue({
       courses: existingCourses.map(existingCourse => {
         if (existingCourse.courseid !== courseBeingEdited) {
           return existingCourse;
         } else {
-          return { ...editedClass, courseid: courseBeingEdited };
+          return {
+            ...editedClass,
+            courseid: courseBeingEdited,
+          };
         }
       }),
     });
 
-    console.log('ON COURSE EDIT FINISH');
     hideCourseModal();
   };
 
