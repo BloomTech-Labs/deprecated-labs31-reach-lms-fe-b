@@ -84,7 +84,9 @@ export const programsActions = {
 
     axiosAuth()
       .get(`/programs/program/${programId}/courses`)
+
       .then(res => {
+        console.log(res);
         dispatch({ type: GET_PROGRAM_COURSES_SUCCESS, payload: res.data });
       })
       .catch(err => {
@@ -237,6 +239,7 @@ const programsReducer = (state = programsInitialState, action) => {
       return {
         ...state,
         program: {
+          ...state.program,
           courses: action.payload,
         },
         statusGet: 'success',

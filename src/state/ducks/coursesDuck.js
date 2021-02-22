@@ -63,7 +63,6 @@ export const coursesActions = {
 
   getCourseModulesThunk: id => dispatch => {
     dispatch({ type: GET_COURSE_START });
-    console.log('HI');
     axiosAuth()
       .get(`/courses/course/${id}/modules`)
       .then(res => {
@@ -170,9 +169,13 @@ const coursesReducer = (state = coursesInitialState, action) => {
     case GET_COURSE_MODULES_START:
       return { ...state, status: 'pending' };
     case GET_COURSE_MODULES_SUCCESS:
+      console.log('HEREERERE', action.payload);
       return {
         ...state,
-        modules: action.payload,
+        course: {
+          ...state.course,
+          modules: action.payload,
+        },
         status: 'success',
       };
     case GET_COURSE_MODULES_FAIL:

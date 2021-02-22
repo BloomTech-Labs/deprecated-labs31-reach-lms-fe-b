@@ -60,14 +60,15 @@ const ProgramViewContainer = props => {
       {/*Render Course Components Section*/}
       <Container>
         <h4>Courses</h4>
-        {courses.map(courseData => (
-          <CourseView
-            key={courseData.courseid}
-            courseName={courseData.coursename}
-            courseDescription={courseData.coursedescription}
-            courseid={courseData.courseid}
-          />
-        ))}
+        {[] &&
+          courses.map(courseData => (
+            <CourseView
+              key={courseData.courseid}
+              courseName={courseData.coursename}
+              courseDescription={courseData.coursedescription}
+              courseid={courseData.courseid}
+            />
+          ))}
       </Container>
     </ProgramWrapper>
   );
