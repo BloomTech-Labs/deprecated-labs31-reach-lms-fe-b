@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react';
 import { DashWrapper } from '../dash-wrapper';
-import { Layout } from 'antd';
 import { DashboardView } from '../dashboard-view';
 import { useDispatch } from 'react-redux';
 import { userActions } from '../../../state/ducks/userDuck';

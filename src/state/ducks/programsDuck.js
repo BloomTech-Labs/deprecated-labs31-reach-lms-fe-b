@@ -13,15 +13,15 @@ const GET_ALLPROGRAMS_SUCCESS = 'GET_ALLPROGRAMS_SUCCESS';
 const GET_ALLPROGRAMS_FAIL = 'GET_ALLPROGRAMS_FAIL';
 const GET_ALLPROGRAMS_RESOLVE = 'GET_ALLPROGRAMS_RESOLVE';
 
+const GET_PROGRAM_COURSES_START = 'GET_PROGRAM_COURSES_START';
+const GET_PROGRAM_COURSES_SUCCESS = 'GET_PROGRAM_COURSES_SUCCESS';
+const GET_PROGRAM_COURSES_FAIL = 'GET_PROGRAM_COURSES_FAIL';
+const GET_PROGRAM_COURSES_RESOLVE = 'GET_PROGRAM_COURSES_RESOLVE';
+
 const ADD_PROGRAM_START = 'ADD_PROGRAM_START';
 const ADD_PROGRAM_SUCCESS = 'ADD_PROGRAM_SUCCESS';
 const ADD_PROGRAM_FAIL = 'ADD_PROGRAM_FAIL';
 const ADD_PROGRAM_RESOLVE = 'ADD_PROGRAM_RESOLVE';
-
-const GET_PROGRAM_COURSES_START = ' GET_PROGRAM_COURSES_START';
-const GET_PROGRAM_COURSES_SUCCESS = ' GET_PROGRAM_COURSES_SUCCESS';
-const GET_PROGRAM_COURSES_FAIL = ' GET_PROGRAM_COURSES_FAIL';
-const GET_PROGRAM_COURSES_RESOLVE = ' GET_PROGRAM_COURSES_RESOLVE';
 
 const EDIT_PROGRAM_START = 'EDIT_PROGRAM_START';
 const EDIT_PROGRAM_SUCCESS = 'EDIT_PROGRAM_SUCCESS';
@@ -76,26 +76,26 @@ export const programsActions = {
       });
   },
 
-  //=========================
-  //Get Program Courses Action
-  //=========================
-  getProgramCoursesThunk: programId => dispatch => {
-    dispatch({ type: GET_PROGRAM_COURSES_START });
+  // //=========================
+  // //Get Program Courses Action
+  // //=========================
+  // getProgramCoursesThunk: programId => dispatch => {
+  //   dispatch({ type: GET_PROGRAM_COURSES_START });
 
-    axiosAuth()
-      .get(`/programs/program/${programId}/courses`)
+  //   axiosAuth()
+  //     .get(`/programs/program/${programId}/courses`)
 
-      .then(res => {
-        console.log(res);
-        dispatch({ type: GET_PROGRAM_COURSES_SUCCESS, payload: res.data });
-      })
-      .catch(err => {
-        dispatch({ type: GET_PROGRAM_COURSES_FAIL, payload: err.message });
-      })
-      .finally(() => {
-        dispatch({ type: GET_PROGRAM_COURSES_RESOLVE });
-      });
-  },
+  //     .then(res => {
+  //       console.log(res);
+  //       dispatch({ type: GET_PROGRAM_COURSES_SUCCESS, payload: res.data });
+  //     })
+  //     .catch(err => {
+  //       dispatch({ type: GET_PROGRAM_COURSES_FAIL, payload: err.message });
+  //     })
+  //     .finally(() => {
+  //       dispatch({ type: GET_PROGRAM_COURSES_RESOLVE });
+  //     });
+  // },
 
   //=========================
   //Add Program Action
@@ -153,6 +153,22 @@ export const programsActions = {
         dispatch({ type: DELETE_PROGRAM_RESOLVE });
       });
   },
+
+  //=========================
+  // GET Program Courses
+  //=========================
+  getProgramCoursesThunk: programId => dispatch => {
+    dispatch({ type: GET_PROGRAM_COURSES_START });
+    axiosAuth()
+      .get(`/programs/program/${programId}/courses`)
+      .then(res =>
+        dispatch({ type: GET_PROGRAM_COURSES_SUCCESS, payload: res.data })
+      )
+      .catch(err =>
+        dispatch({ type: GET_PROGRAM_COURSES_FAIL, payload: err.message })
+      )
+      .finally(() => dispatch({ type: GET_PROGRAM_COURSES_RESOLVE }));
+  },
 };
 
 //=========================
@@ -167,6 +183,8 @@ const programsInitialState = {
     programDescription: '',
     courses: [],
   },
+  programCourses: [],
+  statusGetCourses: 'idle',
   statusGet: 'idle',
   statusAdd: 'idle',
   statusEdit: 'idle',
@@ -229,28 +247,6 @@ const programsReducer = (state = programsInitialState, action) => {
     case GET_PROGRAM_RESOLVE:
       return { ...state, statusGet: 'idle' };
 
-    //================================
-    //Get Program Courses Reducers
-    //================================
-    case GET_PROGRAM_COURSES_START:
-      return { ...state, statusGet: 'pending' };
-
-    case GET_PROGRAM_COURSES_SUCCESS:
-      return {
-        ...state,
-        program: {
-          ...state.program,
-          courses: action.payload,
-        },
-        statusGet: 'success',
-      };
-
-    case GET_PROGRAM_COURSES_FAIL:
-      return { ...state, statusGet: 'error', error: action.payload };
-
-    case GET_PROGRAM_COURSES_RESOLVE:
-      return { ...state, statusGet: 'idle' };
-
     //=========================
     //Add Program Reducers
     //=========================
@@ -295,6 +291,32 @@ const programsReducer = (state = programsInitialState, action) => {
 
     case DELETE_PROGRAM_RESOLVE:
       return { ...state, statusDelete: 'idle' };
+
+    //=========================
+    // GET Program Courses Reducers
+    //=========================
+    case GET_PROGRAM_COURSES_START:
+      return {
+        ...state,
+        statusGetCourses: 'pending',
+      };
+    case GET_PROGRAM_COURSES_SUCCESS:
+      return {
+        ...state,
+        statusGetCourses: 'success',
+        programCourses: action.payload,
+      };
+    case GET_PROGRAM_COURSES_FAIL:
+      return {
+        ...state,
+        statusGetCourses: 'fail',
+        error: action.payload,
+      };
+    case GET_PROGRAM_COURSES_RESOLVE:
+      return {
+        ...state,
+        statusGetCourses: 'idle',
+      };
 
     //=========================
     //Default Case

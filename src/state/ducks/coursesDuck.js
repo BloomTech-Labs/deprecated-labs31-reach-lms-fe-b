@@ -66,7 +66,6 @@ export const coursesActions = {
     axiosAuth()
       .get(`/courses/course/${id}/modules`)
       .then(res => {
-        console.log(res);
         dispatch({ type: GET_COURSE_SUCCESS, payload: res.data });
       })
       .catch(err => {
@@ -95,7 +94,7 @@ export const coursesActions = {
   editCourseThunk: course => dispatch => {
     dispatch({ type: EDIT_COURSE_START });
     axiosAuth()
-      .put(`/courses/course/${course.courseid}`, course)
+      .patch(`/courses/course/${course.courseid}`, course)
       .then(res => {
         dispatch({ type: EDIT_COURSE_SUCCESS, payload: res.data });
       })
@@ -132,8 +131,6 @@ const coursesInitialState = {
     courseCode: '',
     courseDescription: '',
     program: {},
-    modules: [],
-    // users: [],
   },
 };
 
@@ -155,11 +152,6 @@ const coursesReducer = (state = coursesInitialState, action) => {
         ...state,
         course: action.payload,
         status: 'success',
-        // courseName: action.payload.courseName,
-        // courseCode: action.payload.courseCode,
-        // courseDescription: action.payload.courseDescription,
-        // program: action.payload.program,
-        // modules: action.payload.modules,
       };
     case GET_COURSE_FAIL:
       return { ...state, status: 'error', error: action.payload };
@@ -169,7 +161,6 @@ const coursesReducer = (state = coursesInitialState, action) => {
     case GET_COURSE_MODULES_START:
       return { ...state, status: 'pending' };
     case GET_COURSE_MODULES_SUCCESS:
-      console.log('HEREERERE', action.payload);
       return {
         ...state,
         course: {
@@ -195,7 +186,7 @@ const coursesReducer = (state = coursesInitialState, action) => {
     case EDIT_COURSE_START:
       return { ...state, status: 'pending' };
     case EDIT_COURSE_SUCCESS:
-      return { ...state, courses: action.payload };
+      return { ...state, status: 'success' };
     case EDIT_COURSE_FAIL:
       return { ...state, status: 'error', error: action.payload };
     case EDIT_COURSE_RESOLVE:
