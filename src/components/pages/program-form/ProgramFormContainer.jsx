@@ -88,6 +88,7 @@ export default props => {
         students: program.students || [], // stretch: could implement adding students
         teachers: program.teachers || [], // stretch: could implement adding teachers
       };
+      console.log('PROGRAM —— if(id):', validEditedProgram);
       dispatch(editProgramThunk(validEditedProgram));
     } else {
       // else we must just be creating a new program
@@ -96,6 +97,7 @@ export default props => {
         students: [], // stretch: could implement adding students
         teachers: [], // stretch: could implement adding students
       };
+      console.log('PROGRAM —— else:', validProgram);
       dispatch(addProgramThunk(validProgram));
     }
   };

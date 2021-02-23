@@ -21,6 +21,7 @@ export default ({ isWrapped, onSubmit, courseId, courseToEdit }) => {
   const { course, status } = useSelector(state => state.courses);
   const dispatch = useDispatch();
   const [form] = Form.useForm();
+  const [moduleToEdit, setModuleToEdit] = useState(null);
   const [modalVisible, setModalVisible] = useState(false);
 
   useEffect(() => {
@@ -41,11 +42,17 @@ export default ({ isWrapped, onSubmit, courseId, courseToEdit }) => {
   const hideModuleModal = () => setModalVisible(false);
 
   const onFinish = values => {
-    if (id) {
-      dispatch(coursesActions.editCourseThunk({ ...values, courseid: id }));
-    } else if (isWrapped) {
+    if (isWrapped) {
+      console.log('COURSE else if (isWrapped):', {
+        ...form.getFieldsValue(),
+        courseid: courseId,
+      });
       onSubmit({ ...form.getFieldsValue(), courseid: courseId });
+    } else if (id) {
+      console.log('COURSE if (id):', { ...values, courseid: id });
+      dispatch(coursesActions.editCourseThunk({ ...values, courseid: id }));
     } else {
+      console.log('COURSE else:', values);
       dispatch(coursesActions.addCourseThunk(values));
     }
   };
@@ -55,7 +62,29 @@ export default ({ isWrapped, onSubmit, courseId, courseToEdit }) => {
     form.setFieldsValue({
       modules: [...existingModules, newModule],
     });
-    setModalVisible(false);
+    hideModuleModal();
+  };
+
+  const onModuleEdit = editedModule => {
+    const existingModules = form.getFieldValue('modules') || [];
+
+    form.setFieldsValue({
+      modules: existingModules.map(existingModule => {
+        if (existingModule.moduleId !== editedModule.moduleId) {
+          return existingModule;
+        } else {
+          return editedModule;
+        }
+      }),
+    });
+
+    hideModuleModal();
+  };
+
+  const triggerEdit = module => {
+    console.log({ module });
+    setModuleToEdit(module);
+    showModuleModal();
   };
 
   return (
@@ -98,7 +127,11 @@ export default ({ isWrapped, onSubmit, courseId, courseToEdit }) => {
             // then map through each module in array and return a list of ModuleCards
             form.getFieldValue('modules').map((module, index) => (
               <li key={index} className="module">
-                <ModuleCard {...module} />
+                <ModuleCard
+                  {...module}
+                  module={module}
+                  triggerEdit={triggerEdit}
+                />
               </li>
             ))
           ) : (
@@ -119,11 +152,23 @@ export default ({ isWrapped, onSubmit, courseId, courseToEdit }) => {
           </Button>
         </Form.Item>
       </Form>
-      <ModuleForm
-        visible={modalVisible}
-        onCancel={hideModuleModal}
-        onSubmit={onModuleAdd}
-      />
+      {moduleToEdit ? (
+        <ModuleForm
+          visible={modalVisible}
+          onCancel={hideModuleModal}
+          onSubmit={onModuleEdit}
+          moduleToEdit={moduleToEdit}
+          moduleId={moduleToEdit.moduleId}
+          isWrapped={true}
+        />
+      ) : (
+        <ModuleForm
+          visible={modalVisible}
+          onCancel={hideModuleModal}
+          onSubmit={onModuleAdd}
+          isWrapped={true}
+        />
+      )}
     </StyledSpace>
   );
 };
