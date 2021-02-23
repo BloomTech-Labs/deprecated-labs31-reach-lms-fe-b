@@ -42,30 +42,30 @@ export default ({ visible, onCancel, onSubmit }) => {
       <h1>Module</h1>
       <Form form={form} name="moduleForm" layout="vertical" size="large">
         <Form.Item
-          name="modulename"
+          name="moduleName"
           label="Module Name"
           rules={[{ required: true, message: 'Module name is required.' }]}
           onChange={onChange}
         >
-          <Input name="modulename" />
+          <Input name="moduleName" />
         </Form.Item>
         <Form.Item
-          name="moduledescription"
+          name="moduleDescription"
           label="Module Description"
           rules={[
             { required: true, message: 'Module description is required.' },
           ]}
           onChange={onChange}
         >
-          <Input.TextArea name="moduledescription" />
+          <Input.TextArea name="moduleDescription" />
         </Form.Item>
         <Form.Item
-          name="modulecontent"
+          name="moduleContent"
           label="Module Content"
           rules={[{ required: true }]}
           onChange={onChange}
         >
-          <Input.TextArea name="modulecontent" />
+          <Input.TextArea name="moduleContent" />
         </Form.Item>
       </Form>
     </Modal>

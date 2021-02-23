@@ -9,6 +9,7 @@ import {
 import { useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { programsActions } from '../../../state/ducks/programsDuck';
+import { makeEditProgramPath } from '../../../routes';
 
 const DashboardViewContainer = () => {
   const { Meta } = Card;
@@ -46,7 +47,8 @@ const DashboardViewContainer = () => {
             key={program.programId}
             style={{ width: 300, margin: '10px' }}
             actions={[
-              <GhostLink to={`/program/edit/${program.programId}`}>
+              // <GhostLink to={`/program/edit/${program.programId}`}>
+              <GhostLink to={makeEditProgramPath(program.programId)}>
                 <EditOutlined key={program.programId + 'edit'} />
               </GhostLink>,
               <SettingOutlined key={program.programId + 'setting'} />,

@@ -10,6 +10,11 @@ const GET_COURSE_SUCCESS = 'GET_COURSE_SUCCESS';
 const GET_COURSE_FAIL = 'GET_COURSE_FAIL';
 const GET_COURSE_RESOLVE = 'GET_COURSE_RESOLVE';
 
+const GET_COURSE_MODULES_START = 'GET_COURSE_START';
+const GET_COURSE_MODULES_SUCCESS = 'GET_COURSE_SUCCESS';
+const GET_COURSE_MODULES_FAIL = 'GET_COURSE_FAIL';
+const GET_COURSE_MODULES_RESOLVE = 'GET_COURSE_RESOLVE';
+
 const ADD_COURSE_START = 'ADD_COURSE_START';
 const ADD_COURSE_SUCCESS = 'ADD_COURSE_SUCCESS';
 const ADD_COURSE_FAIL = 'ADD_COURSE_FAIL';
@@ -56,6 +61,21 @@ export const coursesActions = {
       });
   },
 
+  getCourseModulesThunk: id => dispatch => {
+    dispatch({ type: GET_COURSE_START });
+    axiosAuth()
+      .get(`/courses/course/${id}/modules`)
+      .then(res => {
+        dispatch({ type: GET_COURSE_SUCCESS, payload: res.data });
+      })
+      .catch(err => {
+        dispatch({ type: GET_COURSE_FAIL, payload: err.message });
+      })
+      .finally(() => {
+        dispatch({ type: GET_COURSE_RESOLVE });
+      });
+  },
+
   addCourseThunk: course => dispatch => {
     dispatch({ type: ADD_COURSE_START });
     axiosAuth()
@@ -74,7 +94,7 @@ export const coursesActions = {
   editCourseThunk: course => dispatch => {
     dispatch({ type: EDIT_COURSE_START });
     axiosAuth()
-      .put(`/courses/course/${course.courseid}`, course)
+      .patch(`/courses/course/${course.courseid}`, course)
       .then(res => {
         dispatch({ type: EDIT_COURSE_SUCCESS, payload: res.data });
       })
@@ -111,8 +131,6 @@ const coursesInitialState = {
     courseCode: '',
     courseDescription: '',
     program: {},
-    modules: [],
-    // users: [],
   },
 };
 
@@ -134,15 +152,26 @@ const coursesReducer = (state = coursesInitialState, action) => {
         ...state,
         course: action.payload,
         status: 'success',
-        // courseName: action.payload.courseName,
-        // courseCode: action.payload.courseCode,
-        // courseDescription: action.payload.courseDescription,
-        // program: action.payload.program,
-        // modules: action.payload.modules,
       };
     case GET_COURSE_FAIL:
       return { ...state, status: 'error', error: action.payload };
     case GET_COURSE_RESOLVE:
+      return { ...state, status: 'idle' };
+
+    case GET_COURSE_MODULES_START:
+      return { ...state, status: 'pending' };
+    case GET_COURSE_MODULES_SUCCESS:
+      return {
+        ...state,
+        course: {
+          ...state.course,
+          modules: action.payload,
+        },
+        status: 'success',
+      };
+    case GET_COURSE_MODULES_FAIL:
+      return { ...state, status: 'error', error: action.payload };
+    case GET_COURSE_MODULES_RESOLVE:
       return { ...state, status: 'idle' };
 
     case ADD_COURSE_START:
@@ -157,7 +186,7 @@ const coursesReducer = (state = coursesInitialState, action) => {
     case EDIT_COURSE_START:
       return { ...state, status: 'pending' };
     case EDIT_COURSE_SUCCESS:
-      return { ...state, courses: action.payload };
+      return { ...state, status: 'success' };
     case EDIT_COURSE_FAIL:
       return { ...state, status: 'error', error: action.payload };
     case EDIT_COURSE_RESOLVE:
