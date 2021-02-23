@@ -210,10 +210,17 @@ const programsReducer = (state = programsInitialState, action) => {
         statusGet: 'success',
       };
     case GET_ALLPROGRAMS_FAIL:
-      return { ...state, statusGet: 'error', error: action.payload };
+      return {
+        ...state,
+        statusGet: 'error',
+        error: action.payload,
+      };
 
     case GET_ALLPROGRAMS_RESOLVE:
-      return { ...state, statusGet: 'idle' };
+      return {
+        ...state,
+        statusGet: 'idle',
+      };
 
     //================================
     //Get Individual Programs Reducers

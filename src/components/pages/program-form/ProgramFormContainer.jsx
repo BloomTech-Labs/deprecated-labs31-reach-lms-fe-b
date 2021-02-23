@@ -84,7 +84,7 @@ export default props => {
       const validEditedProgram = {
         ...values,
         courses: existingCourses,
-        programId: id, // the id of the program to update!
+        programId: parseInt(id), // the id of the program to update!
         students: program.students || [], // stretch: could implement adding students
         teachers: program.teachers || [], // stretch: could implement adding teachers
       };

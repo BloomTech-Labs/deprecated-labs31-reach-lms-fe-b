@@ -18,7 +18,7 @@ export default ({ isWrapped, onSubmit, courseId, courseToEdit }) => {
   if (isWrapped) {
     id = courseId;
   }
-  const { course, status } = useSelector(state => state.courses);
+  const { course, statusGet } = useSelector(state => state.courses);
   const dispatch = useDispatch();
   const [form] = Form.useForm();
   const [moduleToEdit, setModuleToEdit] = useState(null);
@@ -27,16 +27,20 @@ export default ({ isWrapped, onSubmit, courseId, courseToEdit }) => {
   useEffect(() => {
     if (id) {
       dispatch(coursesActions.getCourseThunk(id));
+      dispatch(coursesActions.getCourseModulesThunk(id));
     }
   }, [id, dispatch, isWrapped]);
 
   useEffect(() => {
     if (isWrapped) {
+      console.log({ courseToEdit });
       form.setFieldsValue({ ...courseToEdit });
-    } else if (status === 'success') {
-      form.setFieldsValue({ ...course });
     }
-  }, [status, course, form, isWrapped, courseToEdit]);
+    if (statusGet === 'success') {
+      console.log({ ...form.getFieldsValue(), ...course });
+      form.setFieldsValue({ ...form.getFieldsValue(), ...course });
+    }
+  }, [statusGet, course, form, isWrapped, courseToEdit]);
 
   const showModuleModal = () => setModalVisible(true);
   const hideModuleModal = () => setModalVisible(false);
