@@ -4,7 +4,7 @@ import { NavBar } from '../navbar';
 import { useLocation } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import styled from 'styled-components';
-import logo from '../login/RlmsLogo.png';
+import logo from '../login/Reach.png';
 
 const StyledHeader = styled(Layout.Header)`
   display: flex;
