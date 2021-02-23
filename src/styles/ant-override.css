@@ -8,7 +8,18 @@
         height: 100%;
     }
   }
-
+/*
+    Remove middle divider on cards for dashboard
+    view between main card body and buttons
+ */
 .ant-card-actions {
     border-top: none;
+}
+
+/*
+    Remove dividers between buttons for cards
+    on main dashboard view
+ */
+.ant-card-actions > li:not(:last-child) {
+    border-right: none;
 }
