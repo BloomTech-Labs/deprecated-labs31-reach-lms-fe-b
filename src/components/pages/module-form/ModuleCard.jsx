@@ -3,7 +3,25 @@ import { Card } from 'antd';
 import { GhostLink } from '../../common';
 import { EditOutlined } from '@ant-design/icons';
 
-export default ({ moduleName, moduleDescription, moduleId, moduleContent }) => {
+export default props => {
+  const {
+    moduleName,
+    moduleDescription,
+    moduleId,
+    module,
+    triggerEdit,
+  } = props;
+
+  if (triggerEdit) {
+    return (
+      <Card
+        title={moduleName}
+        actions={[<EditOutlined onClick={() => triggerEdit(module)} />]}
+      >
+        {moduleDescription}
+      </Card>
+    );
+  }
   return (
     <Card
       title={moduleName}
