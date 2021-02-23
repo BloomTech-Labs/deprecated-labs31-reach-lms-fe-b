@@ -10,6 +10,8 @@ const StyledHeader = styled(Layout.Header)`
   display: flex;
   flex-flow: row nowrap;
   background-color: white;
+  margin: 24px;
+  font-size: 1.2rem;
 `;
 
 const LocationInfo = styled.div`
