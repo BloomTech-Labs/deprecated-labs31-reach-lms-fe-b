@@ -44,7 +44,6 @@ export default ({
 
   //this will run if modal is submitted
   const onOk = values => {
-    console.log({ valuesInModuleForm: form.getFieldsValue() });
     if (isWrapped) {
       onSubmit({ ...form.getFieldsValue(), moduleId });
     } else if (id) {

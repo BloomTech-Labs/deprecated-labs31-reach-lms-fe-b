@@ -33,11 +33,9 @@ export default ({ isWrapped, onSubmit, courseId, courseToEdit }) => {
 
   useEffect(() => {
     if (isWrapped) {
-      console.log({ courseToEdit });
       form.setFieldsValue({ ...courseToEdit });
     }
     if (statusGet === 'success') {
-      console.log({ ...form.getFieldsValue(), ...course });
       form.setFieldsValue({ ...form.getFieldsValue(), ...course });
     }
   }, [statusGet, course, form, isWrapped, courseToEdit]);
@@ -47,16 +45,10 @@ export default ({ isWrapped, onSubmit, courseId, courseToEdit }) => {
 
   const onFinish = values => {
     if (isWrapped) {
-      console.log('COURSE else if (isWrapped):', {
-        ...form.getFieldsValue(),
-        courseid: courseId,
-      });
       onSubmit({ ...form.getFieldsValue(), courseid: courseId });
     } else if (id) {
-      console.log('COURSE if (id):', { ...values, courseid: id });
       dispatch(coursesActions.editCourseThunk({ ...values, courseid: id }));
     } else {
-      console.log('COURSE else:', values);
       dispatch(coursesActions.addCourseThunk(values));
     }
   };
@@ -86,7 +78,6 @@ export default ({ isWrapped, onSubmit, courseId, courseToEdit }) => {
   };
 
   const triggerEdit = module => {
-    console.log({ module });
     setModuleToEdit(module);
     showModuleModal();
   };
