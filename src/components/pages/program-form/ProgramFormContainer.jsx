@@ -114,15 +114,26 @@ export default props => {
 
   const onCourseRemove = courseToRemove => {
     const { courseid } = courseToRemove;
-    console.log({ courseid, courseToRemove });
 
-    // const existingClasses = form.getFieldValue("courses");
+    console.log({ courseid });
+    const existingClasses = form.getFieldValue('courses');
 
-    // form.setFieldsValue({
-    //   courses: existingClasses.filter(course => course.courseId !== courseId),
-    // });
-
-    dispatch(deleteCourseThunk(courseid));
+    if (courseid) {
+      dispatch(deleteCourseThunk(courseid));
+      form.setFieldsValue({
+        courses: existingClasses.filter(course => course.courseid !== courseid),
+      });
+    } else {
+      console.log('FILTERING');
+      let updated = existingClasses.filter(
+        course => course.coursecode !== courseToRemove.coursecode
+      );
+      console.log({ updated });
+      form.setFieldsValue({
+        ...form.getFieldsValue(),
+        courses: updated,
+      });
+    }
   };
 
   const onCourseEdit = editedClass => {
