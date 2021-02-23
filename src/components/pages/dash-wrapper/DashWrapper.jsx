@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Layout } from 'antd';
 import { NavBar } from '../navbar';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useHistory } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import styled from 'styled-components';
 import logo from '../login/Reach.png';
@@ -21,6 +21,12 @@ export default ({ children, authService, ...restProps }) => {
   const { Content, Footer } = Layout;
   const { pathname } = useLocation();
   const { role } = useSelector(state => state.user);
+  const { push } = useHistory();
+  const [hovering, setHovering] = useState(false);
+
+  const toggleHovering = () => {
+    setHovering(!hovering);
+  };
 
   return (
     <Layout>
@@ -28,7 +34,14 @@ export default ({ children, authService, ...restProps }) => {
         className="site-layout-sub-header-background"
         style={{ padding: 0 }}
       >
-        <img src={logo} alt="logo" />
+        <img
+          src={logo}
+          alt="logo"
+          style={hovering ? { cursor: 'progess' } : { cursor: 'pointer' }}
+          onMouseEnter={toggleHovering}
+          onMouseLeave={toggleHovering}
+          onClick={() => push('/')}
+        />
         <LocationInfo>
           {
             {
