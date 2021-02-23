@@ -41,7 +41,6 @@ import {
   EDIT_PROFILE_PATH,
 } from './routes/';
 import 'antd/dist/antd.less';
-import './styles/ant-override.css';
 import GlobalStyle from './styles/globalStyles';
 
 ReactDOM.render(

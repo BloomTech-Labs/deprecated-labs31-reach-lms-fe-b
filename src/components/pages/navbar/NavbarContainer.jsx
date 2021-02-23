@@ -13,6 +13,7 @@ import {
 } from '../../../routes';
 import { Link, useLocation } from 'react-router-dom';
 import styled from 'styled-components';
+import { useSelector } from 'react-redux';
 
 const StyledLink = styled(Link)`
   text-decoration: none;
@@ -43,6 +44,7 @@ const MenuItem = ({ key, to, icon, handleClick, children, ...props }) => {
 const NavBar = ({ logout, ...restProps }) => {
   const { pathname } = useLocation();
   const [selectedKey, setSelectedKey] = useState(pathname);
+  const { role } = useSelector(state => state.user);
 
   const handleClick = e => {
     setSelectedKey(e.key);
@@ -59,20 +61,33 @@ const NavBar = ({ logout, ...restProps }) => {
         <MenuItem key="/" to="/" icon={<HomeOutlined />}>
           Dashboard
         </MenuItem>
-        <MenuItem
-          key={CREATE_PROGRAM_PATH}
-          to={CREATE_PROGRAM_PATH}
-          icon={<FormOutlined />}
-        >
-          Create a Program
-        </MenuItem>
-        <MenuItem
-          key={CREATE_COURSE_PATH}
-          to={CREATE_COURSE_PATH}
-          icon={<FormOutlined />}
-        >
-          Create Course
-        </MenuItem>
+        {role === 'ADMIN' ? (
+          <>
+            <MenuItem
+              key={CREATE_PROGRAM_PATH}
+              to={CREATE_PROGRAM_PATH}
+              icon={<FormOutlined />}
+            >
+              Create a Program
+            </MenuItem>
+            <MenuItem
+              key={CREATE_COURSE_PATH}
+              to={CREATE_COURSE_PATH}
+              icon={<FormOutlined />}
+            >
+              Create Course
+            </MenuItem>
+          </>
+        ) : role === 'TEACHER' ? (
+          <MenuItem
+            key={CREATE_COURSE_PATH}
+            to={CREATE_COURSE_PATH}
+            icon={<FormOutlined />}
+          >
+            Create Course
+          </MenuItem>
+        ) : null}
+
         <MenuItem
           key={SETTINGS_PATH}
           to={SETTINGS_PATH}
