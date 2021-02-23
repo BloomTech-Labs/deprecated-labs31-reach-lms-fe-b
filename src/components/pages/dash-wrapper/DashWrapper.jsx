@@ -37,7 +37,7 @@ export default ({ children, authService, ...restProps }) => {
         <img
           src={logo}
           alt="logo"
-          style={hovering ? { cursor: 'progess' } : { cursor: 'pointer' }}
+          style={hovering ? { cursor: 'progress' } : { cursor: 'pointer' }}
           onMouseEnter={toggleHovering}
           onMouseLeave={toggleHovering}
           onClick={() => push('/')}

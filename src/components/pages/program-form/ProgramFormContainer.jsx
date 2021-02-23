@@ -4,6 +4,7 @@ import { CourseForm, CourseCard } from '../course-form';
 import { useParams, useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { programsActions } from '../../../state/ducks/programsDuck';
+import { coursesActions } from '../../../state/ducks/coursesDuck';
 
 const {
   getProgramThunk,
@@ -11,6 +12,7 @@ const {
   editProgramThunk,
   addProgramThunk,
 } = programsActions;
+const { deleteCourseThunk } = coursesActions;
 
 export default props => {
   const { push } = useHistory();
@@ -84,7 +86,7 @@ export default props => {
       const validEditedProgram = {
         ...values,
         courses: existingCourses,
-        programId: id, // the id of the program to update!
+        programId: parseInt(id), // the id of the program to update!
         students: program.students || [], // stretch: could implement adding students
         teachers: program.teachers || [], // stretch: could implement adding teachers
       };
@@ -110,12 +112,21 @@ export default props => {
     hideCourseModal();
   };
 
+  const onCourseRemove = courseToRemove => {
+    const { courseid } = courseToRemove;
+    console.log({ courseid, courseToRemove });
+
+    // const existingClasses = form.getFieldValue("courses");
+
+    // form.setFieldsValue({
+    //   courses: existingClasses.filter(course => course.courseId !== courseId),
+    // });
+
+    dispatch(deleteCourseThunk(courseid));
+  };
+
   const onCourseEdit = editedClass => {
     const existingCourses = form.getFieldValue('courses') || [];
-
-    console.log({ editedClass });
-    console.log({ existingCourses });
-
     form.setFieldsValue({
       courses: existingCourses.map(existingCourse => {
         if (existingCourse.courseid !== editedClass.courseid) {
@@ -194,6 +205,7 @@ export default props => {
                     name={coursename}
                     description={coursedescription}
                     triggerEdit={triggerEdit}
+                    triggerDelete={onCourseRemove}
                     {...rest}
                   />
                 </li>

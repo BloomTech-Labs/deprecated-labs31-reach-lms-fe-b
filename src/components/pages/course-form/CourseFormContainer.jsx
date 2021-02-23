@@ -18,33 +18,36 @@ export default ({ isWrapped, onSubmit, courseId, courseToEdit }) => {
   if (isWrapped) {
     id = courseId;
   }
-  const { course, status } = useSelector(state => state.courses);
+  const { course, statusGet } = useSelector(state => state.courses);
   const dispatch = useDispatch();
   const [form] = Form.useForm();
+  const [moduleToEdit, setModuleToEdit] = useState(null);
   const [modalVisible, setModalVisible] = useState(false);
 
   useEffect(() => {
     if (id) {
       dispatch(coursesActions.getCourseThunk(id));
+      dispatch(coursesActions.getCourseModulesThunk(id));
     }
   }, [id, dispatch, isWrapped]);
 
   useEffect(() => {
     if (isWrapped) {
       form.setFieldsValue({ ...courseToEdit });
-    } else if (status === 'success') {
-      form.setFieldsValue({ ...course });
     }
-  }, [status, course, form, isWrapped, courseToEdit]);
+    if (statusGet === 'success') {
+      form.setFieldsValue({ ...form.getFieldsValue(), ...course });
+    }
+  }, [statusGet, course, form, isWrapped, courseToEdit]);
 
   const showModuleModal = () => setModalVisible(true);
   const hideModuleModal = () => setModalVisible(false);
 
   const onFinish = values => {
-    if (id) {
-      dispatch(coursesActions.editCourseThunk({ ...values, courseid: id }));
-    } else if (isWrapped) {
+    if (isWrapped) {
       onSubmit({ ...form.getFieldsValue(), courseid: courseId });
+    } else if (id) {
+      dispatch(coursesActions.editCourseThunk({ ...values, courseid: id }));
     } else {
       dispatch(coursesActions.addCourseThunk(values));
     }
@@ -55,7 +58,28 @@ export default ({ isWrapped, onSubmit, courseId, courseToEdit }) => {
     form.setFieldsValue({
       modules: [...existingModules, newModule],
     });
-    setModalVisible(false);
+    hideModuleModal();
+  };
+
+  const onModuleEdit = editedModule => {
+    const existingModules = form.getFieldValue('modules') || [];
+
+    form.setFieldsValue({
+      modules: existingModules.map(existingModule => {
+        if (existingModule.moduleId !== editedModule.moduleId) {
+          return existingModule;
+        } else {
+          return editedModule;
+        }
+      }),
+    });
+
+    hideModuleModal();
+  };
+
+  const triggerEdit = module => {
+    setModuleToEdit(module);
+    showModuleModal();
   };
 
   return (
@@ -98,7 +122,11 @@ export default ({ isWrapped, onSubmit, courseId, courseToEdit }) => {
             // then map through each module in array and return a list of ModuleCards
             form.getFieldValue('modules').map((module, index) => (
               <li key={index} className="module">
-                <ModuleCard {...module} />
+                <ModuleCard
+                  {...module}
+                  module={module}
+                  triggerEdit={triggerEdit}
+                />
               </li>
             ))
           ) : (
@@ -119,11 +147,23 @@ export default ({ isWrapped, onSubmit, courseId, courseToEdit }) => {
           </Button>
         </Form.Item>
       </Form>
-      <ModuleForm
-        visible={modalVisible}
-        onCancel={hideModuleModal}
-        onSubmit={onModuleAdd}
-      />
+      {moduleToEdit ? (
+        <ModuleForm
+          visible={modalVisible}
+          onCancel={hideModuleModal}
+          onSubmit={onModuleEdit}
+          moduleToEdit={moduleToEdit}
+          moduleId={moduleToEdit.moduleId}
+          isWrapped={true}
+        />
+      ) : (
+        <ModuleForm
+          visible={modalVisible}
+          onCancel={hideModuleModal}
+          onSubmit={onModuleAdd}
+          isWrapped={true}
+        />
+      )}
     </StyledSpace>
   );
 };
