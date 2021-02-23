@@ -3,11 +3,6 @@ import { Card } from 'antd';
 import { ModuleView } from '../';
 import { useDispatch, useSelector } from 'react-redux';
 import { coursesActions } from '../../../state/ducks/coursesDuck';
-/*
-Last Month's Den: https://youtu.be/d9Pevt2QrJ8
-HashTable Repo: https://github.com/LambdaSchool/cs-module-project-hash-tables
-
-*/
 import styled from 'styled-components';
 
 //Component Styles
