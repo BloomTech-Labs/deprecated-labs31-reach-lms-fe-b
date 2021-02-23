@@ -49,7 +49,7 @@ const DashboardViewContainer = () => {
               <GhostLink to={`/program/edit/${program.programId}`}>
                 <EditOutlined key={program.programId + 'edit'} />
               </GhostLink>,
-              <SettingOutlined key={program.programId + 'setting'} />,
+              //<SettingOutlined key={program.programId + 'setting'} />,
               <DeleteOutlined
                 key={program.programId + 'delete'}
                 onClick={() => deleteProgram(program.programId)}
