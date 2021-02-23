@@ -1,15 +1,19 @@
 import React from 'react';
 import { Card } from 'antd';
-import { EditOutlined } from '@ant-design/icons';
+import { EditOutlined, DeleteOutlined } from '@ant-design/icons';
 import { GhostLink } from '../../common';
 
-export default ({ course, triggerEdit, ...restProps }) => {
+export default ({ course, triggerEdit, triggerDelete, ...restProps }) => {
   const { coursename, courseid, coursedescription } = course;
   if (triggerEdit) {
     return (
       <Card
         title={coursename}
-        actions={[<EditOutlined onClick={() => triggerEdit(course)} />]}
+        actions={[
+          <EditOutlined onClick={() => triggerEdit(course)} />,
+          <DeleteOutlined onClick={() => triggerDelete(course)} />,
+        ]}
+        {...restProps}
       >
         {coursedescription}
       </Card>
