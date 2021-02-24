@@ -75,10 +75,6 @@ export default props => {
     push,
   ]);
 
-  useEffect(() => {
-    console.log({ formValues: form.getFieldsValue() });
-  }, [form]);
-
   // just helper functions to show and hide the COURSE FORM modal
   const showCourseModal = () => setModalVisible(true);
   const hideCourseModal = () => setModalVisible(false);
@@ -120,7 +116,6 @@ export default props => {
   const onCourseRemove = courseToRemove => {
     const { courseid } = courseToRemove;
 
-    console.log({ courseid });
     const existingClasses = form.getFieldValue('courses');
 
     if (courseid) {
@@ -129,11 +124,9 @@ export default props => {
         courses: existingClasses.filter(course => course.courseid !== courseid),
       });
     } else {
-      console.log('FILTERING');
       let updated = existingClasses.filter(
         course => course.coursecode !== courseToRemove.coursecode
       );
-      console.log({ updated });
       form.setFieldsValue({
         ...form.getFieldsValue(),
         courses: updated,
@@ -207,21 +200,17 @@ export default props => {
           name="courses"
           label="Course List"
           shouldUpdate={(prev, current) => {
-            console.log({ prev: prev.courses, current: current.courses });
             let soUpdate = (prev.courses.length !== current.courses.length);
-            console.log({ soUpdate });
             return soUpdate;
           }}
         >
           {({ getFieldValue }) => {
             let courses = getFieldValue("courses");
-            console.log({ courses });
             return (
 
               (getFieldValue("courses")?.length > 0)
                 ?
                 getFieldValue("courses").map(course => {
-                  console.log("INSIDE MAP", { course });
                   const { coursename, coursedescription, courseid, coursecode, ...rest } = course;
                   return (
                     <li key={`${courseid}~${coursecode}`}>

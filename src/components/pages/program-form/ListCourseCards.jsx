@@ -1,11 +1,7 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { CourseCard } from '../course-form';
 
 export default ({ courses, triggerEdit, triggerDelete }) => {
-  useEffect(() => {
-    console.log({ courses });
-  }, [courses]);
-
   return (
     <>
       {courses && courses.length > 0 ? (
