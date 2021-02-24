@@ -10,8 +10,8 @@ export default ({ course, triggerEdit, triggerDelete, ...restProps }) => {
       <Card
         title={coursename}
         actions={[
-          <EditOutlined onClick={() => triggerEdit(course)} />,
-          <DeleteOutlined onClick={() => triggerDelete(course)} />,
+          <EditOutlined onClick={triggerEdit} />,
+          <DeleteOutlined onClick={triggerDelete} />,
         ]}
         {...restProps}
       >

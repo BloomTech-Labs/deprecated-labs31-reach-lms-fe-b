@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Modal, Form, Input, Space, Select, Button } from 'antd';
-import { CourseForm, CourseCard } from '../course-form';
+import { CourseForm } from '../course-form';
 import { useParams, useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { programsActions } from '../../../state/ducks/programsDuck';
@@ -50,8 +50,8 @@ export default props => {
   useEffect(() => {
     if (statusGet === 'success') {
       form.setFieldsValue({
-        ...form.getFieldsValue(),
         ...program,
+        courses: [...form.getFieldValue('courses')],
       });
     }
     if (statusGetCourses === 'success') {
@@ -74,6 +74,10 @@ export default props => {
     program,
     push,
   ]);
+
+  useEffect(() => {
+    console.log({ formValues: form.getFieldsValue() });
+  }, [form]);
 
   // just helper functions to show and hide the COURSE FORM modal
   const showCourseModal = () => setModalVisible(true);
@@ -199,12 +203,57 @@ export default props => {
         </Form.Item>
 
         {/* List of Course Cards for Each Course in This Program */}
-        <Form.Item name="courses" label="Course List">
-          <ListCourseCards
-            courses={form.getFieldValue('courses') || []}
+        {/* <Form.Item
+          name="courses"
+          label="Course List"
+          shouldUpdate={(prev, current) => {
+            console.log({ prev: prev.courses, current: current.courses });
+            let soUpdate = (prev.courses.length !== current.courses.length);
+            console.log({ soUpdate });
+            return soUpdate;
+          }}
+        >
+          {({ getFieldValue }) => {
+            let courses = getFieldValue("courses");
+            console.log({ courses });
+            return (
+
+              (getFieldValue("courses")?.length > 0)
+                ?
+                getFieldValue("courses").map(course => {
+                  console.log("INSIDE MAP", { course });
+                  const { coursename, coursedescription, courseid, coursecode, ...rest } = course;
+                  return (
+                    <li key={`${courseid}~${coursecode}`}>
+                      <CourseCard
+                        id={courseid}
+                        course={course}
+                        triggerEdit={() => triggerEdit(course)}
+                        triggerDelete={() => onCourseRemove(course)}
+                        {...rest}
+                      />
+                    </li>
+                  );
+                })
+                : <p>No courses yet!</p>
+            );
+          }}
+        </Form.Item> */}
+        <Form.Item
+          shouldUpdate={(prev, current) => prev.courses !== current.courses}
+        >
+          {/* <ListCourseCards
+            courses={form.getFieldValue("courses") || []}
             triggerEdit={triggerEdit}
             triggerDelete={onCourseRemove}
-          />
+          /> */}
+          {() => (
+            <ListCourseCards
+              courses={form.getFieldValue('courses')}
+              triggerDelete={onCourseRemove}
+              triggerEdit={triggerEdit}
+            />
+          )}
         </Form.Item>
 
         {/* Add Class Button. On click will pull up ADD COURSE FORM (in a modal) */}
