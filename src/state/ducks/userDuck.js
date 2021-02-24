@@ -20,6 +20,7 @@ export const userActions = {
   // GET USER INFO
   loginThunk: () => dispatch => {
     dispatch({ type: LOGIN_START });
+
     axiosAuth()
       .get('/users/getuserinfo')
       .then(res => {
@@ -32,8 +33,11 @@ export const userActions = {
         dispatch({ type: LOGIN_RESOLVE });
       });
   },
+
+  // UPDATE USER INFO
   updateUserThunk: (userId, userFieldsToUpdate) => dispatch => {
     dispatch({ type: UPDATE_USER_START });
+
     axiosAuth()
       .patch(`/users/user/${userId}`, userFieldsToUpdate)
       .then(res =>
@@ -72,9 +76,7 @@ const userInitialState = {
  ******************************************************/
 const userReducer = (state = userInitialState, action) => {
   switch (action.type) {
-    //-----------------------------
     // LOGIN
-    //-----------------------------
     case LOGIN_START:
       return { ...state, statusGet: 'pending' };
     case LOGIN_SUCCESS:
@@ -93,9 +95,7 @@ const userReducer = (state = userInitialState, action) => {
     case LOGIN_RESOLVE:
       return { ...state, statusGet: 'idle' };
 
-    //-----------------------------
-    // UPDATE_USER
-    //-----------------------------
+    // UPDATE USER
     case UPDATE_USER_START:
       return {
         ...state,
@@ -118,9 +118,8 @@ const userReducer = (state = userInitialState, action) => {
         ...state,
         statusEdit: 'idle',
       };
-    //-----------------------------
+
     // DEFAULT
-    //-----------------------------
     default:
       return state;
   }
