@@ -140,10 +140,6 @@ export const coursesActions = {
 const coursesInitialState = {
   courses: [],
   status: 'idle',
-  statusGet: 'idle',
-  statusAdd: 'idle',
-  statusEdit: 'idle',
-  statusDelete: 'idle',
   error: '',
   course: {
     courseName: '',
@@ -162,61 +158,61 @@ const coursesReducer = (state = coursesInitialState, action) => {
     case GET_ALL_COURSES_START:
       return {
         ...state,
-        statusGet: 'pending',
+        status: 'get-all/pending',
       };
 
     case GET_ALL_COURSES_SUCCESS:
       return {
         ...state,
-        statusGet: 'success',
+        status: 'get-all/success',
         courses: action.payload,
       };
 
     case GET_ALL_COURSES_FAIL:
       return {
         ...state,
-        statusGet: 'error',
+        status: 'get-all/error',
         error: action.payload,
       };
 
     case GET_ALL_COURSES_RESOLVE:
       return {
         ...state,
-        statusGet: 'idle',
+        status: 'idle',
       };
 
     // GET COURSE (by id)
     case GET_COURSE_START:
       return {
         ...state,
-        statusGet: 'pending',
+        status: 'get/pending',
       };
 
     case GET_COURSE_SUCCESS:
       return {
         ...state,
         course: { ...state.course, ...action.payload },
-        statusGet: 'success',
+        status: 'get/success',
       };
 
     case GET_COURSE_FAIL:
       return {
         ...state,
-        statusGet: 'error',
+        status: 'get/error',
         error: action.payload,
       };
 
     case GET_COURSE_RESOLVE:
       return {
         ...state,
-        statusGet: 'idle',
+        status: 'idle',
       };
 
     // GET COURSE MODULES (by course id)
     case GET_COURSE_MODULES_START:
       return {
         ...state,
-        statusGet: 'pending',
+        status: 'get-modules/pending',
       };
 
     case GET_COURSE_MODULES_SUCCESS:
@@ -226,99 +222,99 @@ const coursesReducer = (state = coursesInitialState, action) => {
           ...state.course,
           modules: action.payload,
         },
-        statusGet: 'success',
+        status: 'get-modules/success',
       };
 
     case GET_COURSE_MODULES_FAIL:
       return {
         ...state,
-        statusGet: 'error',
+        status: 'get-modules/error',
         error: action.payload,
       };
 
     case GET_COURSE_MODULES_RESOLVE:
       return {
         ...state,
-        statusGet: 'idle',
+        status: 'idle',
       };
 
     // ADD COURSE
     case ADD_COURSE_START:
       return {
         ...state,
-        statusAdd: 'pending',
+        status: 'add/pending',
       };
 
     case ADD_COURSE_SUCCESS:
       return {
         ...state,
-        statusAdd: 'success',
+        status: 'add/success',
         courses: action.payload,
       };
 
     case ADD_COURSE_FAIL:
       return {
         ...state,
-        statusAdd: 'error',
+        status: 'add/error',
         error: action.payload,
       };
 
     case ADD_COURSE_RESOLVE:
       return {
         ...state,
-        statusAdd: 'idle',
+        status: 'idle',
       };
 
     // EDIT COURSE
     case EDIT_COURSE_START:
       return {
         ...state,
-        statusEdit: 'pending',
+        status: 'edit/pending',
       };
 
     case EDIT_COURSE_SUCCESS:
       return {
         ...state,
-        statusEdit: 'success',
+        status: 'edit/success',
       };
 
     case EDIT_COURSE_FAIL:
       return {
         ...state,
-        statusEdit: 'error',
+        status: 'edit/error',
         error: action.payload,
       };
 
     case EDIT_COURSE_RESOLVE:
       return {
         ...state,
-        statusEdit: 'idle',
+        status: 'idle',
       };
 
     // DELETE COURSE
     case DELETE_COURSE_START:
       return {
         ...state,
-        statusDelete: 'pending',
+        status: 'delete/pending',
       };
 
     case DELETE_COURSE_SUCCESS:
       return {
         ...state,
-        statusDelete: 'success',
+        status: 'delete/success',
       };
 
     case DELETE_COURSE_FAIL:
       return {
         ...state,
-        statusDelete: 'error',
+        status: 'delete/error',
         error: action.payload,
       };
 
     case DELETE_COURSE_RESOLVE:
       return {
         ...state,
-        statusDelete: 'idle',
+        status: 'idle',
       };
 
     //DEFAULT
