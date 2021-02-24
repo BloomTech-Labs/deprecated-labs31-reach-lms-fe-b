@@ -20,7 +20,7 @@ export default ({ isWrapped, onSubmit, courseId, courseToEdit }) => {
   if (isWrapped) {
     id = courseId;
   }
-  const { programs, statusGetCourses } = useSelector(state => state.programs);
+  const { programs } = useSelector(state => state.programs);
   const { course, statusGet } = useSelector(state => state.courses);
   const dispatch = useDispatch();
   const [form] = Form.useForm();
@@ -44,13 +44,7 @@ export default ({ isWrapped, onSubmit, courseId, courseToEdit }) => {
     if (statusGet === 'success') {
       form.setFieldsValue({ ...form.getFieldsValue(), ...course });
     }
-    // if (statusGetCourses === "success") {
-    //   form.setFieldsValue({
-    //     ...form.getFieldsValue(),
-    //     program: programs
-    //   })
-    // }
-  }, [statusGet, statusGetCourses, course, form, isWrapped, courseToEdit]);
+  }, [statusGet, course, form, isWrapped, courseToEdit]);
 
   const showModuleModal = () => setModalVisible(true);
   const hideModuleModal = () => setModalVisible(false);
