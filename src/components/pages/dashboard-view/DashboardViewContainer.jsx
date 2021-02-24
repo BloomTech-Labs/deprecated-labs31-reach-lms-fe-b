@@ -32,8 +32,8 @@ const DashboardViewContainer = () => {
       style={{
         display: 'flex',
         flexWrap: 'wrap',
-        justifyContent: 'center',
-        textAlign: 'center',
+        justifyContent: 'left',
+        textAlign: 'left',
       }}
       key="app-container"
     >

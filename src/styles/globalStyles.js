@@ -4,6 +4,9 @@ const GlobalStyle = createGlobalStyle`
     html {
         font-size: 62.5%;
     }
+    #root{
+      margin: 20px;
+    }
 
     body {
         font-family: 'Lato', sans-serif;
@@ -14,6 +17,14 @@ const GlobalStyle = createGlobalStyle`
     h1, h2, h3, h4, h5, h6 {
         font-weight: 700;
     }
+
+   .ant-card-meta-description {
+     color: black;
+     opacity: .5;
+
+   }
+
+
     @media (max-width: 575px) {
       .ant-layout-sider-dark{
         position: absolute;

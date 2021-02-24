@@ -1,5 +1,8 @@
 import { axiosAuth } from '../../api/axiosAuth';
 
+/******************************************************
+ * COURSE ACTION TYPES
+ ******************************************************/
 const GET_ALL_COURSES_START = 'GET_ALL_COURSES_START';
 const GET_ALL_COURSES_SUCCESS = 'GET_ALL_COURSES_SUCCESS';
 const GET_ALL_COURSES_FAIL = 'GET_ALL_COURSES_FAIL';
@@ -30,9 +33,13 @@ const DELETE_COURSE_SUCCESS = 'DELETE_COURSE_SUCCESS';
 const DELETE_COURSE_FAIL = 'DELETE_COURSE_FAIL';
 const DELETE_COURSE_RESOLVE = 'DELETE_COURSE_RESOLVE';
 
+/******************************************************
+ * COURSE ACTIONS
+ ******************************************************/
 export const coursesActions = {
   getAllCoursesThunk: () => dispatch => {
     dispatch({ type: GET_ALL_COURSES_START });
+
     axiosAuth()
       .get('/courses/courses')
       .then(res => {
@@ -48,6 +55,7 @@ export const coursesActions = {
 
   getCourseThunk: id => dispatch => {
     dispatch({ type: GET_COURSE_START });
+
     axiosAuth()
       .get(`/courses/course/${id}`)
       .then(res => {
@@ -63,6 +71,7 @@ export const coursesActions = {
 
   getCourseModulesThunk: id => dispatch => {
     dispatch({ type: GET_COURSE_MODULES_START });
+
     axiosAuth()
       .get(`/courses/course/${id}/modules`)
       .then(res => {
@@ -78,6 +87,7 @@ export const coursesActions = {
 
   addCourseThunk: course => dispatch => {
     dispatch({ type: ADD_COURSE_START });
+
     axiosAuth()
       .post('/courses/course', course)
       .then(res => {
@@ -93,6 +103,7 @@ export const coursesActions = {
 
   editCourseThunk: course => dispatch => {
     dispatch({ type: EDIT_COURSE_START });
+
     axiosAuth()
       .patch(`/courses/course/${course.courseid}`, course)
       .then(res => {
@@ -108,6 +119,7 @@ export const coursesActions = {
 
   deleteCourseThunk: id => dispatch => {
     dispatch({ type: DELETE_COURSE_START });
+
     axiosAuth()
       .delete(`/courses/course/${id}`)
       .then(res => {
@@ -122,13 +134,12 @@ export const coursesActions = {
   },
 };
 
+/******************************************************
+ * COURSE INITIAL STATE
+ ******************************************************/
 const coursesInitialState = {
   courses: [],
   status: 'idle',
-  statusGet: 'idle',
-  statusAdd: 'idle',
-  statusEdit: 'idle',
-  statusDelete: 'idle',
   error: '',
   course: {
     courseName: '',
@@ -138,67 +149,72 @@ const coursesInitialState = {
   },
 };
 
+/******************************************************
+ * COURSE REDUCERS
+ ******************************************************/
 const coursesReducer = (state = coursesInitialState, action) => {
   switch (action.type) {
-    // -----------------------------
     // GET ALL COURSES
-    // -----------------------------
     case GET_ALL_COURSES_START:
       return {
         ...state,
-        statusGet: 'pending',
+        status: 'get/pending',
       };
+
     case GET_ALL_COURSES_SUCCESS:
       return {
         ...state,
-        statusGet: 'success',
+        status: 'get/success',
         courses: action.payload,
       };
+
     case GET_ALL_COURSES_FAIL:
       return {
         ...state,
-        statusGet: 'error',
+        status: 'get/error',
         error: action.payload,
       };
+
     case GET_ALL_COURSES_RESOLVE:
       return {
         ...state,
-        statusGet: 'idle',
+        status: 'idle',
       };
 
-    // -----------------------------
     // GET COURSE (by id)
-    // -----------------------------
     case GET_COURSE_START:
       return {
         ...state,
-        statusGet: 'pending',
+        status: 'get/pending',
       };
+
     case GET_COURSE_SUCCESS:
       return {
         ...state,
         course: { ...state.course, ...action.payload },
-        statusGet: 'success',
+        status: 'get/success',
       };
+
     case GET_COURSE_FAIL:
       return {
         ...state,
-        statusGet: 'error',
+        status: 'get/error',
         error: action.payload,
       };
+
     case GET_COURSE_RESOLVE:
       return {
         ...state,
-        statusGet: 'idle',
+        status: 'idle',
       };
-    // -----------------------------
+
     // GET COURSE MODULES (by course id)
-    // -----------------------------
     case GET_COURSE_MODULES_START:
       return {
         ...state,
-        statusGet: 'pending',
+        status: 'get/pending',
       };
+
     case GET_COURSE_MODULES_SUCCESS:
       return {
         ...state,
@@ -206,94 +222,102 @@ const coursesReducer = (state = coursesInitialState, action) => {
           ...state.course,
           modules: action.payload,
         },
-        statusGet: 'success',
+        status: 'get/success',
       };
+
     case GET_COURSE_MODULES_FAIL:
       return {
         ...state,
-        statusGet: 'error',
+        status: 'get/error',
         error: action.payload,
       };
+
     case GET_COURSE_MODULES_RESOLVE:
       return {
         ...state,
-        statusGet: 'idle',
+        status: 'idle',
       };
 
-    // -----------------------------
     // ADD COURSE
-    // -----------------------------
     case ADD_COURSE_START:
       return {
         ...state,
-        statusAdd: 'pending',
+        status: 'add/pending',
       };
+
     case ADD_COURSE_SUCCESS:
       return {
         ...state,
-        statusAdd: 'success',
+        status: 'add/success',
         courses: action.payload,
       };
+
     case ADD_COURSE_FAIL:
       return {
         ...state,
-        statusAdd: 'error',
+        status: 'add/error',
         error: action.payload,
       };
+
     case ADD_COURSE_RESOLVE:
       return {
         ...state,
-        statusAdd: 'idle',
+        status: 'idle',
       };
 
-    // -----------------------------
     // EDIT COURSE
-    // -----------------------------
     case EDIT_COURSE_START:
       return {
         ...state,
-        statusEdit: 'pending',
+        status: 'edit/pending',
       };
+
     case EDIT_COURSE_SUCCESS:
       return {
         ...state,
-        statusEdit: 'success',
+        status: 'edit/success',
       };
+
     case EDIT_COURSE_FAIL:
       return {
         ...state,
-        statusEdit: 'error',
+        status: 'edit/error',
         error: action.payload,
       };
+
     case EDIT_COURSE_RESOLVE:
       return {
         ...state,
-        statusEdit: 'idle',
+        status: 'idle',
       };
-    // -----------------------------
+
     // DELETE COURSE
-    // -----------------------------
     case DELETE_COURSE_START:
       return {
         ...state,
-        statusDelete: 'pending',
+        status: 'delete/pending',
       };
+
     case DELETE_COURSE_SUCCESS:
       return {
         ...state,
-        statusDelete: 'success',
+        status: 'delete/success',
       };
+
     case DELETE_COURSE_FAIL:
       return {
         ...state,
-        statusDelete: 'error',
+        status: 'delete/error',
         error: action.payload,
       };
+
     case DELETE_COURSE_RESOLVE:
       return {
         ...state,
-        statusDelete: 'idle',
+        status: 'idle',
       };
+
+    //DEFAULT
     default:
       return state;
   }

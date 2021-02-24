@@ -34,7 +34,7 @@ export default ({
   useEffect(() => {
     if (isWrapped) {
       form.setFieldsValue({ ...moduleToEdit });
-    } else if (status === 'success') {
+    } else if (status === 'get/success') {
       form.setFieldsValue({ ...module });
     }
   }, [status, module, form, isWrapped, moduleToEdit]);

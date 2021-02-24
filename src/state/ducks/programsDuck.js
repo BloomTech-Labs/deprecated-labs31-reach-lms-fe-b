@@ -1,8 +1,8 @@
 import { axiosAuth } from '../../api/axiosAuth';
 
-//=========================
-//Action Types
-//=========================
+/******************************************************
+ * PROGRAM ACTION TYPES
+ ******************************************************/
 const GET_PROGRAM_START = ' GET_PROGRAM_START';
 const GET_PROGRAM_SUCCESS = ' GET_PROGRAM_SUCCESS';
 const GET_PROGRAM_FAIL = ' GET_PROGRAM_FAIL';
@@ -33,14 +33,11 @@ const DELETE_PROGRAM_SUCCESS = 'DELETE_PROGRAM_SUCCESS';
 const DELETE_PROGRAM_FAIL = 'DELETE_PROGRAM_FAIL';
 const DELETE_PROGRAM_RESOLVE = 'DELETE_PROGRAM_RESOLVE';
 
-//=========================
-//Action Creators
-//=========================
-
+/******************************************************
+ * PROGRAM ACTIONS
+ ******************************************************/
 export const programsActions = {
-  //=========================
-  //Get All Programs Action
-  //=========================
+  // GET ALL PROGRAMS
   getAllProgramsThunk: () => dispatch => {
     dispatch({ type: GET_ALL_PROGRAMS_START });
 
@@ -57,9 +54,7 @@ export const programsActions = {
       });
   },
 
-  //=========================
-  //Get Program Action
-  //=========================
+  // GET INDIVIDUAL PROGRAM
   getProgramThunk: programId => dispatch => {
     dispatch({ type: GET_PROGRAM_START });
 
@@ -76,11 +71,10 @@ export const programsActions = {
       });
   },
 
-  //=========================
-  //Add Program Action
-  //=========================
+  // ADD PROGRAM
   addProgramThunk: programObj => dispatch => {
     dispatch({ type: ADD_PROGRAM_START });
+
     axiosAuth()
       .post(`/programs/program`, programObj)
       .then(res => {
@@ -94,9 +88,7 @@ export const programsActions = {
       });
   },
 
-  //=========================
-  //Edit Program Action
-  //=========================
+  // EDIT PROGRAM
   editProgramThunk: programObj => dispatch => {
     dispatch({ type: EDIT_PROGRAM_START });
 
@@ -113,9 +105,7 @@ export const programsActions = {
       });
   },
 
-  //=========================
-  //Delete Program Action
-  //=========================
+  // DELETE PROGRAM
   deleteProgramThunk: programId => dispatch => {
     dispatch({ type: DELETE_PROGRAM_START });
 
@@ -132,11 +122,10 @@ export const programsActions = {
       });
   },
 
-  //=========================
-  // GET Program Courses
-  //=========================
+  // GET PROGRAM COURSES
   getProgramCoursesThunk: programId => dispatch => {
     dispatch({ type: GET_PROGRAM_COURSES_START });
+
     axiosAuth()
       .get(`/programs/program/${programId}/courses`)
       .then(res =>
@@ -149,9 +138,9 @@ export const programsActions = {
   },
 };
 
-//=========================
-//Initial Slice of State
-//=========================
+/******************************************************
+ * PROGRAMS INITIAL STATE
+ ******************************************************/
 const programsInitialState = {
   programs: [],
   program: {
@@ -162,49 +151,42 @@ const programsInitialState = {
     courses: [],
   },
   programCourses: [],
-  statusGetCourses: 'idle',
-  statusGet: 'idle',
-  statusAdd: 'idle',
-  statusEdit: 'idle',
-  statusDelete: 'idle',
+  status: 'idle',
   error: '',
 };
 
-//=========================
-//Reducers
-//=========================
+/******************************************************
+ * PROGRAMS REDUCERS
+ ******************************************************/
 const programsReducer = (state = programsInitialState, action) => {
   switch (action.type) {
-    //=========================
-    //Get All Programs Reducers
-    //=========================
+    //GET ALL PROGRAMS
     case GET_ALL_PROGRAMS_START:
-      return { ...state, statusGet: 'pending' };
+      return { ...state, status: 'get-all/pending' };
 
     case GET_ALL_PROGRAMS_SUCCESS:
       return {
         ...state,
         programs: action.payload,
-        statusGet: 'success',
+        status: 'get-all/success',
       };
+
     case GET_ALL_PROGRAMS_FAIL:
       return {
         ...state,
-        statusGet: 'error',
+        status: 'get-all/error',
         error: action.payload,
       };
 
     case GET_ALL_PROGRAMS_RESOLVE:
       return {
         ...state,
-        statusGet: 'idle',
+        status: 'idle',
       };
 
-    //================================
-    //Get Individual Programs Reducers
-    //================================
+    //GET INDIVIDUAL PROGRAM
     case GET_PROGRAM_START:
-      return { ...state, statusGet: 'pending' };
+      return { ...state, status: 'get/pending' };
 
     case GET_PROGRAM_SUCCESS:
       const {
@@ -222,89 +204,82 @@ const programsReducer = (state = programsInitialState, action) => {
           programType,
           programDescription,
         },
-        statusGet: 'success',
+        status: 'get/success',
       };
 
     case GET_PROGRAM_FAIL:
-      return { ...state, statusGet: 'error', error: action.payload };
+      return { ...state, status: 'get/error', error: action.payload };
 
     case GET_PROGRAM_RESOLVE:
-      return { ...state, statusGet: 'idle' };
+      return { ...state, status: 'idle' };
 
-    //=========================
-    //Add Program Reducers
-    //=========================
+    //ADD PROGRAM
     case ADD_PROGRAM_START:
-      return { ...state, statusAdd: 'pending' };
+      return { ...state, status: 'add/pending' };
 
     case ADD_PROGRAM_SUCCESS:
-      return { ...state, statusAdd: 'success' };
+      return { ...state, status: 'add/success' };
 
     case ADD_PROGRAM_FAIL:
-      return { ...state, statusAdd: 'error', error: action.payload };
+      return { ...state, status: 'add/error', error: action.payload };
 
     case ADD_PROGRAM_RESOLVE:
-      return { ...state, statusAdd: 'idle' };
+      return { ...state, status: 'idle' };
 
-    //=========================
-    //Edit Program Reducers
-    //=========================
+    //EDIT PROGRAM
     case EDIT_PROGRAM_START:
-      return { ...state, statusEdit: 'pending' };
+      return { ...state, status: 'edit/pending' };
 
     case EDIT_PROGRAM_SUCCESS:
-      return { ...state, statusEdit: 'success' };
+      return { ...state, status: 'edit/success' };
 
     case EDIT_PROGRAM_FAIL:
-      return { ...state, statusEdit: 'error', error: action.payload };
+      return { ...state, status: 'edit/error', error: action.payload };
 
     case EDIT_PROGRAM_RESOLVE:
-      return { ...state, statusEdit: 'idle' };
+      return { ...state, status: 'idle' };
 
-    //=========================
-    //Delete Program Reducers
-    //=========================
+    //DELETE PROGRAM
     case DELETE_PROGRAM_START:
-      return { ...state, statusDelete: 'pending' };
+      return { ...state, status: 'delete/pending' };
 
     case DELETE_PROGRAM_SUCCESS:
-      return { ...state, statusDelete: 'success' };
+      return { ...state, status: 'delete/success' };
 
     case DELETE_PROGRAM_FAIL:
-      return { ...state, statusDelete: 'error', error: action.payload };
+      return { ...state, status: 'delete/error', error: action.payload };
 
     case DELETE_PROGRAM_RESOLVE:
-      return { ...state, statusDelete: 'idle' };
+      return { ...state, status: 'delete/idle' };
 
-    //=========================
-    // GET Program Courses Reducers
-    //=========================
+    //GET PROGRAM COURSES
     case GET_PROGRAM_COURSES_START:
       return {
         ...state,
-        statusGetCourses: 'pending',
+        status: 'get-courses/pending',
       };
+
     case GET_PROGRAM_COURSES_SUCCESS:
       return {
         ...state,
-        statusGetCourses: 'success',
+        status: 'get-courses/success',
         programCourses: action.payload,
       };
+
     case GET_PROGRAM_COURSES_FAIL:
       return {
         ...state,
-        statusGetCourses: 'fail',
+        status: 'get-courses/fail',
         error: action.payload,
       };
+
     case GET_PROGRAM_COURSES_RESOLVE:
       return {
         ...state,
-        statusGetCourses: 'idle',
+        status: 'get-courses/idle',
       };
 
-    //=========================
-    //Default Case
-    //=========================
+    //DEFAULT
     default:
       return state;
   }
