@@ -8,10 +8,10 @@ const GET_PROGRAM_SUCCESS = ' GET_PROGRAM_SUCCESS';
 const GET_PROGRAM_FAIL = ' GET_PROGRAM_FAIL';
 const GET_PROGRAM_RESOLVE = ' GET_PROGRAM_RESOLVE';
 
-const GET_ALLPROGRAMS_START = 'GET_ALLPROGRAMS_START';
-const GET_ALLPROGRAMS_SUCCESS = 'GET_ALLPROGRAMS_SUCCESS';
-const GET_ALLPROGRAMS_FAIL = 'GET_ALLPROGRAMS_FAIL';
-const GET_ALLPROGRAMS_RESOLVE = 'GET_ALLPROGRAMS_RESOLVE';
+const GET_ALL_PROGRAMS_START = 'GET_ALL_PROGRAMS_START';
+const GET_ALL_PROGRAMS_SUCCESS = 'GET_ALL_PROGRAMS_SUCCESS';
+const GET_ALL_PROGRAMS_FAIL = 'GET_ALL_PROGRAMS_FAIL';
+const GET_ALL_PROGRAMS_RESOLVE = 'GET_ALL_PROGRAMS_RESOLVE';
 
 const GET_PROGRAM_COURSES_START = 'GET_PROGRAM_COURSES_START';
 const GET_PROGRAM_COURSES_SUCCESS = 'GET_PROGRAM_COURSES_SUCCESS';
@@ -42,18 +42,18 @@ export const programsActions = {
   //Get All Programs Action
   //=========================
   getAllProgramsThunk: () => dispatch => {
-    dispatch({ type: GET_ALLPROGRAMS_START });
+    dispatch({ type: GET_ALL_PROGRAMS_START });
 
     axiosAuth()
       .get('/users/getuserprograms')
       .then(res => {
-        dispatch({ type: GET_ALLPROGRAMS_SUCCESS, payload: res.data });
+        dispatch({ type: GET_ALL_PROGRAMS_SUCCESS, payload: res.data });
       })
       .catch(err => {
-        dispatch({ type: GET_ALLPROGRAMS_FAIL, payload: err.message });
+        dispatch({ type: GET_ALL_PROGRAMS_FAIL, payload: err.message });
       })
       .finally(() => {
-        dispatch({ type: GET_ALLPROGRAMS_RESOLVE });
+        dispatch({ type: GET_ALL_PROGRAMS_RESOLVE });
       });
   },
 
@@ -178,23 +178,23 @@ const programsReducer = (state = programsInitialState, action) => {
     //=========================
     //Get All Programs Reducers
     //=========================
-    case GET_ALLPROGRAMS_START:
+    case GET_ALL_PROGRAMS_START:
       return { ...state, statusGet: 'pending' };
 
-    case GET_ALLPROGRAMS_SUCCESS:
+    case GET_ALL_PROGRAMS_SUCCESS:
       return {
         ...state,
         programs: action.payload,
         statusGet: 'success',
       };
-    case GET_ALLPROGRAMS_FAIL:
+    case GET_ALL_PROGRAMS_FAIL:
       return {
         ...state,
         statusGet: 'error',
         error: action.payload,
       };
 
-    case GET_ALLPROGRAMS_RESOLVE:
+    case GET_ALL_PROGRAMS_RESOLVE:
       return {
         ...state,
         statusGet: 'idle',

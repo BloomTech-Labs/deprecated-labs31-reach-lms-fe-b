@@ -3,40 +3,37 @@ import { Card } from 'antd';
 import { GhostLink } from '../../common';
 import { EditOutlined, DeleteOutlined } from '@ant-design/icons';
 
-export default props => {
-  const {
-    moduleName,
-    moduleDescription,
-    moduleId,
-    module,
-    triggerEdit,
-    triggerDelete,
-  } = props;
-
+export default ({
+  moduleId,
+  name,
+  description,
+  triggerEdit,
+  triggerDelete,
+}) => {
   if (triggerEdit) {
     return (
       <Card
-        title={moduleName}
+        title={name}
         actions={[
-          <EditOutlined onClick={() => triggerEdit(module)} />,
-          <DeleteOutlined onClick={() => triggerDelete(module)} />,
+          <EditOutlined onClick={triggerEdit} />,
+          <DeleteOutlined onClick={triggerDelete} />,
         ]}
       >
-        {moduleDescription}
+        {description}
       </Card>
     );
   }
   return (
     <Card
-      title={moduleName}
+      title={name}
       actions={[
         <GhostLink to={`/module/edit/${moduleId}`}>
           <EditOutlined />
         </GhostLink>,
-        <DeleteOutlined onClick={() => triggerDelete(moduleId)} />,
+        <DeleteOutlined onClick={triggerDelete} />,
       ]}
     >
-      {moduleDescription}
+      {description}
     </Card>
   );
 };

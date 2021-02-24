@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
-import { Form, Input, Space, Button } from 'antd';
+import { Form, Input, Space, Button, Select } from 'antd';
 import { useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
+import { programsActions } from '../../../state/ducks/programsDuck';
 import { coursesActions } from '../../../state/ducks/coursesDuck';
-import { ModuleForm, ModuleCard } from '../module-form';
+import { modulesActions } from '../../../state/ducks/modulesDuck';
+import { ModuleForm } from '../module-form';
+import ListModuleCards from './ListModuleCards';
 
 const StyledSpace = styled(Space)`
   &&& {
@@ -12,12 +15,12 @@ const StyledSpace = styled(Space)`
   }
 `;
 
-// CourseFormContainer — No specific parent, props isn't coming down quite yet
 export default ({ isWrapped, onSubmit, courseId, courseToEdit }) => {
   let { id } = useParams();
   if (isWrapped) {
     id = courseId;
   }
+  const { programs, statusGetCourses } = useSelector(state => state.programs);
   const { course, statusGet } = useSelector(state => state.courses);
   const dispatch = useDispatch();
   const [form] = Form.useForm();
@@ -29,6 +32,9 @@ export default ({ isWrapped, onSubmit, courseId, courseToEdit }) => {
       dispatch(coursesActions.getCourseThunk(id));
       dispatch(coursesActions.getCourseModulesThunk(id));
     }
+    if (!isWrapped && !id) {
+      dispatch(programsActions.getAllProgramsThunk());
+    }
   }, [id, dispatch, isWrapped]);
 
   useEffect(() => {
@@ -38,7 +44,13 @@ export default ({ isWrapped, onSubmit, courseId, courseToEdit }) => {
     if (statusGet === 'success') {
       form.setFieldsValue({ ...form.getFieldsValue(), ...course });
     }
-  }, [statusGet, course, form, isWrapped, courseToEdit]);
+    // if (statusGetCourses === "success") {
+    //   form.setFieldsValue({
+    //     ...form.getFieldsValue(),
+    //     program: programs
+    //   })
+    // }
+  }, [statusGet, statusGetCourses, course, form, isWrapped, courseToEdit]);
 
   const showModuleModal = () => setModalVisible(true);
   const hideModuleModal = () => setModalVisible(false);
@@ -49,7 +61,12 @@ export default ({ isWrapped, onSubmit, courseId, courseToEdit }) => {
     } else if (id) {
       dispatch(coursesActions.editCourseThunk({ ...values, courseid: id }));
     } else {
-      dispatch(coursesActions.addCourseThunk(values));
+      dispatch(
+        coursesActions.addCourseThunk({
+          ...values,
+          program: { programId: values.program },
+        })
+      );
     }
   };
 
@@ -82,6 +99,24 @@ export default ({ isWrapped, onSubmit, courseId, courseToEdit }) => {
     showModuleModal();
   };
 
+  const onModuleRemove = moduleToDelete => {
+    const { moduleId, moduleName } = moduleToDelete;
+    const existingModules = form.getFieldValue('modules');
+    if (moduleId) {
+      dispatch(modulesActions.deleteModuleThunk(moduleId));
+      form.setFieldsValue({
+        modules: existingModules.filter(module => module.moduleId !== moduleId),
+      });
+    } else {
+      form.setFieldsValue({
+        ...form.getFieldsValue(),
+        modules: existingModules.filter(
+          module => module.moduleName !== moduleName
+        ),
+      });
+    }
+  };
+
   return (
     <StyledSpace direction="vertical" align="center">
       <h1>Course Form</h1>
@@ -92,6 +127,25 @@ export default ({ isWrapped, onSubmit, courseId, courseToEdit }) => {
         autoComplete="off"
         layout="vertical"
       >
+        {!isWrapped && (
+          <Form.Item
+            name="programSelected"
+            label="Associated Program"
+            rules={[{ required: true }]}
+          >
+            <Select name="program" placeholder="Select a Program">
+              {/* <Select.Option value="--default--">Please Select a Program</Select.Option> */}
+              {programs.map(program => {
+                return (
+                  <Select.Option value={program.programId}>
+                    {program.programName}
+                  </Select.Option>
+                );
+              })}
+            </Select>
+          </Form.Item>
+        )}
+
         <Form.Item
           name="coursename"
           label="Course Name"
@@ -116,23 +170,19 @@ export default ({ isWrapped, onSubmit, courseId, courseToEdit }) => {
           <Input.TextArea style={{ resize: 'none' }} rows={2} cols={2} />
         </Form.Item>
 
-        <Form.Item name="modules" label="Module List">
-          {// if `formState.modules` both exists & has a length greater than 0,
-          form.getFieldValue('modules')?.length > 0 ? (
-            // then map through each module in array and return a list of ModuleCards
-            form.getFieldValue('modules').map((module, index) => (
-              <li key={index} className="module">
-                <ModuleCard
-                  {...module}
-                  module={module}
-                  triggerEdit={triggerEdit}
-                />
-              </li>
-            ))
-          ) : (
-            // else, we don't have any modules in this course!
-            <p>No modules yet!</p>
-          )}
+        <Form.Item
+          label="Modules"
+          shouldUpdate={(prev, current) => prev.modules !== current.modules}
+        >
+          {() => {
+            return (
+              <ListModuleCards
+                modules={form.getFieldValue('modules')}
+                triggerEdit={triggerEdit}
+                triggerDelete={onModuleRemove}
+              />
+            );
+          }}
         </Form.Item>
 
         <Form.Item>

@@ -196,46 +196,9 @@ export default props => {
         </Form.Item>
 
         {/* List of Course Cards for Each Course in This Program */}
-        {/* <Form.Item
-          name="courses"
-          label="Course List"
-          shouldUpdate={(prev, current) => {
-            let soUpdate = (prev.courses.length !== current.courses.length);
-            return soUpdate;
-          }}
-        >
-          {({ getFieldValue }) => {
-            let courses = getFieldValue("courses");
-            return (
-
-              (getFieldValue("courses")?.length > 0)
-                ?
-                getFieldValue("courses").map(course => {
-                  const { coursename, coursedescription, courseid, coursecode, ...rest } = course;
-                  return (
-                    <li key={`${courseid}~${coursecode}`}>
-                      <CourseCard
-                        id={courseid}
-                        course={course}
-                        triggerEdit={() => triggerEdit(course)}
-                        triggerDelete={() => onCourseRemove(course)}
-                        {...rest}
-                      />
-                    </li>
-                  );
-                })
-                : <p>No courses yet!</p>
-            );
-          }}
-        </Form.Item> */}
         <Form.Item
           shouldUpdate={(prev, current) => prev.courses !== current.courses}
         >
-          {/* <ListCourseCards
-            courses={form.getFieldValue("courses") || []}
-            triggerEdit={triggerEdit}
-            triggerDelete={onCourseRemove}
-          /> */}
           {() => (
             <ListCourseCards
               courses={form.getFieldValue('courses')}
