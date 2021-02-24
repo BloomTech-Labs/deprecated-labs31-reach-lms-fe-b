@@ -5,6 +5,7 @@ import { useParams, useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { programsActions } from '../../../state/ducks/programsDuck';
 import { coursesActions } from '../../../state/ducks/coursesDuck';
+import ListCourseCards from './ListCourseCards';
 
 const {
   getProgramThunk,
@@ -199,33 +200,11 @@ export default props => {
 
         {/* List of Course Cards for Each Course in This Program */}
         <Form.Item name="courses" label="Course List">
-          {form.getFieldValue('courses')?.length > 0 ? (
-            form.getFieldValue('courses').map((course, index) => {
-              const {
-                coursename,
-                coursedescription,
-                courseid,
-                ...rest
-              } = course;
-              return (
-                <li key={index}>
-                  <CourseCard
-                    key={index}
-                    id={courseid}
-                    course={course}
-                    name={coursename}
-                    description={coursedescription}
-                    triggerEdit={triggerEdit}
-                    triggerDelete={onCourseRemove}
-                    {...rest}
-                  />
-                </li>
-              );
-            })
-          ) : (
-            // if no courses in program, display that to user
-            <p>No courses yet!</p>
-          )}
+          <ListCourseCards
+            courses={form.getFieldValue('courses') || []}
+            triggerEdit={triggerEdit}
+            triggerDelete={onCourseRemove}
+          />
         </Form.Item>
 
         {/* Add Class Button. On click will pull up ADD COURSE FORM (in a modal) */}
