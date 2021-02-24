@@ -61,12 +61,12 @@ export default ({ isWrapped, onSubmit, courseId, courseToEdit }) => {
     } else if (id) {
       dispatch(coursesActions.editCourseThunk({ ...values, courseid: id }));
     } else {
-      dispatch(
-        coursesActions.addCourseThunk({
-          ...values,
-          program: { programId: values.program },
-        })
-      );
+      const validNewCourse = {
+        ...values,
+        program: { programId: values.programSelected },
+      };
+      console.log({ validNewCourse });
+      dispatch(coursesActions.addCourseThunk(validNewCourse));
     }
   };
 
