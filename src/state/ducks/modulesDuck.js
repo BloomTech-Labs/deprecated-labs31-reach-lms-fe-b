@@ -138,20 +138,20 @@ const modulesReducer = (state = modulesInitialState, action) => {
     case GET_MODULES_START:
       return {
         ...state,
-        status: 'pending',
+        status: 'get-all/pending',
       };
 
     case GET_MODULES_SUCCESS:
       return {
         ...state,
-        status: 'success',
+        status: 'get-all/success',
         modules: action.payload,
       };
 
     case GET_MODULES_FAIL:
       return {
         ...state,
-        status: 'error',
+        status: 'get-all/error',
         error: action.payload,
       };
 
@@ -165,20 +165,20 @@ const modulesReducer = (state = modulesInitialState, action) => {
     case GET_MODULE_START:
       return {
         ...state,
-        status: 'pending',
+        status: 'get/pending',
       };
 
     case GET_MODULE_SUCCESS:
       return {
         ...state,
-        status: 'success',
+        status: 'get/success',
         module: action.payload,
       };
 
     case GET_MODULE_FAIL:
       return {
         ...state,
-        status: 'error',
+        status: 'get/error',
         error: action.payload,
       };
 
@@ -192,19 +192,19 @@ const modulesReducer = (state = modulesInitialState, action) => {
     case ADD_MODULE_START:
       return {
         ...state,
-        status: 'pending',
+        status: 'add/pending',
       };
 
     case ADD_MODULE_SUCCESS:
       return {
         ...state,
-        status: 'success',
+        status: 'add/success',
       };
 
     case ADD_MODULE_FAIL:
       return {
         ...state,
-        status: 'error',
+        status: 'add/error',
         error: action.payload,
       };
 
@@ -218,19 +218,19 @@ const modulesReducer = (state = modulesInitialState, action) => {
     case EDIT_MODULE_START:
       return {
         ...state,
-        status: 'pending',
+        status: 'edit/pending',
       };
 
     case EDIT_MODULE_SUCCESS:
       return {
         ...state,
-        status: 'success',
+        status: 'edit/success',
       };
 
     case EDIT_MODULE_FAIL:
       return {
         ...state,
-        status: 'error',
+        status: 'edit/error',
         error: action.payload,
       };
 
@@ -244,19 +244,19 @@ const modulesReducer = (state = modulesInitialState, action) => {
     case DELETE_MODULE_START:
       return {
         ...state,
-        status: 'pending',
+        status: 'delete/pending',
       };
 
     case DELETE_MODULE_SUCCESS:
       return {
         ...state,
-        status: 'success',
+        status: 'delete/success',
       };
 
     case DELETE_MODULE_FAIL:
       return {
         ...state,
-        status: 'error',
+        status: 'delete/error',
         error: action.payload,
       };
 
