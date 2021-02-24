@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { programsActions } from '../../../state/ducks/programsDuck';
 import { coursesActions } from '../../../state/ducks/coursesDuck';
 import { modulesActions } from '../../../state/ducks/modulesDuck';
-import { ModuleForm } from '../module-form';
+import { ModuleForm, ModuleFormModal } from '../module-form';
 import ListModuleCards from './ListModuleCards';
 
 const StyledSpace = styled(Space)`
@@ -66,6 +66,7 @@ export default ({ isWrapped, onSubmit, courseId, courseToEdit }) => {
 
   const onModuleAdd = newModule => {
     const existingModules = form.getFieldValue('modules') || [];
+
     form.setFieldsValue({
       modules: [...existingModules, newModule],
     });
@@ -76,13 +77,9 @@ export default ({ isWrapped, onSubmit, courseId, courseToEdit }) => {
     const existingModules = form.getFieldValue('modules') || [];
 
     form.setFieldsValue({
-      modules: existingModules.map(existingModule => {
-        if (existingModule.moduleId !== editedModule.moduleId) {
-          return existingModule;
-        } else {
-          return editedModule;
-        }
-      }),
+      modules: existingModules.map(module =>
+        module.moduleId === editedModule.moduleId ? editedModule : module
+      ),
     });
 
     hideModuleModal();
@@ -95,7 +92,6 @@ export default ({ isWrapped, onSubmit, courseId, courseToEdit }) => {
 
   const onModuleRemove = moduleToDelete => {
     const { moduleId, moduleName } = moduleToDelete;
-    const existingModules = form.getFieldValue('modules');
 
     const filterById = module => module.moduleId !== moduleId;
     const filterByName = module => module.moduleName !== moduleName;
@@ -103,6 +99,8 @@ export default ({ isWrapped, onSubmit, courseId, courseToEdit }) => {
     if (moduleId) {
       dispatch(modulesActions.deleteModuleThunk(moduleId));
     }
+
+    const existingModules = form.getFieldValue('modules') || [];
 
     form.setFieldsValue({
       modules: existingModules.filter(moduleId ? filterById : filterByName),
@@ -126,14 +124,9 @@ export default ({ isWrapped, onSubmit, courseId, courseToEdit }) => {
             rules={[{ required: true }]}
           >
             <Select name="program" placeholder="Select a Program">
-              {/* <Select.Option value="--default--">Please Select a Program</Select.Option> */}
-              {programs.map(program => {
-                return (
-                  <Select.Option value={program.programId}>
-                    {program.programName}
-                  </Select.Option>
-                );
-              })}
+              {programs.map(({ programId, programName }) => (
+                <Select.Option value={programId}>{programName}</Select.Option>
+              ))}
             </Select>
           </Form.Item>
         )}
@@ -189,7 +182,12 @@ export default ({ isWrapped, onSubmit, courseId, courseToEdit }) => {
           </Button>
         </Form.Item>
       </Form>
-      {moduleToEdit ? (
+      <ModuleFormModal
+        visible={modalVisible}
+        onCancel={hideModuleModal}
+        onSubmit={onModuleAdd}
+      />
+      {/* {moduleToEdit ? (
         <ModuleForm
           visible={modalVisible}
           onCancel={hideModuleModal}
@@ -205,7 +203,7 @@ export default ({ isWrapped, onSubmit, courseId, courseToEdit }) => {
           onSubmit={onModuleAdd}
           isWrapped={true}
         />
-      )}
+      )} */}
     </StyledSpace>
   );
 };

@@ -4,6 +4,7 @@ import { useResetFormOnCloseModal } from '../../hooks/useResetFormOnCloseModal';
 import { useParams } from 'react-router-dom';
 import { modulesActions } from '../../../state/ducks/modulesDuck';
 import { useDispatch, useSelector } from 'react-redux';
+import { ModuleFormModal, ModuleForm } from '.';
 
 // ModuleFormContainer component
 // props come from CourseFormContainer
@@ -64,41 +65,17 @@ export default ({
   };
 
   return (
-    <Modal
-      title="Module Modal"
-      visible={visible}
-      onOk={onOk}
-      onCancel={onCancel}
-    >
-      <h1>Module</h1>
-      <Form form={form} name="moduleForm" layout="vertical" size="large">
-        <Form.Item
-          name="moduleName"
-          label="Module Name"
-          rules={[{ required: true, message: 'Module name is required.' }]}
-          onChange={onChange}
-        >
-          <Input name="moduleName" />
-        </Form.Item>
-        <Form.Item
-          name="moduleDescription"
-          label="Module Description"
-          rules={[
-            { required: true, message: 'Module description is required.' },
-          ]}
-          onChange={onChange}
-        >
-          <Input.TextArea name="moduleDescription" />
-        </Form.Item>
-        <Form.Item
-          name="moduleContent"
-          label="Module Content"
-          rules={[{ required: true }]}
-          onChange={onChange}
-        >
-          <Input.TextArea name="moduleContent" />
-        </Form.Item>
-      </Form>
-    </Modal>
+    <>
+      {/* <ModuleFormModal visible={visible} onOk={onOk} onCancel={onCancel} /> */}
+      <Modal
+        title="Module Modal"
+        visible={visible}
+        onOk={onOk}
+        onCancel={onCancel}
+      >
+        <h1>Module</h1>
+        <ModuleForm form={form} onChange={onChange} />
+      </Modal>
+    </>
   );
 };
