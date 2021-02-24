@@ -162,11 +162,7 @@ const programsInitialState = {
     courses: [],
   },
   programCourses: [],
-  statusGetCourses: 'idle',
-  statusGet: 'idle',
-  statusAdd: 'idle',
-  statusEdit: 'idle',
-  statusDelete: 'idle',
+  status: 'idle',
   error: '',
 };
 
@@ -179,32 +175,32 @@ const programsReducer = (state = programsInitialState, action) => {
     //Get All Programs Reducers
     //=========================
     case GET_ALL_PROGRAMS_START:
-      return { ...state, statusGet: 'pending' };
+      return { ...state, status: 'get-all/pending' };
 
     case GET_ALL_PROGRAMS_SUCCESS:
       return {
         ...state,
         programs: action.payload,
-        statusGet: 'success',
+        status: 'get-all/success',
       };
     case GET_ALL_PROGRAMS_FAIL:
       return {
         ...state,
-        statusGet: 'error',
+        status: 'get-all/error',
         error: action.payload,
       };
 
     case GET_ALL_PROGRAMS_RESOLVE:
       return {
         ...state,
-        statusGet: 'idle',
+        status: 'idle',
       };
 
     //================================
     //Get Individual Programs Reducers
     //================================
     case GET_PROGRAM_START:
-      return { ...state, statusGet: 'pending' };
+      return { ...state, status: 'get/pending' };
 
     case GET_PROGRAM_SUCCESS:
       const {
@@ -222,59 +218,59 @@ const programsReducer = (state = programsInitialState, action) => {
           programType,
           programDescription,
         },
-        statusGet: 'success',
+        status: 'get/success',
       };
 
     case GET_PROGRAM_FAIL:
-      return { ...state, statusGet: 'error', error: action.payload };
+      return { ...state, status: 'get/error', error: action.payload };
 
     case GET_PROGRAM_RESOLVE:
-      return { ...state, statusGet: 'idle' };
+      return { ...state, status: 'idle' };
 
     //=========================
     //Add Program Reducers
     //=========================
     case ADD_PROGRAM_START:
-      return { ...state, statusAdd: 'pending' };
+      return { ...state, status: 'add/pending' };
 
     case ADD_PROGRAM_SUCCESS:
-      return { ...state, statusAdd: 'success' };
+      return { ...state, status: 'add/success' };
 
     case ADD_PROGRAM_FAIL:
-      return { ...state, statusAdd: 'error', error: action.payload };
+      return { ...state, status: 'add/error', error: action.payload };
 
     case ADD_PROGRAM_RESOLVE:
-      return { ...state, statusAdd: 'idle' };
+      return { ...state, status: 'idle' };
 
     //=========================
     //Edit Program Reducers
     //=========================
     case EDIT_PROGRAM_START:
-      return { ...state, statusEdit: 'pending' };
+      return { ...state, status: 'edit/pending' };
 
     case EDIT_PROGRAM_SUCCESS:
-      return { ...state, statusEdit: 'success' };
+      return { ...state, status: 'edit/success' };
 
     case EDIT_PROGRAM_FAIL:
-      return { ...state, statusEdit: 'error', error: action.payload };
+      return { ...state, status: 'edit/error', error: action.payload };
 
     case EDIT_PROGRAM_RESOLVE:
-      return { ...state, statusEdit: 'idle' };
+      return { ...state, status: 'idle' };
 
     //=========================
     //Delete Program Reducers
     //=========================
     case DELETE_PROGRAM_START:
-      return { ...state, statusDelete: 'pending' };
+      return { ...state, status: 'delete/pending' };
 
     case DELETE_PROGRAM_SUCCESS:
-      return { ...state, statusDelete: 'success' };
+      return { ...state, status: 'delete/success' };
 
     case DELETE_PROGRAM_FAIL:
-      return { ...state, statusDelete: 'error', error: action.payload };
+      return { ...state, status: 'delete/error', error: action.payload };
 
     case DELETE_PROGRAM_RESOLVE:
-      return { ...state, statusDelete: 'idle' };
+      return { ...state, status: 'delete/idle' };
 
     //=========================
     // GET Program Courses Reducers
@@ -282,24 +278,24 @@ const programsReducer = (state = programsInitialState, action) => {
     case GET_PROGRAM_COURSES_START:
       return {
         ...state,
-        statusGetCourses: 'pending',
+        status: 'get-courses/pending',
       };
     case GET_PROGRAM_COURSES_SUCCESS:
       return {
         ...state,
-        statusGetCourses: 'success',
+        status: 'get-courses/success',
         programCourses: action.payload,
       };
     case GET_PROGRAM_COURSES_FAIL:
       return {
         ...state,
-        statusGetCourses: 'fail',
+        status: 'get-courses/fail',
         error: action.payload,
       };
     case GET_PROGRAM_COURSES_RESOLVE:
       return {
         ...state,
-        statusGetCourses: 'idle',
+        status: 'get-courses/idle',
       };
 
     //=========================
