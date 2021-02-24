@@ -29,7 +29,7 @@ export const modulesActions = {
   getModulesThunk: () => dispatch => {
     dispatch({ type: GET_MODULES_START });
     axiosAuth()
-      .get('/courses/courses')
+      .get('/modules/modules')
       .then(res => {
         dispatch({ type: GET_MODULES_SUCCESS, payload: res.data });
       })
@@ -43,7 +43,7 @@ export const modulesActions = {
   getModuleThunk: id => dispatch => {
     dispatch({ type: GET_MODULE_START });
     axiosAuth()
-      .get(`/courses/course/${id}`)
+      .get(`/modules/module/${id}`)
       .then(res => {
         dispatch({ type: GET_MODULE_SUCCESS, payload: res.data });
       })
@@ -57,9 +57,9 @@ export const modulesActions = {
   addModuleThunk: module => dispatch => {
     dispatch({ type: ADD_MODULE_START });
     axiosAuth()
-      .post('/courses/courses', module)
+      .post('/modules/module', module)
       .then(res => {
-        dispatch({ type: ADD_MODULE_SUCCESS });
+        dispatch({ type: ADD_MODULE_SUCCESS, payload: res.data });
       })
       .catch(err => {
         dispatch({ type: ADD_MODULE_FAIL, payload: err.message });
@@ -71,9 +71,9 @@ export const modulesActions = {
   editModuleThunk: module => dispatch => {
     dispatch({ type: EDIT_MODULE_START });
     axiosAuth()
-      .put(`/courses/course/${module.courseid}`, module)
+      .patch(`/modules/module/${module.moduleId}`, module)
       .then(res => {
-        dispatch({ type: EDIT_MODULE_SUCCESS });
+        dispatch({ type: EDIT_MODULE_SUCCESS, payload: res.data });
       })
       .catch(err => {
         dispatch({ type: EDIT_MODULE_FAIL, payload: err.message });
@@ -100,7 +100,7 @@ export const modulesActions = {
 
 const modulesInitialState = {
   modules: [],
-  isFetching: false,
+  status: 'idle',
   error: '',
   module: {
     moduleId: '',
@@ -121,6 +121,7 @@ const modulesReducer = (state = modulesInitialState, action) => {
     case GET_MODULES_SUCCESS:
       return {
         ...state,
+        status: 'success',
         modules: action.payload,
       };
     case GET_MODULES_FAIL:
@@ -142,11 +143,8 @@ const modulesReducer = (state = modulesInitialState, action) => {
     case GET_MODULE_SUCCESS:
       return {
         ...state,
-        moduleId: action.payload.moduleId,
-        moduleName: action.payload.moduleName,
-        moduleDescription: action.payload.moduleDescription,
-        moduleContent: action.payload.moduleContent,
-        course: action.payload.course,
+        status: 'success',
+        module: action.payload,
       };
     case GET_MODULE_FAIL:
       return {
@@ -165,7 +163,10 @@ const modulesReducer = (state = modulesInitialState, action) => {
         status: 'pending',
       };
     case ADD_MODULE_SUCCESS:
-      return state;
+      return {
+        ...state,
+        status: 'success',
+      };
     case ADD_MODULE_FAIL:
       return {
         ...state,
@@ -183,7 +184,10 @@ const modulesReducer = (state = modulesInitialState, action) => {
         status: 'pending',
       };
     case EDIT_MODULE_SUCCESS:
-      return state;
+      return {
+        ...state,
+        status: 'success',
+      };
     case EDIT_MODULE_FAIL:
       return {
         ...state,
@@ -201,7 +205,10 @@ const modulesReducer = (state = modulesInitialState, action) => {
         status: 'pending',
       };
     case DELETE_MODULE_SUCCESS:
-      return state;
+      return {
+        ...state,
+        status: 'success',
+      };
     case DELETE_MODULE_FAIL:
       return {
         ...state,

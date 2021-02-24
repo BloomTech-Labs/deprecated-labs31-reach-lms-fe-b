@@ -3,6 +3,7 @@ import { Card } from 'antd';
 import { ModuleView } from '../';
 import { useDispatch, useSelector } from 'react-redux';
 import { coursesActions } from '../../../state/ducks/coursesDuck';
+
 import { Button } from 'antd';
 import { GhostLink as Link } from '../../common';
 
@@ -26,7 +27,8 @@ const CourseViewContainer = props => {
   //Redux State Managers
   const dispatch = useDispatch();
 
-  const modules = useSelector(state => state.courses.course);
+  const course = useSelector(state => state.courses.course);
+  const { modules } = course;
 
   //Dispatch Action to Load Program Info
   useEffect(() => {
@@ -54,7 +56,7 @@ const CourseViewContainer = props => {
             <Description>{courseDescription}</Description>
             {/* Maps over course module data and renders ModuleView components*/}
             {[] &&
-              modules.map(module => (
+              modules?.map(module => (
                 <ModuleView
                   key={module.moduleId}
                   moduleId={module.moduleId}

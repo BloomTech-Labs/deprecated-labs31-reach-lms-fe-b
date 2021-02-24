@@ -76,33 +76,11 @@ export const programsActions = {
       });
   },
 
-  // //=========================
-  // //Get Program Courses Action
-  // //=========================
-  // getProgramCoursesThunk: programId => dispatch => {
-  //   dispatch({ type: GET_PROGRAM_COURSES_START });
-
-  //   axiosAuth()
-  //     .get(`/programs/program/${programId}/courses`)
-
-  //     .then(res => {
-  //       console.log(res);
-  //       dispatch({ type: GET_PROGRAM_COURSES_SUCCESS, payload: res.data });
-  //     })
-  //     .catch(err => {
-  //       dispatch({ type: GET_PROGRAM_COURSES_FAIL, payload: err.message });
-  //     })
-  //     .finally(() => {
-  //       dispatch({ type: GET_PROGRAM_COURSES_RESOLVE });
-  //     });
-  // },
-
   //=========================
   //Add Program Action
   //=========================
   addProgramThunk: programObj => dispatch => {
     dispatch({ type: ADD_PROGRAM_START });
-    console.log({ programObj });
     axiosAuth()
       .post(`/programs/program`, programObj)
       .then(res => {
@@ -210,10 +188,17 @@ const programsReducer = (state = programsInitialState, action) => {
         statusGet: 'success',
       };
     case GET_ALLPROGRAMS_FAIL:
-      return { ...state, statusGet: 'error', error: action.payload };
+      return {
+        ...state,
+        statusGet: 'error',
+        error: action.payload,
+      };
 
     case GET_ALLPROGRAMS_RESOLVE:
-      return { ...state, statusGet: 'idle' };
+      return {
+        ...state,
+        statusGet: 'idle',
+      };
 
     //================================
     //Get Individual Programs Reducers
@@ -227,7 +212,6 @@ const programsReducer = (state = programsInitialState, action) => {
         programName,
         programType,
         programDescription,
-        courses,
       } = action.payload;
       return {
         ...state,
