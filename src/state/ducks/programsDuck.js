@@ -74,6 +74,7 @@ export const programsActions = {
   // ADD PROGRAM
   addProgramThunk: programObj => dispatch => {
     dispatch({ type: ADD_PROGRAM_START });
+
     axiosAuth()
       .post(`/programs/program`, programObj)
       .then(res => {
@@ -124,6 +125,7 @@ export const programsActions = {
   // GET PROGRAM COURSES
   getProgramCoursesThunk: programId => dispatch => {
     dispatch({ type: GET_PROGRAM_COURSES_START });
+
     axiosAuth()
       .get(`/programs/program/${programId}/courses`)
       .then(res =>
