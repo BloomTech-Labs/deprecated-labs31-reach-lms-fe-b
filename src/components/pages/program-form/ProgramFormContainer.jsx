@@ -104,46 +104,37 @@ export default props => {
   };
 
   const onCourseAdd = newClass => {
-    const existingClasses = form.getFieldValue('courses') || [];
-
     form.setFieldsValue({
-      courses: [...existingClasses, newClass],
+      courses: [...form.getFieldValue('courses'), newClass],
     });
 
     hideCourseModal();
   };
 
   const onCourseRemove = courseToRemove => {
-    const { courseid } = courseToRemove;
+    const { courseid, coursecode } = courseToRemove;
 
-    const existingClasses = form.getFieldValue('courses');
+    const filterById = course => course.courseid !== courseid;
+    const filterByCode = course => course.coursecode !== coursecode;
 
     if (courseid) {
       dispatch(deleteCourseThunk(courseid));
-      form.setFieldsValue({
-        courses: existingClasses.filter(course => course.courseid !== courseid),
-      });
-    } else {
-      let updated = existingClasses.filter(
-        course => course.coursecode !== courseToRemove.coursecode
-      );
-      form.setFieldsValue({
-        ...form.getFieldsValue(),
-        courses: updated,
-      });
     }
+
+    form.setFieldsValue({
+      courses: form
+        .getFieldValue('courses')
+        .filter(courseid ? filterById : filterByCode),
+    });
   };
 
-  const onCourseEdit = editedClass => {
-    const existingCourses = form.getFieldValue('courses') || [];
+  const onCourseEdit = editedCourse => {
     form.setFieldsValue({
-      courses: existingCourses.map(existingCourse => {
-        if (existingCourse.courseid !== editedClass.courseid) {
-          return existingCourse;
-        } else {
-          return editedClass;
-        }
-      }),
+      courses: form
+        .getFieldValue('courses')
+        .map(course =>
+          course.courseid === editedCourse.courseid ? editedCourse : course
+        ),
     });
 
     hideCourseModal();

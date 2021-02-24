@@ -96,19 +96,17 @@ export default ({ isWrapped, onSubmit, courseId, courseToEdit }) => {
   const onModuleRemove = moduleToDelete => {
     const { moduleId, moduleName } = moduleToDelete;
     const existingModules = form.getFieldValue('modules');
+
+    const filterById = module => module.moduleId !== moduleId;
+    const filterByName = module => module.moduleName !== moduleName;
+
     if (moduleId) {
       dispatch(modulesActions.deleteModuleThunk(moduleId));
-      form.setFieldsValue({
-        modules: existingModules.filter(module => module.moduleId !== moduleId),
-      });
-    } else {
-      form.setFieldsValue({
-        ...form.getFieldsValue(),
-        modules: existingModules.filter(
-          module => module.moduleName !== moduleName
-        ),
-      });
     }
+
+    form.setFieldsValue({
+      modules: existingModules.filter(moduleId ? filterById : filterByName),
+    });
   };
 
   return (
