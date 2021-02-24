@@ -1,8 +1,8 @@
 import { axiosAuth } from '../../api/axiosAuth';
 
-//=========================
-//Action Types
-//=========================
+/******************************************************
+ * PROGRAM ACTION TYPES
+ ******************************************************/
 const GET_PROGRAM_START = ' GET_PROGRAM_START';
 const GET_PROGRAM_SUCCESS = ' GET_PROGRAM_SUCCESS';
 const GET_PROGRAM_FAIL = ' GET_PROGRAM_FAIL';
@@ -33,14 +33,11 @@ const DELETE_PROGRAM_SUCCESS = 'DELETE_PROGRAM_SUCCESS';
 const DELETE_PROGRAM_FAIL = 'DELETE_PROGRAM_FAIL';
 const DELETE_PROGRAM_RESOLVE = 'DELETE_PROGRAM_RESOLVE';
 
-//=========================
-//Action Creators
-//=========================
-
+/******************************************************
+ * PROGRAM ACTIONS
+ ******************************************************/
 export const programsActions = {
-  //=========================
-  //Get All Programs Action
-  //=========================
+  // GET ALL PROGRAMS
   getAllProgramsThunk: () => dispatch => {
     dispatch({ type: GET_ALL_PROGRAMS_START });
 
@@ -57,9 +54,7 @@ export const programsActions = {
       });
   },
 
-  //=========================
-  //Get Program Action
-  //=========================
+  // GET INDIVIDUAL PROGRAM
   getProgramThunk: programId => dispatch => {
     dispatch({ type: GET_PROGRAM_START });
 
@@ -76,9 +71,7 @@ export const programsActions = {
       });
   },
 
-  //=========================
-  //Add Program Action
-  //=========================
+  // ADD PROGRAM
   addProgramThunk: programObj => dispatch => {
     dispatch({ type: ADD_PROGRAM_START });
     axiosAuth()
@@ -94,9 +87,7 @@ export const programsActions = {
       });
   },
 
-  //=========================
-  //Edit Program Action
-  //=========================
+  // EDIT PROGRAM
   editProgramThunk: programObj => dispatch => {
     dispatch({ type: EDIT_PROGRAM_START });
 
@@ -113,9 +104,7 @@ export const programsActions = {
       });
   },
 
-  //=========================
-  //Delete Program Action
-  //=========================
+  // DELETE PROGRAM
   deleteProgramThunk: programId => dispatch => {
     dispatch({ type: DELETE_PROGRAM_START });
 
@@ -132,9 +121,7 @@ export const programsActions = {
       });
   },
 
-  //=========================
-  // GET Program Courses
-  //=========================
+  // GET PROGRAM COURSES
   getProgramCoursesThunk: programId => dispatch => {
     dispatch({ type: GET_PROGRAM_COURSES_START });
     axiosAuth()
@@ -149,9 +136,9 @@ export const programsActions = {
   },
 };
 
-//=========================
-//Initial Slice of State
-//=========================
+/******************************************************
+ * PROGRAMS INITIAL STATE
+ ******************************************************/
 const programsInitialState = {
   programs: [],
   program: {
@@ -166,14 +153,12 @@ const programsInitialState = {
   error: '',
 };
 
-//=========================
-//Reducers
-//=========================
+/******************************************************
+ * PROGRAMS REDUCERS
+ ******************************************************/
 const programsReducer = (state = programsInitialState, action) => {
   switch (action.type) {
-    //=========================
-    //Get All Programs Reducers
-    //=========================
+    //GET ALL PROGRAMS
     case GET_ALL_PROGRAMS_START:
       return { ...state, status: 'get-all/pending' };
 
@@ -183,6 +168,7 @@ const programsReducer = (state = programsInitialState, action) => {
         programs: action.payload,
         status: 'get-all/success',
       };
+
     case GET_ALL_PROGRAMS_FAIL:
       return {
         ...state,
@@ -196,9 +182,7 @@ const programsReducer = (state = programsInitialState, action) => {
         status: 'idle',
       };
 
-    //================================
-    //Get Individual Programs Reducers
-    //================================
+    //GET INDIVIDUAL PROGRAM
     case GET_PROGRAM_START:
       return { ...state, status: 'get/pending' };
 
@@ -227,9 +211,7 @@ const programsReducer = (state = programsInitialState, action) => {
     case GET_PROGRAM_RESOLVE:
       return { ...state, status: 'idle' };
 
-    //=========================
-    //Add Program Reducers
-    //=========================
+    //ADD PROGRAM
     case ADD_PROGRAM_START:
       return { ...state, status: 'add/pending' };
 
@@ -242,9 +224,7 @@ const programsReducer = (state = programsInitialState, action) => {
     case ADD_PROGRAM_RESOLVE:
       return { ...state, status: 'idle' };
 
-    //=========================
-    //Edit Program Reducers
-    //=========================
+    //EDIT PROGRAM
     case EDIT_PROGRAM_START:
       return { ...state, status: 'edit/pending' };
 
@@ -257,9 +237,7 @@ const programsReducer = (state = programsInitialState, action) => {
     case EDIT_PROGRAM_RESOLVE:
       return { ...state, status: 'idle' };
 
-    //=========================
-    //Delete Program Reducers
-    //=========================
+    //DELETE PROGRAM
     case DELETE_PROGRAM_START:
       return { ...state, status: 'delete/pending' };
 
@@ -272,35 +250,34 @@ const programsReducer = (state = programsInitialState, action) => {
     case DELETE_PROGRAM_RESOLVE:
       return { ...state, status: 'delete/idle' };
 
-    //=========================
-    // GET Program Courses Reducers
-    //=========================
+    //GET PROGRAM COURSES
     case GET_PROGRAM_COURSES_START:
       return {
         ...state,
         status: 'get-courses/pending',
       };
+
     case GET_PROGRAM_COURSES_SUCCESS:
       return {
         ...state,
         status: 'get-courses/success',
         programCourses: action.payload,
       };
+
     case GET_PROGRAM_COURSES_FAIL:
       return {
         ...state,
         status: 'get-courses/fail',
         error: action.payload,
       };
+
     case GET_PROGRAM_COURSES_RESOLVE:
       return {
         ...state,
         status: 'get-courses/idle',
       };
 
-    //=========================
-    //Default Case
-    //=========================
+    //DEFAULT
     default:
       return state;
   }
