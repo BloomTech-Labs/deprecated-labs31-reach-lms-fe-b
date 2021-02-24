@@ -24,8 +24,12 @@ const GlobalStyle = createGlobalStyle`
 
    }
 
-
     @media (max-width: 575px) {
+      /* .ant-layout-header h1{
+        display: flex;
+        justify-content: flex-start;
+      } */
+
       .ant-layout-sider-dark{
         position: absolute;
         z-index: 3;

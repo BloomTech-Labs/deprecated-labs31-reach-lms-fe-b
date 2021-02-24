@@ -15,7 +15,7 @@ const StyledHeader = styled(Layout.Header)`
 `;
 
 const LocationInfo = styled.div`
-  margin-left: 24px;
+  text-align: center;
   background-color: white;
 `;
 
@@ -32,33 +32,24 @@ export default ({ children, authService, ...restProps }) => {
 
   return (
     <Layout>
-      <StyledHeader
-        className="site-layout-sub-header-background"
-        style={{ padding: 0 }}
-      >
-        <img
-          src={logo}
-          alt="logo"
-          style={hovering ? { cursor: 'progress' } : { cursor: 'pointer' }}
-          onMouseEnter={toggleHovering}
-          onMouseLeave={toggleHovering}
-          onClick={() => push('/')}
-        />
-        <LocationInfo>
-          {
-            {
-              '/': <h1>{role}: Dashboard</h1>,
-              '/program/create': <h1>{role}: Create Program</h1>,
-              '/course/create': <h1>{role}: Create Course</h1>,
-              '/settings': <h1>{role}: Settings</h1>,
-            }[pathname]
-          }
-        </LocationInfo>
-      </StyledHeader>
-
       <Layout>
         <NavBar logout={authService?.logout} />
-        <Content>{children}</Content>
+        <Content>
+          {/* renders role and path on the main content rendering area*/}
+          <LocationInfo>
+            {
+              {
+                '/': <h1>{role}: Dashboard</h1>,
+                '/program/create': <h1>{role}: Create Program</h1>,
+                '/course/create': <h1>{role}: Create Course</h1>,
+                '/settings': <h1>{role}: Settings</h1>,
+              }[pathname]
+            }
+          </LocationInfo>
+
+          {/*main content rendering area*/}
+          {children}
+        </Content>
       </Layout>
       <Footer style={{ textAlign: 'center' }}>Reach LMS ©2021</Footer>
     </Layout>
