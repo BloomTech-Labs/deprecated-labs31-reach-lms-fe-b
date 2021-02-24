@@ -1,5 +1,8 @@
 import { axiosAuth } from '../../api';
 
+/******************************************************
+ * MODULE ACTION TYPES
+ ******************************************************/
 const GET_MODULES_START = 'GET_MODULES_START';
 const GET_MODULES_SUCCESS = 'GET_MODULES_SUCCESS';
 const GET_MODULES_FAIL = 'GET_MODULES_FAIL';
@@ -25,9 +28,13 @@ const DELETE_MODULE_SUCCESS = 'DELETE_MODULE_SUCCESS';
 const DELETE_MODULE_FAIL = 'DELETE_MODULE_FAIL';
 const DELETE_MODULE_RESOLVE = 'DELETE_MODULE_RESOLVE';
 
+/******************************************************
+ * MODULE ACTIONS
+ ******************************************************/
 export const modulesActions = {
   getModulesThunk: () => dispatch => {
     dispatch({ type: GET_MODULES_START });
+
     axiosAuth()
       .get('/modules/modules')
       .then(res => {
@@ -40,8 +47,10 @@ export const modulesActions = {
         dispatch({ type: GET_MODULES_RESOLVE });
       });
   },
+
   getModuleThunk: id => dispatch => {
     dispatch({ type: GET_MODULE_START });
+
     axiosAuth()
       .get(`/modules/module/${id}`)
       .then(res => {
@@ -54,8 +63,10 @@ export const modulesActions = {
         dispatch({ type: GET_MODULE_RESOLVE });
       });
   },
+
   addModuleThunk: module => dispatch => {
     dispatch({ type: ADD_MODULE_START });
+
     axiosAuth()
       .post('/modules/module', module)
       .then(res => {
@@ -68,8 +79,10 @@ export const modulesActions = {
         dispatch({ type: ADD_MODULE_RESOLVE });
       });
   },
+
   editModuleThunk: module => dispatch => {
     dispatch({ type: EDIT_MODULE_START });
+
     axiosAuth()
       .patch(`/modules/module/${module.moduleId}`, module)
       .then(res => {
@@ -82,8 +95,10 @@ export const modulesActions = {
         dispatch({ type: EDIT_MODULE_RESOLVE });
       });
   },
+
   deleteModuleThunk: id => dispatch => {
     dispatch({ type: DELETE_MODULE_START });
+
     axiosAuth()
       .delete(`/modules/module/${id}`)
       .then(res => {
@@ -98,6 +113,9 @@ export const modulesActions = {
   },
 };
 
+/******************************************************
+ * MODULE INITIAL STATE
+ ******************************************************/
 const modulesInitialState = {
   modules: [],
   status: 'idle',
@@ -111,115 +129,144 @@ const modulesInitialState = {
   },
 };
 
+/******************************************************
+ * MODULE REDUCERS
+ ******************************************************/
 const modulesReducer = (state = modulesInitialState, action) => {
   switch (action.type) {
+    // GET MODULES
     case GET_MODULES_START:
       return {
         ...state,
-        status: 'pending',
+        status: 'get-all/pending',
       };
+
     case GET_MODULES_SUCCESS:
       return {
         ...state,
-        status: 'success',
+        status: 'get-all/success',
         modules: action.payload,
       };
+
     case GET_MODULES_FAIL:
       return {
         ...state,
-        status: 'error',
+        status: 'get-all/error',
         error: action.payload,
       };
+
     case GET_MODULES_RESOLVE:
       return {
         ...state,
         status: 'idle',
       };
+
+    // GET INDIVIDUAL MODULE
     case GET_MODULE_START:
       return {
         ...state,
-        status: 'pending',
+        status: 'get/pending',
       };
+
     case GET_MODULE_SUCCESS:
       return {
         ...state,
-        status: 'success',
+        status: 'get/success',
         module: action.payload,
       };
+
     case GET_MODULE_FAIL:
       return {
         ...state,
-        status: 'error',
+        status: 'get/error',
         error: action.payload,
       };
+
     case GET_MODULE_RESOLVE:
       return {
         ...state,
         status: 'idle',
       };
+
+    // ADD MODULE
     case ADD_MODULE_START:
       return {
         ...state,
-        status: 'pending',
+        status: 'add/pending',
       };
+
     case ADD_MODULE_SUCCESS:
       return {
         ...state,
-        status: 'success',
+        status: 'add/success',
       };
+
     case ADD_MODULE_FAIL:
       return {
         ...state,
-        status: 'error',
+        status: 'add/error',
         error: action.payload,
       };
+
     case ADD_MODULE_RESOLVE:
       return {
         ...state,
         status: 'idle',
       };
+
+    // EDIT MODULE
     case EDIT_MODULE_START:
       return {
         ...state,
-        status: 'pending',
+        status: 'edit/pending',
       };
+
     case EDIT_MODULE_SUCCESS:
       return {
         ...state,
-        status: 'success',
+        status: 'edit/success',
       };
+
     case EDIT_MODULE_FAIL:
       return {
         ...state,
-        status: 'error',
+        status: 'edit/error',
         error: action.payload,
       };
+
     case EDIT_MODULE_RESOLVE:
       return {
         ...state,
         status: 'idle',
       };
+
+    // DELETE MODULE
     case DELETE_MODULE_START:
       return {
         ...state,
-        status: 'pending',
+        status: 'delete/pending',
       };
+
     case DELETE_MODULE_SUCCESS:
       return {
         ...state,
-        status: 'success',
+        status: 'delete/success',
       };
+
     case DELETE_MODULE_FAIL:
       return {
         ...state,
-        status: 'error',
+        status: 'delete/error',
         error: action.payload,
       };
+
     case DELETE_MODULE_RESOLVE:
       return {
         ...state,
         status: 'idle',
       };
+
+    // DEFAULT
     default:
       return state;
   }
