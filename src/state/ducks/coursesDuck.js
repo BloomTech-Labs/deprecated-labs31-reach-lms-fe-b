@@ -158,20 +158,20 @@ const coursesReducer = (state = coursesInitialState, action) => {
     case GET_ALL_COURSES_START:
       return {
         ...state,
-        status: 'get-all/pending',
+        status: 'get/pending',
       };
 
     case GET_ALL_COURSES_SUCCESS:
       return {
         ...state,
-        status: 'get-all/success',
+        status: 'get/success',
         courses: action.payload,
       };
 
     case GET_ALL_COURSES_FAIL:
       return {
         ...state,
-        status: 'get-all/error',
+        status: 'get/error',
         error: action.payload,
       };
 
@@ -212,7 +212,7 @@ const coursesReducer = (state = coursesInitialState, action) => {
     case GET_COURSE_MODULES_START:
       return {
         ...state,
-        status: 'get-modules/pending',
+        status: 'get/pending',
       };
 
     case GET_COURSE_MODULES_SUCCESS:
@@ -222,13 +222,13 @@ const coursesReducer = (state = coursesInitialState, action) => {
           ...state.course,
           modules: action.payload,
         },
-        status: 'get-modules/success',
+        status: 'get/success',
       };
 
     case GET_COURSE_MODULES_FAIL:
       return {
         ...state,
-        status: 'get-modules/error',
+        status: 'get/error',
         error: action.payload,
       };
 

@@ -26,10 +26,7 @@ export default props => {
   const {
     program, // top level program info
     programCourses, // all courses associated with this program (if any)
-    statusAdd,
-    statusGet,
-    statusEdit,
-    statusGetCourses,
+    status,
   } = useSelector(state => state.programs);
 
   /** AntD reusable form hook */
@@ -48,32 +45,23 @@ export default props => {
   }, [id, dispatch, form]);
 
   useEffect(() => {
-    if (statusGet === 'success') {
+    if (status === 'get/success') {
       form.setFieldsValue({
         ...program,
         courses: [...form.getFieldValue('courses')],
       });
     }
-    if (statusGetCourses === 'success') {
+    if (status === 'get-courses/success') {
       form.setFieldsValue({
         ...form.getFieldsValue(),
         courses: programCourses,
       });
     }
-    if (statusEdit === 'success' || statusAdd === 'success') {
+    if (status === 'edit/success' || status === 'add/success') {
       form.resetFields();
       push('/');
     }
-  }, [
-    statusGet,
-    statusGetCourses,
-    statusEdit,
-    statusAdd,
-    programCourses,
-    form,
-    program,
-    push,
-  ]);
+  }, [status, programCourses, form, program, push]);
 
   // just helper functions to show and hide the COURSE FORM modal
   const showCourseModal = () => setModalVisible(true);
