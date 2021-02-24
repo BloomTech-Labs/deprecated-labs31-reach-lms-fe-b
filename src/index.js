@@ -25,6 +25,7 @@ import {
   DashboardView,
   ProfileEdit,
   DashWrapper,
+  ModuleFormPage,
 } from './components/pages';
 import {
   HOME_PATH,
@@ -127,7 +128,7 @@ function App() {
           )}
         />
         <SecureRoute path={VIEW_MODULE_PATH} component={ModuleView} />
-        <SecureRoute path={EDIT_MODULE_PATH} component={ModuleForm} />
+        <SecureRoute path={EDIT_MODULE_PATH} component={ModuleFormPage} />
         <SecureRoute
           path={EDIT_PROFILE_PATH}
           component={() => (

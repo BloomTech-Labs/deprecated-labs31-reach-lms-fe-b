@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { programsActions } from '../../../state/ducks/programsDuck';
 import { coursesActions } from '../../../state/ducks/coursesDuck';
 import { modulesActions } from '../../../state/ducks/modulesDuck';
-import { ModuleForm, ModuleFormModal } from '../module-form';
+import { ModuleFormModal } from '../module-form';
 import ListModuleCards from './ListModuleCards';
 
 const StyledSpace = styled(Space)`
