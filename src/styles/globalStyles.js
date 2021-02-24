@@ -4,6 +4,9 @@ const GlobalStyle = createGlobalStyle`
     html {
         font-size: 62.5%;
     }
+    #root{
+      margin: 24px;
+    }
 
     body {
         font-family: 'Lato', sans-serif;
