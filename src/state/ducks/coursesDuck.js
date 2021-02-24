@@ -39,6 +39,7 @@ const DELETE_COURSE_RESOLVE = 'DELETE_COURSE_RESOLVE';
 export const coursesActions = {
   getAllCoursesThunk: () => dispatch => {
     dispatch({ type: GET_ALL_COURSES_START });
+
     axiosAuth()
       .get('/courses/courses')
       .then(res => {
@@ -54,6 +55,7 @@ export const coursesActions = {
 
   getCourseThunk: id => dispatch => {
     dispatch({ type: GET_COURSE_START });
+
     axiosAuth()
       .get(`/courses/course/${id}`)
       .then(res => {
@@ -69,6 +71,7 @@ export const coursesActions = {
 
   getCourseModulesThunk: id => dispatch => {
     dispatch({ type: GET_COURSE_MODULES_START });
+
     axiosAuth()
       .get(`/courses/course/${id}/modules`)
       .then(res => {
@@ -84,6 +87,7 @@ export const coursesActions = {
 
   addCourseThunk: course => dispatch => {
     dispatch({ type: ADD_COURSE_START });
+
     axiosAuth()
       .post('/courses/course', course)
       .then(res => {
@@ -99,6 +103,7 @@ export const coursesActions = {
 
   editCourseThunk: course => dispatch => {
     dispatch({ type: EDIT_COURSE_START });
+
     axiosAuth()
       .patch(`/courses/course/${course.courseid}`, course)
       .then(res => {
@@ -114,6 +119,7 @@ export const coursesActions = {
 
   deleteCourseThunk: id => dispatch => {
     dispatch({ type: DELETE_COURSE_START });
+
     axiosAuth()
       .delete(`/courses/course/${id}`)
       .then(res => {
