@@ -11,8 +11,7 @@ import logo from '../login/Reach.png';
 //   display: flex;
 //   flex-flow: row nowrap;
 //   background-color: white;
-// `;
-
+// `
 const LocationInfo = styled.div`
   text-align: center;
   background-color: white;

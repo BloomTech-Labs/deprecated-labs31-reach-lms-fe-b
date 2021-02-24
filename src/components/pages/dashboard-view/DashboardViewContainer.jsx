@@ -1,15 +1,11 @@
 import React, { useEffect } from 'react';
 import { Card } from 'antd';
 import { GhostLink } from '../../common';
-import {
-  EditOutlined,
-  DeleteOutlined,
-  SettingOutlined,
-} from '@ant-design/icons';
+import { EditOutlined, DeleteOutlined } from '@ant-design/icons';
 import { useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { programsActions } from '../../../state/ducks/programsDuck';
-import { makeEditProgramPath } from '../../../routes';
+import { makeEditProgramPath, makeViewProgramPath } from '../../../routes';
 
 const DashboardViewContainer = () => {
   const { Meta } = Card;
@@ -36,8 +32,8 @@ const DashboardViewContainer = () => {
       style={{
         display: 'flex',
         flexWrap: 'wrap',
-        justifyContent: 'center',
-        textAlign: 'center',
+        justifyContent: 'left',
+        textAlign: 'left',
       }}
       key="app-container"
     >
@@ -58,7 +54,7 @@ const DashboardViewContainer = () => {
               />,
             ]}
           >
-            <GhostLink to={`/program/view/${program.programId}`}>
+            <GhostLink to={makeViewProgramPath(program.programId)}>
               <Meta
                 key={program.programId + 'meta'}
                 title={program.programName}
@@ -68,7 +64,7 @@ const DashboardViewContainer = () => {
           </Card>
         ) : (
           <Card key={program.programId} style={{ width: 300, margin: '10px' }}>
-            <GhostLink to={`/program/view/${program.programId}`}>
+            <GhostLink to={makeViewProgramPath(program.programId)}>
               <Meta
                 key={program.programId + 'meta'}
                 title={program.programName}

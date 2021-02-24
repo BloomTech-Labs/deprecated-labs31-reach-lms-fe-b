@@ -4,6 +4,7 @@ import { Card } from 'antd';
 import { EditOutlined } from '@ant-design/icons';
 import { GhostLink } from '../../common/';
 import { userActions } from '../../../state/ducks/userDuck';
+import { EDIT_PROFILE_PATH } from '../../../routes';
 
 const SettingsProfile = props => {
   const { user } = useSelector(state => state.user);
@@ -21,7 +22,7 @@ const SettingsProfile = props => {
         <Card
           title="Profile"
           actions={[
-            <GhostLink to="/profile/edit">
+            <GhostLink to={EDIT_PROFILE_PATH}>
               <EditOutlined />
             </GhostLink>,
           ]}

@@ -3,6 +3,10 @@ import { Card } from 'antd';
 import { ModuleView } from '../';
 import { useDispatch, useSelector } from 'react-redux';
 import { coursesActions } from '../../../state/ducks/coursesDuck';
+
+import { Button } from 'antd';
+import { GhostLink as Link } from '../../common';
+
 import styled from 'styled-components';
 
 //Component Styles
@@ -36,9 +40,14 @@ const CourseViewContainer = props => {
       <CourseCard
         title={courseName}
         extra={
-          <span onClick={() => setIsExpanded(!isExpanded)}>
-            {!isExpanded ? 'more' : 'less'}
-          </span>
+          <>
+            <Button onClick={() => setIsExpanded(!isExpanded)}>
+              {!isExpanded ? '+' : '-'}
+            </Button>
+            <Link to={`/course/edit/${courseid}`}>
+              <Button>Edit</Button>
+            </Link>
+          </>
         }
       >
         {/* If expanded button is clicked, show course information, otherwise collapse card */}
@@ -50,6 +59,7 @@ const CourseViewContainer = props => {
               modules?.map(module => (
                 <ModuleView
                   key={module.moduleId}
+                  moduleId={module.moduleId}
                   moduleName={module.moduleName}
                   moduleDescription={module.moduleDescription}
                   moduleContent={module.moduleContent}

@@ -5,6 +5,7 @@ import { useParams } from 'react-router-dom';
 import { programsActions } from '../../../state/ducks/programsDuck';
 import { Button } from 'antd';
 import { GhostLink as Link } from '../../common';
+import { makeEditProgramPath } from '../../../routes';
 import styled from 'styled-components';
 
 //Styled Components
@@ -49,7 +50,7 @@ const ProgramViewContainer = props => {
           <h3>{programType}</h3>
         </div>
         <div>
-          <Link to={`/program/edit/${id}`}>
+          <Link to={makeEditProgramPath(id)}>
             <Button>Edit</Button>
           </Link>
         </div>

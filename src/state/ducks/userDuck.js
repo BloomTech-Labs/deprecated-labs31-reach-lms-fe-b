@@ -7,6 +7,7 @@ const LOGIN_START = 'LOGIN_START';
 const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
 const LOGIN_FAIL = 'LOGIN_FAIL';
 const LOGIN_RESOLVE = 'LOGIN_RESOLVE';
+
 const UPDATE_USER_START = 'UPDATE_USER_START';
 const UPDATE_USER_SUCCESS = 'UPDATE_USER_SUCCESS';
 const UPDATE_USER_FAIL = 'UPDATE_USER_FAIL';
@@ -19,6 +20,7 @@ export const userActions = {
   // GET USER INFO
   loginThunk: () => dispatch => {
     dispatch({ type: LOGIN_START });
+
     axiosAuth()
       .get('/users/getuserinfo')
       .then(res => {
@@ -31,8 +33,11 @@ export const userActions = {
         dispatch({ type: LOGIN_RESOLVE });
       });
   },
+
+  // UPDATE USER INFO
   updateUserThunk: (userId, userFieldsToUpdate) => dispatch => {
     dispatch({ type: UPDATE_USER_START });
+
     axiosAuth()
       .patch(`/users/user/${userId}`, userFieldsToUpdate)
       .then(res =>
@@ -61,8 +66,7 @@ const userInitialState = {
   username: '',
   role: '',
   loggedIn: false,
-  statusGet: 'idle',
-  statusEdit: 'idle',
+  status: 'idle',
   error: '',
 };
 
@@ -71,11 +75,9 @@ const userInitialState = {
  ******************************************************/
 const userReducer = (state = userInitialState, action) => {
   switch (action.type) {
-    //-----------------------------
     // LOGIN
-    //-----------------------------
     case LOGIN_START:
-      return { ...state, statusGet: 'pending' };
+      return { ...state, status: 'get/pending' };
     case LOGIN_SUCCESS:
       return {
         // this needs to be refactored for consistency — let's wait till Shane updates backend tho
@@ -85,41 +87,38 @@ const userReducer = (state = userInitialState, action) => {
         username: action.payload.username,
         role: action.payload.roles[0].role.name,
         loggedIn: true,
-        statusGet: 'success',
+        status: 'get/success',
       };
     case LOGIN_FAIL:
-      return { ...state, statusGet: 'error', error: action.payload };
+      return { ...state, status: 'get/error', error: action.payload };
     case LOGIN_RESOLVE:
-      return { ...state, statusGet: 'idle' };
+      return { ...state, status: 'idle' };
 
-    //-----------------------------
-    // UPDATE_USER
-    //-----------------------------
+    // UPDATE USER
     case UPDATE_USER_START:
       return {
         ...state,
-        statusEdit: 'pending',
+        status: 'edit/pending',
       };
     case UPDATE_USER_SUCCESS:
       return {
         ...state,
-        statusEdit: 'success',
+        status: 'edit/success',
         user: action.payload,
       };
     case UPDATE_USER_FAIL:
       return {
         ...state,
-        statusEdit: 'error',
+        status: 'edit/error',
         error: action.payload,
       };
     case UPDATE_USER_RESOLVE:
       return {
         ...state,
-        statusEdit: 'idle',
+        status: 'idle',
       };
-    //-----------------------------
+
     // DEFAULT
-    //-----------------------------
     default:
       return state;
   }
