@@ -79,7 +79,7 @@ export const coursesActions = {
   addCourseThunk: course => dispatch => {
     dispatch({ type: ADD_COURSE_START });
     axiosAuth()
-      .post('/courses/courses', course)
+      .post('/courses/course', course)
       .then(res => {
         dispatch({ type: ADD_COURSE_SUCCESS, payload: res.data });
       })
@@ -109,7 +109,7 @@ export const coursesActions = {
   deleteCourseThunk: id => dispatch => {
     dispatch({ type: DELETE_COURSE_START });
     axiosAuth()
-      .put(`/courses/course/${id}`)
+      .delete(`/courses/course/${id}`)
       .then(res => {
         dispatch({ type: DELETE_COURSE_SUCCESS });
       })

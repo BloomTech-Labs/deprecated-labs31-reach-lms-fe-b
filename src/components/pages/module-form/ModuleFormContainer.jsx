@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { Form, Input, Modal } from 'antd';
-import { useResetFormOnCloseModal } from './useResetFormOnCloseModal';
+import { useResetFormOnCloseModal } from '../../hooks/useResetFormOnCloseModal';
 import { useParams } from 'react-router-dom';
 import { modulesActions } from '../../../state/ducks/modulesDuck';
 import { useDispatch, useSelector } from 'react-redux';

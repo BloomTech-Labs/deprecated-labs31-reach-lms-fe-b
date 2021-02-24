@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { Modal, Form, Input, Space, Select, Button } from 'antd';
-import { CourseForm, CourseCard } from '../course-form';
+import { CourseForm } from '../course-form';
 import { useParams, useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { programsActions } from '../../../state/ducks/programsDuck';
+import { coursesActions } from '../../../state/ducks/coursesDuck';
+import ListCourseCards from './ListCourseCards';
 
 const {
   getProgramThunk,
@@ -11,6 +13,7 @@ const {
   editProgramThunk,
   addProgramThunk,
 } = programsActions;
+const { deleteCourseThunk } = coursesActions;
 
 export default props => {
   const { push } = useHistory();
@@ -47,8 +50,8 @@ export default props => {
   useEffect(() => {
     if (statusGet === 'success') {
       form.setFieldsValue({
-        ...form.getFieldsValue(),
         ...program,
+        courses: [...form.getFieldValue('courses')],
       });
     }
     if (statusGetCourses === 'success') {
@@ -108,6 +111,27 @@ export default props => {
     });
 
     hideCourseModal();
+  };
+
+  const onCourseRemove = courseToRemove => {
+    const { courseid } = courseToRemove;
+
+    const existingClasses = form.getFieldValue('courses');
+
+    if (courseid) {
+      dispatch(deleteCourseThunk(courseid));
+      form.setFieldsValue({
+        courses: existingClasses.filter(course => course.courseid !== courseid),
+      });
+    } else {
+      let updated = existingClasses.filter(
+        course => course.coursecode !== courseToRemove.coursecode
+      );
+      form.setFieldsValue({
+        ...form.getFieldsValue(),
+        courses: updated,
+      });
+    }
   };
 
   const onCourseEdit = editedClass => {
@@ -172,32 +196,15 @@ export default props => {
         </Form.Item>
 
         {/* List of Course Cards for Each Course in This Program */}
-        <Form.Item name="courses" label="Course List">
-          {form.getFieldValue('courses')?.length > 0 ? (
-            form.getFieldValue('courses').map((course, index) => {
-              const {
-                coursename,
-                coursedescription,
-                courseid,
-                ...rest
-              } = course;
-              return (
-                <li key={index}>
-                  <CourseCard
-                    key={index}
-                    id={courseid}
-                    course={course}
-                    name={coursename}
-                    description={coursedescription}
-                    triggerEdit={triggerEdit}
-                    {...rest}
-                  />
-                </li>
-              );
-            })
-          ) : (
-            // if no courses in program, display that to user
-            <p>No courses yet!</p>
+        <Form.Item
+          shouldUpdate={(prev, current) => prev.courses !== current.courses}
+        >
+          {() => (
+            <ListCourseCards
+              courses={form.getFieldValue('courses')}
+              triggerDelete={onCourseRemove}
+              triggerEdit={triggerEdit}
+            />
           )}
         </Form.Item>
 

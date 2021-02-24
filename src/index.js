@@ -141,8 +141,8 @@ function App() {
 
         {/* any of the routes you need secured should be registered as SecureRoutes */}
         <SecureRoute
-          path={HOME_PATH}
           exact
+          path={HOME_PATH}
           // component={() => <DashboardView LoadingComponent={LoadingComponent} />}
           component={() => <HomePage LoadingComponent={LoadingComponent} />}
         />
