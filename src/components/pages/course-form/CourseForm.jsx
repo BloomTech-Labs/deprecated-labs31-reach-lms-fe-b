@@ -1,90 +1,130 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { coursesActions, modulesActions } from '../../../state/ducks';
 import { Form, Input, Button } from 'antd';
+import CourseFormInnards from './CourseFormInnards';
+import { ModuleFormModal } from './../module-form';
 import ListModuleCards from './ListModuleCards';
 import { FormWrapper } from '../../common';
+import { useResetFormOnCloseModal } from '../../hooks';
 
-const CourseFormInnards = ({
-  getFieldValue,
-  showModuleModal,
-  triggerEdit,
-  onModuleRemove,
-}) => (
-  <>
-    <Form.Item
-      name="coursename"
-      label="Course Name"
-      rules={[{ required: true, message: 'Missing Course Name' }]}
-    >
-      <Input />
-    </Form.Item>
+export default ({ id, onFinish, children }) => {
+  //Forms
+  const [form] = Form.useForm();
+  const { getFieldsValue, getFieldValue, setFieldsValue } = form;
+  const [moduleToEdit, setModuleToEdit] = useState(null);
 
-    <Form.Item
-      name="coursecode"
-      label="Course Code"
-      rules={[{ required: true, message: 'Missing Course Code' }]}
-    >
-      <Input />
-    </Form.Item>
+  //Redux
+  const dispatch = useDispatch();
+  const { course, status } = useSelector(state => state.courses);
+  const { hideModal, showModal, modalVisable } = useResetFormOnCloseModal();
 
-    <Form.Item
-      name="coursedescription"
-      label="Course Description"
-      rules={[{ required: true, message: 'Missing Course Description' }]}
-    >
-      <Input.TextArea style={{ resize: 'none' }} rows={2} cols={2} />
-    </Form.Item>
+  useEffect(() => {
+    if (id) {
+      dispatch(coursesActions.getCourseThunk(id));
+      dispatch(coursesActions.getCourseModulesThunk(id));
+    }
+  }, [id, dispatch]);
 
-    <Form.Item
-      label="Modules"
-      shouldUpdate={(prev, current) => prev.modules !== current.modules}
-    >
-      {() => {
-        return (
-          <ListModuleCards
-            modules={getFieldValue('modules')}
-            triggerEdit={triggerEdit}
-            triggerDelete={onModuleRemove}
-          />
-        );
-      }}
-    </Form.Item>
+  useEffect(() => {
+    if (status === 'get/success') {
+      setFieldsValue({ ...getFieldsValue(), ...course });
+    }
+  }, [status, course, getFieldsValue, setFieldsValue]);
 
-    <Form.Item>
-      <Button htmlType="button" onClick={showModuleModal}>
-        Add Module
-      </Button>
-    </Form.Item>
+  //Module Handlers
 
-    <Form.Item>
-      <Button htmlType="submit" type="primary">
-        Submit
-      </Button>
-    </Form.Item>
-  </>
-);
+  const onModuleAdd = newModule => {
+    const existingModules = form.getFieldValue('modules') || [];
 
-export default ({
-  form,
-  onFinish,
-  onModuleRemove,
-  triggerEdit,
-  showModuleModal,
-  children,
-}) => {
-  const { getFieldValue } = form;
+    form.setFieldsValue({
+      modules: [...existingModules, newModule],
+    });
+    hideModal();
+  };
+
+  const onModuleEdit = editedModule => {
+    const existingModules = form.getFieldValue('modules') || [];
+    //look into editing module that doesn't exist in DB, like Programs
+
+    form.setFieldsValue({
+      modules: existingModules.map(module =>
+        module.moduleId === editedModule.moduleId ? editedModule : module
+      ),
+    });
+
+    hideModal();
+  };
+
+  const triggerEdit = module => {
+    setModuleToEdit(module);
+    showModal();
+  };
+
+  const onModuleRemove = moduleToDelete => {
+    const { moduleId, moduleName } = moduleToDelete;
+
+    const filterById = module => module.moduleId !== moduleId;
+    const filterByName = module => module.moduleName !== moduleName;
+
+    if (moduleId) {
+      dispatch(modulesActions.deleteModuleThunk(moduleId));
+    }
+
+    const existingModules = form.getFieldValue('modules') || [];
+
+    form.setFieldsValue({
+      modules: existingModules.filter(moduleId ? filterById : filterByName),
+    });
+  };
 
   return (
     <>
       <FormWrapper name={'courseForm'} form={form} onFinish={onFinish}>
         {children}
 
-        <CourseFormInnards
-          getFieldValue={getFieldValue}
-          onModuleRemove={onModuleRemove}
-          triggerEdit={triggerEdit}
-          showModuleModal={showModuleModal}
-        />
+        <CourseFormInnards />
+
+        {/*Module Modal*/}
+        <Form.Item
+          label="Modules"
+          shouldUpdate={(prev, current) => prev.modules !== current.modules}
+        >
+          {() => {
+            return (
+              <ListModuleCards
+                modules={getFieldValue('modules')}
+                triggerEdit={triggerEdit}
+                triggerDelete={onModuleRemove}
+              />
+            );
+          }}
+        </Form.Item>
+
+        <Form.Item>
+          <Button htmlType="button" onClick={showModal}>
+            Add Module
+          </Button>
+        </Form.Item>
+
+        <Form.Item>
+          <Button htmlType="submit" type="primary">
+            Submit
+          </Button>
+        </Form.Item>
       </FormWrapper>
+
+      {moduleToEdit ? (
+        <ModuleFormModal
+          onSubmit={onModuleEdit}
+          visible={modalVisable}
+        ></ModuleFormModal>
+      ) : (
+        <ModuleFormModal
+          onSubmit={onModuleAdd}
+          visible={modalVisable}
+        ></ModuleFormModal>
+      )}
     </>
   );
 };
