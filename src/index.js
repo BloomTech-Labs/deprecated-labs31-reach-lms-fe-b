@@ -13,6 +13,7 @@ import { store } from './state/index';
 import { LoadingComponent } from './components/common';
 import {
   CourseForm,
+  CourseFormPage,
   CourseView,
   ModuleForm,
   ModuleView,
@@ -107,7 +108,7 @@ function App() {
           path={EDIT_COURSE_PATH}
           component={() => (
             <DashWrapper>
-              <CourseForm />
+              <CourseFormPage />
             </DashWrapper>
           )}
         />
@@ -115,7 +116,7 @@ function App() {
           path={CREATE_COURSE_PATH}
           component={() => (
             <DashWrapper>
-              <CourseForm />
+              <CourseFormPage />
             </DashWrapper>
           )}
         />

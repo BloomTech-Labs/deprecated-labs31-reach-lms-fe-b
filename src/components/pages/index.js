@@ -1,4 +1,4 @@
-export { CourseForm } from './course-form';
+export { CourseForm, CourseFormPage } from './course-form';
 export { CourseView } from './course-view';
 export { HomePage } from './home';
 export { LoginPage } from './login';

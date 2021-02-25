@@ -95,7 +95,6 @@ const NavBar = ({ logout, ...restProps }) => {
         >
           Settings
         </MenuItem>
-        {console.log(logout)}
         <MenuItem key="__LOGOUT__" icon={<LogoutOutlined />} onClick={logout}>
           Logout
         </MenuItem>
