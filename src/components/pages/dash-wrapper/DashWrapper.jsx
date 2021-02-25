@@ -3,6 +3,7 @@ import { Layout } from 'antd';
 import { NavBar } from '../navbar';
 import { useLocation, useHistory } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import { useOktaAuth } from '@okta/okta-react';
 import styled from 'styled-components';
 import logo from '../login/Reach.png';
 
@@ -17,8 +18,9 @@ const LocationInfo = styled.div`
   background-color: white;
 `;
 
-export default ({ children, authService, ...restProps }) => {
+export default ({ children, ...restProps }) => {
   const { Content, Footer } = Layout;
+  const { authService } = useOktaAuth();
   const { pathname } = useLocation();
   const { role } = useSelector(state => state.user);
   const { push } = useHistory();

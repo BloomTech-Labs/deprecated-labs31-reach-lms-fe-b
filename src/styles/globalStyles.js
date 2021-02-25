@@ -55,6 +55,15 @@ const GlobalStyle = createGlobalStyle`
       border-right: none;
     }
 
+    .ant-layout-sider-zero-width-trigger {
+      position: absolute;
+      height: 30px;
+      top: -25px;
+      right: 0;
+      left: 0;
+      z-index: 3;
+    }
+
     //Mobile devices
     @media(min-width: 320px) {
 

@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { useOktaAuth } from '@okta/okta-react';
-
+import { DashWrapper } from '../dash-wrapper';
 import RenderHomePage from './RenderHomePage';
 
 function HomeContainer({ LoadingComponent }) {
@@ -29,14 +29,14 @@ function HomeContainer({ LoadingComponent }) {
   }, [memoAuthService]);
 
   return (
-    <>
+    <DashWrapper>
       {authState.isAuthenticated && !userInfo && (
         <LoadingComponent message="Fetching user profile..." />
       )}
       {authState.isAuthenticated && userInfo && (
         <RenderHomePage userInfo={userInfo} authService={authService} />
       )}
-    </>
+    </DashWrapper>
   );
 }
 
