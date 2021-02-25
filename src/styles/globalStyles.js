@@ -24,8 +24,12 @@ const GlobalStyle = createGlobalStyle`
 
    }
 
-
     @media (max-width: 575px) {
+      /* .ant-layout-header h1{
+        display: flex;
+        justify-content: flex-start;
+      } */
+
       .ant-layout-sider-dark{
         position: absolute;
         z-index: 3;
@@ -49,6 +53,15 @@ const GlobalStyle = createGlobalStyle`
      */
     .ant-card-actions > li:not(:last-child) {
       border-right: none;
+    }
+
+    .ant-layout-sider-zero-width-trigger {
+      position: absolute;
+      height: 30px;
+      top: -25px;
+      right: 0;
+      left: 0;
+      z-index: 3;
     }
 
     //Mobile devices

@@ -9,11 +9,13 @@ import {
   modulesReducer,
 } from './ducks';
 
-const middleware = [thunk];
+export const middleware = [thunk];
 
-const createStoreWithMiddleware = applyMiddleware(...middleware)(createStore);
+export const createStoreWithMiddleware = applyMiddleware(...middleware)(
+  createStore
+);
 
-const rootReducer = combineReducers({
+export const rootReducer = combineReducers({
   user: userReducer,
   programs: programsReducer,
   courses: coursesReducer,
