@@ -6,7 +6,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { programsActions } from '../../../state/ducks/programsDuck';
 import { coursesActions } from '../../../state/ducks/coursesDuck';
 import { modulesActions } from '../../../state/ducks/modulesDuck';
-import { ModuleForm } from '../module-form';
+import { ModuleFormModal } from '../module-form';
+import { CourseForm } from './';
 import ListModuleCards from './ListModuleCards';
 
 const StyledSpace = styled(Space)`
@@ -66,6 +67,7 @@ export default ({ isWrapped, onSubmit, courseId, courseToEdit }) => {
 
   const onModuleAdd = newModule => {
     const existingModules = form.getFieldValue('modules') || [];
+
     form.setFieldsValue({
       modules: [...existingModules, newModule],
     });
@@ -76,13 +78,9 @@ export default ({ isWrapped, onSubmit, courseId, courseToEdit }) => {
     const existingModules = form.getFieldValue('modules') || [];
 
     form.setFieldsValue({
-      modules: existingModules.map(existingModule => {
-        if (existingModule.moduleId !== editedModule.moduleId) {
-          return existingModule;
-        } else {
-          return editedModule;
-        }
-      }),
+      modules: existingModules.map(module =>
+        module.moduleId === editedModule.moduleId ? editedModule : module
+      ),
     });
 
     hideModuleModal();
@@ -95,119 +93,30 @@ export default ({ isWrapped, onSubmit, courseId, courseToEdit }) => {
 
   const onModuleRemove = moduleToDelete => {
     const { moduleId, moduleName } = moduleToDelete;
-    const existingModules = form.getFieldValue('modules');
+
+    const filterById = module => module.moduleId !== moduleId;
+    const filterByName = module => module.moduleName !== moduleName;
+
     if (moduleId) {
       dispatch(modulesActions.deleteModuleThunk(moduleId));
-      form.setFieldsValue({
-        modules: existingModules.filter(module => module.moduleId !== moduleId),
-      });
-    } else {
-      form.setFieldsValue({
-        ...form.getFieldsValue(),
-        modules: existingModules.filter(
-          module => module.moduleName !== moduleName
-        ),
-      });
     }
+
+    const existingModules = form.getFieldValue('modules') || [];
+
+    form.setFieldsValue({
+      modules: existingModules.filter(moduleId ? filterById : filterByName),
+    });
   };
 
   return (
     <StyledSpace direction="vertical" align="center">
       <h1>Course Form</h1>
-      <Form
-        form={form}
-        name="courseForm"
-        onFinish={onFinish}
-        autoComplete="off"
-        layout="vertical"
-      >
-        {!isWrapped && (
-          <Form.Item
-            name="programSelected"
-            label="Associated Program"
-            rules={[{ required: true }]}
-          >
-            <Select name="program" placeholder="Select a Program">
-              {/* <Select.Option value="--default--">Please Select a Program</Select.Option> */}
-              {programs.map(program => {
-                return (
-                  <Select.Option value={program.programId}>
-                    {program.programName}
-                  </Select.Option>
-                );
-              })}
-            </Select>
-          </Form.Item>
-        )}
-
-        <Form.Item
-          name="coursename"
-          label="Course Name"
-          rules={[{ required: true, message: 'Missing Course Name' }]}
-        >
-          <Input />
-        </Form.Item>
-
-        <Form.Item
-          name="coursecode"
-          label="Course Code"
-          rules={[{ required: true, message: 'Missing Course Code' }]}
-        >
-          <Input />
-        </Form.Item>
-
-        <Form.Item
-          name="coursedescription"
-          label="Course Description"
-          rules={[{ required: true, message: 'Missing Course Description' }]}
-        >
-          <Input.TextArea style={{ resize: 'none' }} rows={2} cols={2} />
-        </Form.Item>
-
-        <Form.Item
-          label="Modules"
-          shouldUpdate={(prev, current) => prev.modules !== current.modules}
-        >
-          {() => {
-            return (
-              <ListModuleCards
-                modules={form.getFieldValue('modules')}
-                triggerEdit={triggerEdit}
-                triggerDelete={onModuleRemove}
-              />
-            );
-          }}
-        </Form.Item>
-
-        <Form.Item>
-          <Button htmlType="button" onClick={showModuleModal}>
-            Add Module
-          </Button>
-        </Form.Item>
-
-        <Form.Item>
-          <Button htmlType="submit" type="primary">
-            Submit
-          </Button>
-        </Form.Item>
-      </Form>
-      {moduleToEdit ? (
-        <ModuleForm
-          visible={modalVisible}
-          onCancel={hideModuleModal}
-          onSubmit={onModuleEdit}
-          moduleToEdit={moduleToEdit}
-          moduleId={moduleToEdit.moduleId}
-          isWrapped={true}
-        />
-      ) : (
-        <ModuleForm
-          visible={modalVisible}
-          onCancel={hideModuleModal}
-          onSubmit={onModuleAdd}
-          isWrapped={true}
-        />
-      )}
+      <CourseForm form={form} onFinish={onFinish} />
+      <ModuleFormModal
+        visible={modalVisible}
+        onCancel={hideModuleModal}
+        onSubmit={onModuleAdd}
+      />
     </StyledSpace>
   );
 };

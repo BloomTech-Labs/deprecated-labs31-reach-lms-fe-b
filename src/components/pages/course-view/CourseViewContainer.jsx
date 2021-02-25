@@ -8,6 +8,7 @@ import { Button } from 'antd';
 import { GhostLink as Link } from '../../common';
 
 import styled from 'styled-components';
+import { makeEditCoursePath } from '../../../routes';
 
 //Component Styles
 const CourseCard = styled(Card)`
@@ -22,7 +23,7 @@ const CourseViewContainer = props => {
   const [isExpanded, setIsExpanded] = useState(false);
 
   //Props passed from ProgramView Component
-  const { courseName, courseDescription, courseid } = props;
+  const { courseName, courseDescription, courseid, programId } = props;
 
   //Redux State Managers
   const dispatch = useDispatch();
@@ -44,7 +45,7 @@ const CourseViewContainer = props => {
             <Button onClick={() => setIsExpanded(!isExpanded)}>
               {!isExpanded ? '+' : '-'}
             </Button>
-            <Link to={`/course/edit/${courseid}`}>
+            <Link to={makeEditCoursePath(courseid, programId)}>
               <Button>Edit</Button>
             </Link>
           </>

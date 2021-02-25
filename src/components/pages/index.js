@@ -1,8 +1,8 @@
-export { CourseForm } from './course-form';
+export { CourseForm, CourseFormPage } from './course-form';
 export { CourseView } from './course-view';
 export { HomePage } from './home';
 export { LoginPage } from './login';
-export { ModuleForm } from './module-form';
+export { ModuleForm, ModuleFormPage } from './module-form';
 export { ModuleView } from './module-view';
 export { NotFoundPage } from './not-found';
 export { ProgramForm } from './program-form';
