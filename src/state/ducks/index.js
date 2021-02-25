@@ -1,4 +1,4 @@
-export { default as coursesReducer } from './coursesDuck';
-export { default as modulesReducer } from './modulesDuck';
-export { default as programsReducer } from './programsDuck';
-export { default as userReducer } from './userDuck';
+export { default as coursesReducer, coursesActions } from './coursesDuck';
+export { default as modulesReducer, modulesActions } from './modulesDuck';
+export { default as programsReducer, programsActions } from './programsDuck';
+export { default as userReducer, userActions } from './userDuck';
