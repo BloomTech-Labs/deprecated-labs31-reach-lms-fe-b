@@ -2,6 +2,7 @@ import React from 'react';
 import { render, cleanup, wait, waitFor } from '@testing-library/react';
 import { HomePage } from '../components/pages/home';
 import { LoadingComponent } from '../components/common';
+import * as reactRedux from 'react-redux';
 import { BrowserRouter as Router } from 'react-router-dom';
 
 afterEach(cleanup);
@@ -21,6 +22,19 @@ jest.mock('@okta/okta-react', () => ({
 
 describe('<HomeContainer /> testing suite', () => {
   test('mounts a page', () => {
+    // listen for redux's dispatch and selector calls
+    const useSelectorMock = jest.spyOn(reactRedux, 'useSelector');
+    const useDispatchMock = jest.spyOn(reactRedux, 'useDispatch');
+
+    // Setup before each test; clear previous test's mock return
+    beforeEach(() => {
+      useSelectorMock.mockClear();
+      useDispatchMock.mockClear();
+    });
+
+    useDispatchMock.mockReturnValue(jest.fn());
+    useSelectorMock.mockReturnValue({ user: { role: 'test' } });
+
     const { getByText } = render(
       <Router>
         <HomePage
@@ -30,13 +44,8 @@ describe('<HomeContainer /> testing suite', () => {
         />
       </Router>
     );
+
     let loader = getByText(/...fetching profile/i);
     expect(loader).toBeInTheDocument();
-
-    // await waitFor(async () => {
-    // });
-    // await findByText(/Dashboard/i);
-    // loader = queryByText(/...fetching profile/i);
-    // expect(loader).toBeNull();
   });
 });

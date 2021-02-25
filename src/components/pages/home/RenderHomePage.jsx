@@ -1,5 +1,4 @@
 import React, { useEffect } from 'react';
-import { DashWrapper } from '../dash-wrapper';
 import { DashboardView } from '../dashboard-view';
 import { useDispatch } from 'react-redux';
 import { userActions } from '../../../state/ducks/userDuck';
@@ -14,10 +13,10 @@ function RenderHomePage(props) {
   }, [dispatch]);
 
   return (
-    <DashWrapper authService={authService}>
+    <>
       {/*Main Content Area*/}
       <DashboardView />
-    </DashWrapper>
+    </>
   );
 }
 export default RenderHomePage;
