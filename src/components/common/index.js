@@ -7,3 +7,4 @@ export { default as LoadingComponent } from './LoadingComponent';
 export { default as Button } from './Button';
 export { default as GhostLink } from './GhostLink';
 export { default as FormWrapper } from './FormWrapper';
+export { default as FormModalWrapper } from './FormModalWrapper';
