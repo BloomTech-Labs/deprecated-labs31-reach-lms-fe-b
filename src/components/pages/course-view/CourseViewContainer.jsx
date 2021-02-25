@@ -3,6 +3,7 @@ import { Card } from 'antd';
 import { ModuleView } from '../';
 import { useDispatch, useSelector } from 'react-redux';
 import { coursesActions } from '../../../state/ducks/coursesDuck';
+import { makeEditCoursePath } from '../../../routes/index';
 
 import { Button } from 'antd';
 import { GhostLink as Link } from '../../common';
@@ -44,7 +45,7 @@ const CourseViewContainer = props => {
             <Button onClick={() => setIsExpanded(!isExpanded)}>
               {!isExpanded ? '+' : '-'}
             </Button>
-            <Link to={`/course/edit/${courseid}`}>
+            <Link to={makeEditCoursePath(courseid)}>
               <Button>Edit</Button>
             </Link>
           </>
@@ -55,6 +56,7 @@ const CourseViewContainer = props => {
           <>
             <Description>{courseDescription}</Description>
             {/* Maps over course module data and renders ModuleView components*/}
+
             {[] &&
               modules?.map(module => (
                 <ModuleView

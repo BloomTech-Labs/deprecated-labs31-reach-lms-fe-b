@@ -13,7 +13,7 @@ import logo from '../login/Reach.png';
 //   background-color: white;
 // `
 const LocationInfo = styled.div`
-  text-align: center;
+  text-align: left;
   background-color: white;
 `;
 
