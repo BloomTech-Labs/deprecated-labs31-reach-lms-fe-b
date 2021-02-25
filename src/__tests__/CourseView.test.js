@@ -1,4 +1,4 @@
-import { DashboardView } from '../components/pages';
+import { CourseView } from '../components/pages';
 import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { render, waitFor } from '@testing-library/react';
@@ -6,27 +6,14 @@ import * as reactRedux from 'react-redux';
 import expect from 'expect';
 
 // mock data to be returned in mocked useSelector call
-const mockPrograms = {
-  programs: [
-    {
-      programId: 1,
-      programName: 'name1',
-      programDescription: 'description1',
-    },
-    {
-      programId: 2,
-      programName: 'name2',
-      programDescription: 'description2',
-    },
-    {
-      programId: 3,
-      programName: 'name3',
-      programDescription: 'description3',
-    },
-  ],
+const mockCourse = {
+  courseId: 1,
+  courseName: 'name1',
+  courseDescription: 'description1',
+  modules: [],
 };
 
-describe('Simple <DashboardView /> test suite', () => {
+describe('<CourseView /> test suite', () => {
   // listen for redux's dispatch and selector calls
   const useSelectorMock = jest.spyOn(reactRedux, 'useSelector');
   const useDispatchMock = jest.spyOn(reactRedux, 'useDispatch');
@@ -41,12 +28,12 @@ describe('Simple <DashboardView /> test suite', () => {
     // when spyOn detects dispatch/selector call, mock dispatch and selector
     // return values
     useDispatchMock.mockReturnValue(jest.fn());
-    useSelectorMock.mockReturnValue(mockPrograms);
+    useSelectorMock.mockReturnValue(mockCourse);
 
     //render component
     const { getByText } = render(
       <Router>
-        <DashboardView />
+        <CourseView {...mockCourse} />
       </Router>
     );
 
