@@ -1,5 +1,6 @@
 import React from 'react';
 import { Form, Input } from 'antd';
+import { FormWrapper } from '../../common';
 
 const ModuleFormInnards = ({ onChange }) => (
   <>
@@ -33,15 +34,9 @@ const ModuleFormInnards = ({ onChange }) => (
 export default ({ form, onChange, onFinish }) => {
   return (
     <>
-      <Form
-        form={form}
-        onFinish={onFinish}
-        name="moduleForm"
-        layout="vertical"
-        size="large"
-      >
+      <FormWrapper form={form} onFinish={onFinish}>
         <ModuleFormInnards onChange={onChange} />
-      </Form>
+      </FormWrapper>
     </>
   );
 };
