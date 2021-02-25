@@ -7,6 +7,7 @@ import { programsActions } from '../../../state/ducks/programsDuck';
 import { coursesActions } from '../../../state/ducks/coursesDuck';
 import { modulesActions } from '../../../state/ducks/modulesDuck';
 import { ModuleFormModal } from '../module-form';
+import { CourseForm } from './';
 import ListModuleCards from './ListModuleCards';
 
 const StyledSpace = styled(Space)`
@@ -110,100 +111,12 @@ export default ({ isWrapped, onSubmit, courseId, courseToEdit }) => {
   return (
     <StyledSpace direction="vertical" align="center">
       <h1>Course Form</h1>
-      <Form
-        form={form}
-        name="courseForm"
-        onFinish={onFinish}
-        autoComplete="off"
-        layout="vertical"
-      >
-        {!isWrapped && (
-          <Form.Item
-            name="programSelected"
-            label="Associated Program"
-            rules={[{ required: true }]}
-          >
-            <Select name="program" placeholder="Select a Program">
-              {programs.map(({ programId, programName }) => (
-                <Select.Option value={programId}>{programName}</Select.Option>
-              ))}
-            </Select>
-          </Form.Item>
-        )}
-
-        <Form.Item
-          name="coursename"
-          label="Course Name"
-          rules={[{ required: true, message: 'Missing Course Name' }]}
-        >
-          <Input />
-        </Form.Item>
-
-        <Form.Item
-          name="coursecode"
-          label="Course Code"
-          rules={[{ required: true, message: 'Missing Course Code' }]}
-        >
-          <Input />
-        </Form.Item>
-
-        <Form.Item
-          name="coursedescription"
-          label="Course Description"
-          rules={[{ required: true, message: 'Missing Course Description' }]}
-        >
-          <Input.TextArea style={{ resize: 'none' }} rows={2} cols={2} />
-        </Form.Item>
-
-        <Form.Item
-          label="Modules"
-          shouldUpdate={(prev, current) => prev.modules !== current.modules}
-        >
-          {() => {
-            return (
-              <ListModuleCards
-                modules={form.getFieldValue('modules')}
-                triggerEdit={triggerEdit}
-                triggerDelete={onModuleRemove}
-              />
-            );
-          }}
-        </Form.Item>
-
-        <Form.Item>
-          <Button htmlType="button" onClick={showModuleModal}>
-            Add Module
-          </Button>
-        </Form.Item>
-
-        <Form.Item>
-          <Button htmlType="submit" type="primary">
-            Submit
-          </Button>
-        </Form.Item>
-      </Form>
+      <CourseForm form={form} onFinish={onFinish} />
       <ModuleFormModal
         visible={modalVisible}
         onCancel={hideModuleModal}
         onSubmit={onModuleAdd}
       />
-      {/* {moduleToEdit ? (
-        <ModuleForm
-          visible={modalVisible}
-          onCancel={hideModuleModal}
-          onSubmit={onModuleEdit}
-          moduleToEdit={moduleToEdit}
-          moduleId={moduleToEdit.moduleId}
-          isWrapped={true}
-        />
-      ) : (
-        <ModuleForm
-          visible={modalVisible}
-          onCancel={hideModuleModal}
-          onSubmit={onModuleAdd}
-          isWrapped={true}
-        />
-      )} */}
     </StyledSpace>
   );
 };
