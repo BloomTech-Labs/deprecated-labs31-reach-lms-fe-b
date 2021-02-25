@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
-import { Form, Input, Space, Button, Select } from 'antd';
+import { Form, Space } from 'antd';
 import { useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { programsActions } from '../../../state/ducks/programsDuck';
@@ -8,7 +8,6 @@ import { coursesActions } from '../../../state/ducks/coursesDuck';
 import { modulesActions } from '../../../state/ducks/modulesDuck';
 import { ModuleFormModal } from '../module-form';
 import { CourseForm } from './';
-import ListModuleCards from './ListModuleCards';
 
 const StyledSpace = styled(Space)`
   &&& {
@@ -21,7 +20,6 @@ export default ({ isWrapped, onSubmit, courseId, courseToEdit }) => {
   if (isWrapped) {
     id = courseId;
   }
-  const { programs } = useSelector(state => state.programs);
   const { course, status } = useSelector(state => state.courses);
   const dispatch = useDispatch();
   const [form] = Form.useForm();
