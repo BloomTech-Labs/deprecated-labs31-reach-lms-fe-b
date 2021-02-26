@@ -25,21 +25,21 @@ export default props => {
   }, [push, status]);
 
   const onFinish = values => {
-    const validNewCourse = {
-      ...values,
-      program: { programId: values.programSelected },
-    };
-
     if (id) {
-      const validEditedCourse = {
-        ...values,
-        program: { programId },
-        courseid: id,
-      };
-
-      dispatch(coursesActions.editCourseThunk(validEditedCourse));
+      dispatch(
+        coursesActions.editCourseThunk({
+          ...values,
+          program: { programId },
+          courseid: id,
+        })
+      );
     } else {
-      dispatch(coursesActions.addCourseThunk(validNewCourse));
+      dispatch(
+        coursesActions.addCourseThunk({
+          ...values,
+          program: { programId: values.programSelected },
+        })
+      );
     }
   };
 

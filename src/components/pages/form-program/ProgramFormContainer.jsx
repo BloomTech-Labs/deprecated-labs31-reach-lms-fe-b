@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Button, Form, Space } from 'antd';
-import { CourseForm } from '../course-form';
+import { CourseForm } from '../form-course';
 import { useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { programsActions, coursesActions } from '../../../state/ducks';

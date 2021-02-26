@@ -1,5 +1,5 @@
 import React from 'react';
-import { ModuleCard } from '../module-form';
+import { ModuleCard } from '../form-module';
 
 export default ({ modules, triggerEdit, triggerDelete }) => {
   return (

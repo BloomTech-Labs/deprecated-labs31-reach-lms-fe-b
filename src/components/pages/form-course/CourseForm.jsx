@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { coursesActions, modulesActions } from '../../../state/ducks';
 import { Modal, Form, Button } from 'antd';
-import { ModuleForm } from './../module-form';
+import { ModuleForm } from './../form-module';
 import { FormWrapper } from '../../common';
 import { useSubModal, useResetFormOnCloseModal } from '../../hooks';
 import CourseFormInnards from './CourseFormInnards';
@@ -144,16 +144,19 @@ export default props => {
    */
   const onModuleRemove = moduleToDelete => {
     const { moduleId, moduleName } = moduleToDelete;
-
     if (moduleId) {
+      // if the module exists in DB, we need to delete it
       dispatch(modulesActions.deleteModuleThunk(moduleId));
     }
-
+    // if we can filter by `moduleId`, we'll do that
     const filterById = module => module.moduleId !== moduleId;
+    // otherwise we'll filter by `moduleName`
     const filterByName = module => module.moduleName !== moduleName;
-
+    // make a copy of our existing modules
     const existingModules = getFieldValue('modules') || [];
 
+    // set our modules property to a filtered version of what it is
+    // filter by ID if moduleId exists, otherwise filter by name
     setFieldsValue({
       modules: existingModules.filter(moduleId ? filterById : filterByName),
     });
@@ -170,6 +173,11 @@ export default props => {
     showModal();
   };
 
+  /**
+   * If a user clicks `cancel` on the module modal, we want to set our `
+   * moduleToEdit` back to null b/c they clearly don't want to edit anymore.
+   * Additionally, hide the modal to close it.
+   */
   const cancelModuleEdit = () => {
     setModuleToEdit(null);
     hideModal();
@@ -189,10 +197,11 @@ export default props => {
     <>
       {children}
 
-      {/* All the top-level course fields that don't relate to modules */}
+      {/* All the top-level course fields that don't relate to modules*/}
       <CourseFormInnards />
 
-      {/* List of Module Cards (with EDIT or DELETE optionality) */}
+      {/* List of Module Cards (with EDIT or DELETE optionality)
+      These will update any time the `modules` property changes in our form state */}
       <Form.Item
         label="Modules"
         shouldUpdate={(prev, current) => prev.modules !== current.modules}
@@ -206,32 +215,30 @@ export default props => {
         )}
       </Form.Item>
 
+      {/* This allows users to add a module to our Course; pulls up the module form modal */}
       <Form.Item>
         <Button htmlType="button" onClick={showModal}>
           Add Module
         </Button>
       </Form.Item>
 
-      {moduleToEdit ? (
-        <ModuleForm
-          isWrapped={true}
-          onFinish={onModuleEdit}
-          onCancel={cancelModuleEdit}
-          moduleToEdit={moduleToEdit}
-          modalVisible={visible}
-        />
-      ) : (
-        <ModuleForm
-          isWrapped={true}
-          onFinish={onModuleAdd}
-          onCancel={cancelModuleEdit}
-          modalVisible={visible}
-        />
-      )}
+      {/* Module Form allows us to Create or Edit a Module (whether it's in the database yet or not)
+        - `onFinish` will be `onModuleEdit` if our `moduleToEdit` piece of state is defined, 
+        otherwise it will be `onModuleAdd`
+        - `moduleToEdit` will be our piece of state if it exists or `undefined` if it's still `null`
+      */}
+      <ModuleForm
+        isWrapped={true}
+        onFinish={moduleToEdit ? onModuleEdit : onModuleAdd}
+        onCancel={cancelModuleEdit}
+        moduleToEdit={moduleToEdit ?? undefined}
+        modalVisible={visible}
+      />
     </>
   );
 
   if (isWrapped) {
+    // if our CourseForm is wrapped, we need to wrap all the JSX elements above in a Modal
     return (
       <Modal
         title="Course Modal"
@@ -240,14 +247,18 @@ export default props => {
         onCancel={cancelEdit}
       >
         <FormWrapper name="courseForm" form={form} onFinish={onFinish}>
-          {innerForm()}
+          {// note: innerForm returns all the Form JSX above
+          innerForm()}
         </FormWrapper>
       </Modal>
     );
   } else {
+    // otherwise, our CourseForm is NOT wrapped, so we need to just return
+    // all the above JSX but with a Submit button to give users submission power
     return (
       <FormWrapper name="courseForm" form={form} onFinish={onFinish}>
-        {innerForm()}
+        {// note: innerForm returns all the Form JSX above
+        innerForm()}
         <Form.Item>
           <Button htmlType="submit" type="primary">
             Submit

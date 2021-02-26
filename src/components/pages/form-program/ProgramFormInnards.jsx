@@ -1,13 +1,13 @@
 import React from 'react';
-import { Form, Input, Select, Button } from 'antd';
-import ListCourseCards from './ListCourseCards';
+import { Form, Input, Select } from 'antd';
 
-export default ({
-  onCourseRemove,
-  getFieldValue,
-  triggerEdit,
-  showCourseModal,
-}) => {
+/**
+ * ProgramFormInnards Component
+ * This component contains the simplest pieces of the ProgramForm.
+ * I've split it into a separate component for the sake of reusability and
+ * readability.
+ */
+export default props => {
   return (
     <>
       {/* PROGRAM NAME */}

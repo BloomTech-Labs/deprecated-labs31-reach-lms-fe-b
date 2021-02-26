@@ -1,7 +1,11 @@
 import React from 'react';
 import { Form, Input } from 'antd';
 
-const CourseFormInnards = props => (
+/**
+ * These are all of the simple form elements of `CourseForm`.
+ * We moved this to a separate component for reusability and readability in `CourseForm`.
+ */
+export default props => (
   <>
     <Form.Item
       name="coursename"
@@ -28,5 +32,3 @@ const CourseFormInnards = props => (
     </Form.Item>
   </>
 );
-
-export default CourseFormInnards;
