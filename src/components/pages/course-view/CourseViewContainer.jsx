@@ -28,12 +28,11 @@ const CourseViewContainer = props => {
   //Redux State Managers
   const dispatch = useDispatch();
 
-  const course = useSelector(state => state.courses.course);
-  const { modules } = course;
+  const modules = useSelector(state => state.courses.modules[courseid]);
 
   //Dispatch Action to Load Program Info
   useEffect(() => {
-    dispatch(coursesActions.getCourseModulesThunk(courseid));
+    dispatch(coursesActions.getCourseModulesThunk2(courseid));
   }, [courseid, dispatch]);
 
   return (
