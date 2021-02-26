@@ -1,13 +1,7 @@
 import React from 'react';
-import { Form, Input, Button } from 'antd';
-import ListModuleCards from './ListModuleCards';
+import { Form, Input } from 'antd';
 
-const CourseFormInnards = ({
-  getFieldValue,
-  showModuleModal,
-  triggerEdit,
-  onModuleRemove,
-}) => (
+const CourseFormInnards = props => (
   <>
     <Form.Item
       name="coursename"

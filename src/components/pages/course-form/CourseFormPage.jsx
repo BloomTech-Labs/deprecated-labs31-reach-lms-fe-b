@@ -48,7 +48,7 @@ export default props => {
   };
 
   return (
-    <CourseForm onFinish={onFinish}>
+    <CourseForm id={id} onFinish={onFinish}>
       <Form.Item
         name="programSelected"
         label="Associated Program"

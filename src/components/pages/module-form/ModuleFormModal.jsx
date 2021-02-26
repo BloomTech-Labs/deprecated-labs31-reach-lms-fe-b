@@ -1,20 +1,23 @@
 import React from 'react';
 import { Form, Modal } from 'antd';
-import { useResetFormOnCloseModal } from '../../hooks/useResetFormOnCloseModal';
+import { useResetFormOnCloseModal } from '../../hooks/useModalHooks';
 import { ModuleForm } from './';
 
-export default ({ visible, onCancel, onSubmit }) => {
-  const [form] = Form.useForm();
+export default props => {
+  const { visible, onCancel, onSubmit } = props;
 
-  useResetFormOnCloseModal({ resetFields: form.resetFields, visible });
+  const [form] = Form.useForm();
+  const { resetFields, setFieldsValue, getFieldsValue } = form;
+
+  useResetFormOnCloseModal({ resetFields, visible });
 
   const onChange = evt => {
     const { name, value } = evt.target;
-    form.setFieldsValue({ [name]: value });
+    setFieldsValue({ [name]: value });
   };
 
   const onOk = values => {
-    onSubmit(form.getFieldsValue());
+    onSubmit(getFieldsValue());
     form.submit();
   };
 

@@ -13,9 +13,8 @@ export const useResetFormOnCloseModal = ({ resetFields, visible }) => {
   }, [visible, prevVisible, resetFields]);
 };
 
-export const useSubModal = resetFields => {
+export const useSubModal = () => {
   const [visible, setVisible] = useState(false);
-  useResetFormOnCloseModal({ resetFields, visible });
 
   const showModal = () => setVisible(true);
   const hideModal = () => setVisible(false);
