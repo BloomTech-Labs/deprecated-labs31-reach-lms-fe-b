@@ -58,7 +58,6 @@ export default props => {
     setFieldsValue({
       courses: [...getFieldValue('courses'), newClass],
     });
-
     hideCourseModal();
   };
 

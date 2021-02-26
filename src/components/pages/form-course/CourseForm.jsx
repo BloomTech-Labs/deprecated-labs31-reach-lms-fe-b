@@ -184,8 +184,9 @@ export default props => {
    * `onFinish` function passed down from ProgramFormContainer
    */
   const onOk = () => {
+    const modules = getFieldValue('modules');
     const values = getFieldsValue();
-    onFinish(values);
+    onFinish({ ...values, modules });
   };
 
   /**
@@ -270,7 +271,7 @@ export default props => {
     // otherwise, our CourseForm is NOT wrapped, so we need to just return
     // all the above JSX but with a Submit button to give users submission power
     return (
-      <FormWrapper name="courseForm" form={form} onFinish={onFinish}>
+      <FormWrapper name="courseForm" form={form} onFinish={onOk}>
         {// note: innerForm returns all the Form JSX above
         innerForm()}
         <Form.Item>
