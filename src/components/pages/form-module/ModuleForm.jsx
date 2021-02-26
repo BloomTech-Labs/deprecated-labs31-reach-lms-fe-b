@@ -48,13 +48,21 @@ export default props => {
     }
   }, [id, dispatch]);
 
+  /**
+   * this useEffect is all about actually populating the form data if
+   * there is something with which we should populate it.
+   */
   useEffect(() => {
-    if (status === 'success') {
+    // if status is "get/success", our getModuleThunk successfully
+    // obtained some data, so let's populate our form with that.
+    if (status === 'get/success') {
       setFieldsValue({
         ...getFieldsValue(),
         ...module,
       });
     }
+    // if `moduleToEdit` was passed in, we should set our form state
+    // to match it. This allows us to edit modules that aren't in the DB yet!
     if (moduleToEdit) {
       setFieldsValue({
         ...getFieldsValue(),
@@ -82,6 +90,7 @@ export default props => {
         onCancel={onCancel}
       >
         <FormWrapper name="moduleForm" form={form} onFinish={onFinish}>
+          {children}
           <ModuleFormInnards onChange={onChange} />
         </FormWrapper>
       </Modal>
@@ -90,7 +99,7 @@ export default props => {
 
   return (
     <>
-      <FormWrapper form={form} onFinish={onFinish}>
+      <FormWrapper name="moduleForm" form={form} onFinish={onFinish}>
         {children}
         <ModuleFormInnards onChange={onChange} />
       </FormWrapper>

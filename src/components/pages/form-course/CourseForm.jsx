@@ -50,9 +50,6 @@ export default props => {
    * showModal: function to show modal
    */
   const { visible, hideModal, showModal } = useSubModal();
-  // const [visible, setVisible] = useState(false);
-  // const hideModal = () => setVisible(false);
-  // const showModal = () => setVisible(true);
 
   /** should reset form fields as CourseFormModal opens and closes */
   useResetFormOnCloseModal({ resetFields, visible: modalVisible });
@@ -95,8 +92,6 @@ export default props => {
    * @param {Module} newModule — the module to create
    */
   const onModuleAdd = newModule => {
-    console.log({ newModule });
-
     const existingModules = getFieldValue('modules') || [];
 
     setFieldsValue({
@@ -193,6 +188,20 @@ export default props => {
     onFinish(values);
   };
 
+  /**
+   * *************************************************
+   * NOTE: THIS IS NOT A RETURN STATEMENT YET
+   * *************************************************
+   *
+   * This function is a utility function that will be used inside of our return statement.
+   * It holds all of the most complex pieces of this form that WILL BE USED NO MATTER WHAT
+   *
+   * The return statement handles a tiny bit of logic to decide whether we will wrap what this
+   * returns in a Modal or not.
+   *
+   * This function is the meat behind this component, but it's important to understand
+   * that the RETURN IS STILL BELOW ALL OF THIS
+   */
   const innerForm = () => (
     <>
       {children}
@@ -237,6 +246,11 @@ export default props => {
     </>
   );
 
+  /**
+   * *************************************************
+   * FINALLY THE RETURN LOGIC
+   * *************************************************
+   */
   if (isWrapped) {
     // if our CourseForm is wrapped, we need to wrap all the JSX elements above in a Modal
     return (
