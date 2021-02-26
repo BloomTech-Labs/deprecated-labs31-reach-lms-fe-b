@@ -146,6 +146,7 @@ const coursesInitialState = {
     courseCode: '',
     courseDescription: '',
     program: {},
+    modules: [],
   },
 };
 
