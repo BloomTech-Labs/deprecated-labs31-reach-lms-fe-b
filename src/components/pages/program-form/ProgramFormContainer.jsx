@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
-import { Modal, Form, Space } from 'antd';
+import { Button, Form, Space } from 'antd';
 import { CourseForm } from '../course-form';
 import { useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { programsActions, coursesActions } from '../../../state/ducks';
 import ProgramFormInnards from './ProgramFormInnards';
+import ListCourseCards from './ListCourseCards';
 import { useProgramRedux } from './useCourseManagement';
 
 const { editProgramThunk, addProgramThunk } = programsActions;
@@ -79,18 +80,29 @@ export default props => {
   };
 
   const onCourseEdit = editedCourse => {
+    editedCourse = { ...editedCourse, ...courseToEdit };
+
+    if (editedCourse?.courseid) {
+      dispatch(coursesActions.editCourseThunk(editedCourse));
+    }
+
     setFieldsValue({
       courses: getFieldValue('courses').map(course =>
         course.courseid === editedCourse.courseid ? editedCourse : course
       ),
     });
-
+    setCourseToEdit(null);
     hideCourseModal();
   };
 
   const triggerEdit = course => {
     setCourseToEdit(course);
     showCourseModal();
+  };
+
+  const cancelEdit = () => {
+    setCourseToEdit(null);
+    hideCourseModal();
   };
 
   return (
@@ -112,24 +124,51 @@ export default props => {
           showCourseModal={showCourseModal}
           triggerEdit={triggerEdit}
         />
+
+        {/* List of Course Cards for Each Course in This Program */}
+        <Form.Item
+          shouldUpdate={(prev, current) => prev.courses !== current.courses}
+        >
+          {() => (
+            <ListCourseCards
+              courses={getFieldValue('courses')}
+              triggerDelete={onCourseRemove}
+              triggerEdit={triggerEdit}
+            />
+          )}
+        </Form.Item>
+
+        {/* Add Class Button. On click will pull up ADD COURSE FORM (in a modal) */}
+        <Form.Item>
+          <Button htmlType="button" onClick={showCourseModal}>
+            Add Course
+          </Button>
+        </Form.Item>
+
+        {/* SUBMIT BUTTON */}
+        <Form.Item>
+          <Button htmlType="submit" type="primary">
+            Submit
+          </Button>
+        </Form.Item>
       </Form>
+
       {/* This modal will display if user clicks "ADD COURSE"  */}
-      <Modal
-        title="Course Modal"
-        visible={modalVisible}
-        onCancel={hideCourseModal}
-      >
-        {courseToEdit ? (
-          <CourseForm
-            isWrapped={true}
-            onSubmit={onCourseEdit}
-            courseId={courseToEdit.courseid}
-            courseToEdit={courseToEdit}
-          />
-        ) : (
-          <CourseForm isWrapped={true} onSubmit={onCourseAdd} />
-        )}
-      </Modal>
+      {courseToEdit ? (
+        <CourseForm
+          isWrapped={true}
+          modalVisible={modalVisible}
+          onFinish={onCourseEdit}
+          id={courseToEdit.courseid}
+          courseToEdit={courseToEdit}
+        />
+      ) : (
+        <CourseForm
+          isWrapped={true}
+          modalVisible={modalVisible}
+          onFinish={onCourseAdd}
+        />
+      )}
     </Space>
   );
 };

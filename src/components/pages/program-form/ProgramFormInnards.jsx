@@ -37,33 +37,6 @@ export default ({
       <Form.Item name="programDescription" label="Program Description">
         <Input.TextArea />
       </Form.Item>
-
-      {/* List of Course Cards for Each Course in This Program */}
-      <Form.Item
-        shouldUpdate={(prev, current) => prev.courses !== current.courses}
-      >
-        {() => (
-          <ListCourseCards
-            courses={getFieldValue('courses')}
-            triggerDelete={onCourseRemove}
-            triggerEdit={triggerEdit}
-          />
-        )}
-      </Form.Item>
-
-      {/* Add Class Button. On click will pull up ADD COURSE FORM (in a modal) */}
-      <Form.Item>
-        <Button htmlType="button" onClick={showCourseModal}>
-          Add Course
-        </Button>
-      </Form.Item>
-
-      {/* SUBMIT BUTTON */}
-      <Form.Item>
-        <Button htmlType="submit" type="primary">
-          Submit
-        </Button>
-      </Form.Item>
     </>
   );
 };

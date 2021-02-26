@@ -1,27 +1,62 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { coursesActions, modulesActions } from '../../../state/ducks';
-import { Form, Button } from 'antd';
+import { Modal, Form, Button } from 'antd';
 import { ModuleFormModal } from './../module-form';
 import { FormWrapper } from '../../common';
-import { useSubModal } from '../../hooks';
+import { useSubModal, useResetFormOnCloseModal } from '../../hooks';
 import CourseFormInnards from './CourseFormInnards';
 import ListModuleCards from './ListModuleCards';
 
+/**
+ * COURSE FORM
+ * This component manages the creation or editing of a Course
+ * Rendered by CourseFormPage and ProgramForm
+ */
 export default props => {
-  // props
-  const { id, onFinish, children } = props;
+  /**
+   * PROPS
+   *
+   * id: the id of the course in question (or undefined)
+   * onFinish: the function to call on CourseForm submit
+   * courseToEdit: the course we should edit! (populates form state)
+   * children: any children this component should render
+   */
+  const {
+    id,
+    onFinish,
+    cancelEdit,
+    courseToEdit,
+    modalVisible,
+    isWrapped,
+    children,
+  } = props;
 
-  // form
+  /** reusable form hook from ant design */
   const [form] = Form.useForm();
-  const { getFieldsValue, getFieldValue, setFieldsValue } = form;
+  /** destructuring functions from form for ease of access */
+  const { getFieldsValue, getFieldValue, setFieldsValue, resetFields } = form;
+  /** allows us to edit a module regardless of whether it exists in database yet */
   const [moduleToEdit, setModuleToEdit] = useState(null);
 
   // Redux
+  /** allows us to dispatch actions to the Redux store */
   const dispatch = useDispatch();
+  /** selects course & status from our course slice of state */
   const { course, status } = useSelector(state => state.courses);
+  /**
+   * visible {boolean}: denotes whether module modal is open
+   * hideModal: function to close modal
+   * showModal: function to show modal
+   */
   const { visible, hideModal, showModal } = useSubModal();
 
+  /** should reset form fields as CourseFormModal opens and closes */
+  useResetFormOnCloseModal({ resetFields, visible: modalVisible });
+
+  /**
+   * dispatches calls to backend api to populate form data if ID exists
+   */
   useEffect(() => {
     if (id) {
       dispatch(coursesActions.getCourseThunk(id));
@@ -29,6 +64,11 @@ export default props => {
     }
   }, [id, dispatch]);
 
+  /**
+   * if status hits "get/success", we know our Redux store
+   * has updated course information and we can set our form state
+   * to the populated data
+   */
   useEffect(() => {
     if (status === 'get/success') {
       setFieldsValue({
@@ -36,7 +76,13 @@ export default props => {
         ...course,
       });
     }
-  }, [status, course, getFieldsValue, setFieldsValue]);
+    if (courseToEdit) {
+      setFieldsValue({
+        ...getFieldsValue(),
+        ...courseToEdit,
+      });
+    }
+  }, [status, course, courseToEdit, getFieldsValue, setFieldsValue]);
 
   /**
    * Add a new module to our form state.
@@ -117,9 +163,9 @@ export default props => {
     showModal();
   };
 
-  return (
+  const inside = () => (
     <>
-      <FormWrapper name={'courseForm'} form={form} onFinish={onFinish}>
+      <FormWrapper name="courseForm" form={form} onFinish={onFinish}>
         {children}
 
         {/* All the top-level course fields that don't relate to modules */}
@@ -145,16 +191,19 @@ export default props => {
           </Button>
         </Form.Item>
 
-        <Form.Item>
-          <Button htmlType="submit" type="primary">
-            Submit
-          </Button>
-        </Form.Item>
+        {!isWrapped && (
+          <Form.Item>
+            <Button htmlType="submit" type="primary">
+              Submit
+            </Button>
+          </Form.Item>
+        )}
       </FormWrapper>
 
       {moduleToEdit ? (
         <ModuleFormModal
           onSubmit={onModuleEdit}
+          moduleToEdit={moduleToEdit}
           visible={visible}
         ></ModuleFormModal>
       ) : (
@@ -165,4 +214,19 @@ export default props => {
       )}
     </>
   );
+
+  if (isWrapped) {
+    return (
+      <Modal
+        title="Course Modal"
+        visible={modalVisible}
+        onOk={onFinish}
+        onCancel={cancelEdit}
+      >
+        {inside()}
+      </Modal>
+    );
+  } else {
+    return inside();
+  }
 };

@@ -1,13 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
 import CourseForm from './CourseForm';
 import { Select, Form } from 'antd';
 import { useSelector, useDispatch } from 'react-redux';
-import {
-  programsActions,
-  coursesActions,
-  modulesActions,
-} from '../../../state/ducks';
+import { programsActions, coursesActions } from '../../../state/ducks';
 
 export default props => {
   //Router
@@ -52,13 +48,13 @@ export default props => {
       <Form.Item
         name="programSelected"
         label="Associated Program"
-        rules={programId ? [{ required: false }] : [{ required: true }]}
+        rules={[{ required: programId ? false : true }]}
       >
         <Select
           name="program"
           placeholder="Select a Program"
-          defaultValue={parseInt(programId)}
-          disabled={id}
+          defaultValue={programId ? parseInt(programId) : undefined}
+          disabled={programId}
         >
           {programs.map(programIn => (
             <Select.Option value={programIn.programId}>
