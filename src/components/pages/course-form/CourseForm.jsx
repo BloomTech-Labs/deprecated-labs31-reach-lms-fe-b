@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { coursesActions, modulesActions } from '../../../state/ducks';
 import { Modal, Form, Button } from 'antd';
-import { ModuleFormModal } from './../module-form';
+import { ModuleForm } from './../module-form';
 import { FormWrapper } from '../../common';
 import { useSubModal, useResetFormOnCloseModal } from '../../hooks';
 import CourseFormInnards from './CourseFormInnards';
@@ -50,6 +50,9 @@ export default props => {
    * showModal: function to show modal
    */
   const { visible, hideModal, showModal } = useSubModal();
+  // const [visible, setVisible] = useState(false);
+  // const hideModal = () => setVisible(false);
+  // const showModal = () => setVisible(true);
 
   /** should reset form fields as CourseFormModal opens and closes */
   useResetFormOnCloseModal({ resetFields, visible: modalVisible });
@@ -92,6 +95,8 @@ export default props => {
    * @param {Module} newModule — the module to create
    */
   const onModuleAdd = newModule => {
+    console.log({ newModule });
+
     const existingModules = getFieldValue('modules') || [];
 
     setFieldsValue({
@@ -109,12 +114,14 @@ export default props => {
    * @param {Module} editedModule — The module to be updated
    */
   const onModuleEdit = editedModule => {
-    const { moduleId, moduleName } = editedModule;
+    const { moduleId } = moduleToEdit;
+
+    editedModule = { ...editedModule, moduleId };
 
     const mapById = module =>
       module.moduleId === moduleId ? editedModule : module;
     const mapByName = module =>
-      module.moduleName === moduleName ? editedModule : module;
+      module.moduleName === editedModule.moduleName ? editedModule : module;
 
     if (moduleId) {
       dispatch(modulesActions.editModuleThunk(editedModule));
@@ -138,14 +145,14 @@ export default props => {
   const onModuleRemove = moduleToDelete => {
     const { moduleId, moduleName } = moduleToDelete;
 
-    const filterById = module => module.moduleId !== moduleId;
-    const filterByName = module => module.moduleName !== moduleName;
-
     if (moduleId) {
       dispatch(modulesActions.deleteModuleThunk(moduleId));
     }
 
-    const existingModules = form.getFieldValue('modules') || [];
+    const filterById = module => module.moduleId !== moduleId;
+    const filterByName = module => module.moduleName !== moduleName;
+
+    const existingModules = getFieldValue('modules') || [];
 
     setFieldsValue({
       modules: existingModules.filter(moduleId ? filterById : filterByName),
@@ -163,54 +170,63 @@ export default props => {
     showModal();
   };
 
-  const inside = () => (
+  const cancelModuleEdit = () => {
+    setModuleToEdit(null);
+    hideModal();
+  };
+
+  /**
+   * This is the submit function for when this course form is wrapped in a modal.
+   * This function will get our form's values and pass them up to the
+   * `onFinish` function passed down from ProgramFormContainer
+   */
+  const onOk = () => {
+    const values = getFieldsValue();
+    onFinish(values);
+  };
+
+  const innerForm = () => (
     <>
-      <FormWrapper name="courseForm" form={form} onFinish={onFinish}>
-        {children}
+      {children}
 
-        {/* All the top-level course fields that don't relate to modules */}
-        <CourseFormInnards />
+      {/* All the top-level course fields that don't relate to modules */}
+      <CourseFormInnards />
 
-        {/* List of Module Cards (with EDIT or DELETE optionality) */}
-        <Form.Item
-          label="Modules"
-          shouldUpdate={(prev, current) => prev.modules !== current.modules}
-        >
-          {() => (
-            <ListModuleCards
-              modules={getFieldValue('modules')}
-              triggerEdit={triggerEdit}
-              triggerDelete={onModuleRemove}
-            />
-          )}
-        </Form.Item>
-
-        <Form.Item>
-          <Button htmlType="button" onClick={showModal}>
-            Add Module
-          </Button>
-        </Form.Item>
-
-        {!isWrapped && (
-          <Form.Item>
-            <Button htmlType="submit" type="primary">
-              Submit
-            </Button>
-          </Form.Item>
+      {/* List of Module Cards (with EDIT or DELETE optionality) */}
+      <Form.Item
+        label="Modules"
+        shouldUpdate={(prev, current) => prev.modules !== current.modules}
+      >
+        {() => (
+          <ListModuleCards
+            modules={getFieldValue('modules')}
+            triggerEdit={triggerEdit}
+            triggerDelete={onModuleRemove}
+          />
         )}
-      </FormWrapper>
+      </Form.Item>
+
+      <Form.Item>
+        <Button htmlType="button" onClick={showModal}>
+          Add Module
+        </Button>
+      </Form.Item>
 
       {moduleToEdit ? (
-        <ModuleFormModal
-          onSubmit={onModuleEdit}
+        <ModuleForm
+          isWrapped={true}
+          onFinish={onModuleEdit}
+          onCancel={cancelModuleEdit}
           moduleToEdit={moduleToEdit}
-          visible={visible}
-        ></ModuleFormModal>
+          modalVisible={visible}
+        />
       ) : (
-        <ModuleFormModal
-          onSubmit={onModuleAdd}
-          visible={visible}
-        ></ModuleFormModal>
+        <ModuleForm
+          isWrapped={true}
+          onFinish={onModuleAdd}
+          onCancel={cancelModuleEdit}
+          modalVisible={visible}
+        />
       )}
     </>
   );
@@ -220,13 +236,24 @@ export default props => {
       <Modal
         title="Course Modal"
         visible={modalVisible}
-        onOk={onFinish}
+        onOk={onOk}
         onCancel={cancelEdit}
       >
-        {inside()}
+        <FormWrapper name="courseForm" form={form} onFinish={onFinish}>
+          {innerForm()}
+        </FormWrapper>
       </Modal>
     );
   } else {
-    return inside();
+    return (
+      <FormWrapper name="courseForm" form={form} onFinish={onFinish}>
+        {innerForm()}
+        <Form.Item>
+          <Button htmlType="submit" type="primary">
+            Submit
+          </Button>
+        </Form.Item>
+      </FormWrapper>
+    );
   }
 };

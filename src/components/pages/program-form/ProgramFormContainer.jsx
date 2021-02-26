@@ -80,7 +80,7 @@ export default props => {
   };
 
   const onCourseEdit = editedCourse => {
-    editedCourse = { ...editedCourse, ...courseToEdit };
+    editedCourse = { ...editedCourse, courseid: courseToEdit.courseid };
 
     if (editedCourse?.courseid) {
       dispatch(coursesActions.editCourseThunk(editedCourse));
@@ -160,6 +160,7 @@ export default props => {
           modalVisible={modalVisible}
           onFinish={onCourseEdit}
           id={courseToEdit.courseid}
+          cancelEdit={cancelEdit}
           courseToEdit={courseToEdit}
         />
       ) : (
@@ -167,6 +168,7 @@ export default props => {
           isWrapped={true}
           modalVisible={modalVisible}
           onFinish={onCourseAdd}
+          cancelEdit={cancelEdit}
         />
       )}
     </Space>
