@@ -1,2 +1,2 @@
 export { useOktaAuthWithInfo } from './useOktaAuthWithInfo';
-export { useResetFormOnCloseModal } from './useResetFormOnCloseModal';
+export { useResetFormOnCloseModal, useSubModal } from './useModalHooks';

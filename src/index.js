@@ -12,10 +12,8 @@ import { Provider } from 'react-redux';
 import { store } from './state/index';
 import { LoadingComponent } from './components/common';
 import {
-  CourseForm,
   CourseFormPage,
   CourseView,
-  ModuleForm,
   ModuleView,
   SettingsPage,
   ProgramForm,
