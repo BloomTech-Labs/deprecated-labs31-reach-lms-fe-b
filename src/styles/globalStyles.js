@@ -5,7 +5,7 @@ const GlobalStyle = createGlobalStyle`
         font-size: 62.5%;
     }
     #root{
-      margin: 20px;
+      margin: 24px;
     }
 
     body {

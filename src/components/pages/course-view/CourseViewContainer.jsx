@@ -4,6 +4,12 @@ import { ModuleView } from '../';
 import { useDispatch, useSelector } from 'react-redux';
 import { coursesActions } from '../../../state/ducks/coursesDuck';
 import { makeEditCoursePath } from '../../../routes/index';
+import {
+  DownOutlined,
+  UpOutlined,
+  EditOutlined,
+  DeleteOutlined,
+} from '@ant-design/icons';
 
 import { Button } from 'antd';
 import { GhostLink as Link } from '../../common';
@@ -43,10 +49,12 @@ const CourseViewContainer = props => {
         extra={
           <>
             <Button onClick={() => setIsExpanded(!isExpanded)}>
-              {!isExpanded ? '+' : '-'}
+              {!isExpanded ? <DownOutlined /> : <UpOutlined />}
             </Button>
             <Link to={makeEditCoursePath(courseid)}>
-              <Button>Edit</Button>
+              <Button>
+                <EditOutlined />
+              </Button>
             </Link>
           </>
         }

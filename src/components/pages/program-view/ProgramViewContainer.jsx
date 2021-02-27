@@ -7,6 +7,7 @@ import { Button } from 'antd';
 import { GhostLink as Link } from '../../common';
 import { makeEditProgramPath } from '../../../routes';
 import styled from 'styled-components';
+import { EditOulined, EditOutlined } from '@ant-design/icons';
 
 //Styled Components
 const TitleContainer = styled.div`
@@ -51,7 +52,9 @@ const ProgramViewContainer = props => {
         </div>
         <div>
           <Link to={makeEditProgramPath(id)}>
-            <Button>Edit</Button>
+            <Button>
+              <EditOutlined />
+            </Button>
           </Link>
         </div>
       </TitleContainer>

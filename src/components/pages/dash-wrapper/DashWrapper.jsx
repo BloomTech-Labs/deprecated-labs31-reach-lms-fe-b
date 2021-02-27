@@ -14,6 +14,7 @@ import logo from '../login/Reach.png';
 //   background-color: white;
 // `
 const LocationInfo = styled.div`
+  margin: 24px;
   text-align: left;
   background-color: white;
 `;
