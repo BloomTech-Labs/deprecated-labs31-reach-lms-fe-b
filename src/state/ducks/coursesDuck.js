@@ -18,6 +18,11 @@ const GET_COURSE_MODULES_SUCCESS = 'GET_COURSE_MODULES_SUCCESS';
 const GET_COURSE_MODULES_FAIL = 'GET_COURSE_MODULES_FAIL';
 const GET_COURSE_MODULES_RESOLVE = 'GET_COURSE_MODULES_RESOLVE';
 
+const GET_COURSE_MODULES2_START = 'GET_COURSE_MODULES2_START';
+const GET_COURSE_MODULES2_SUCCESS = 'GET_COURSE_MODULES2_SUCCESS';
+const GET_COURSE_MODULES2_FAIL = 'GET_COURSE_MODULES2_FAIL';
+const GET_COURSE_MODULES2_RESOLVE = 'GET_COURSE_MODULES2_RESOLVE';
+
 const ADD_COURSE_START = 'ADD_COURSE_START';
 const ADD_COURSE_SUCCESS = 'ADD_COURSE_SUCCESS';
 const ADD_COURSE_FAIL = 'ADD_COURSE_FAIL';
@@ -85,6 +90,25 @@ export const coursesActions = {
       });
   },
 
+  getCourseModulesThunk2: id => dispatch => {
+    dispatch({ type: GET_COURSE_MODULES2_START });
+
+    axiosAuth()
+      .get(`/courses/course/${id}/modules`)
+      .then(res => {
+        dispatch({
+          type: GET_COURSE_MODULES2_SUCCESS,
+          payload: { modules: res.data, id },
+        });
+      })
+      .catch(err => {
+        dispatch({ type: GET_COURSE_MODULES2_FAIL, payload: err.message });
+      })
+      .finally(() => {
+        dispatch({ type: GET_COURSE_MODULES2_RESOLVE });
+      });
+  },
+
   addCourseThunk: course => dispatch => {
     dispatch({ type: ADD_COURSE_START });
 
@@ -147,6 +171,7 @@ const coursesInitialState = {
     courseDescription: '',
     program: {},
   },
+  modules: [],
 };
 
 /******************************************************
@@ -233,6 +258,35 @@ const coursesReducer = (state = coursesInitialState, action) => {
       };
 
     case GET_COURSE_MODULES_RESOLVE:
+      return {
+        ...state,
+        status: 'idle',
+      };
+
+    case GET_COURSE_MODULES2_START:
+      return {
+        ...state,
+        status: 'get/pending',
+      };
+
+    case GET_COURSE_MODULES2_SUCCESS:
+      return {
+        ...state,
+        modules: {
+          ...state.modules,
+          [action.payload.id]: action.payload.modules,
+        },
+        status: 'get/success',
+      };
+
+    case GET_COURSE_MODULES2_FAIL:
+      return {
+        ...state,
+        status: 'get/error',
+        error: action.payload,
+      };
+
+    case GET_COURSE_MODULES2_RESOLVE:
       return {
         ...state,
         status: 'idle',

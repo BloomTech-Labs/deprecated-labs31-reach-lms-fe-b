@@ -3,7 +3,7 @@ import { Card } from 'antd';
 import { ModuleView } from '../';
 import { useDispatch, useSelector } from 'react-redux';
 import { coursesActions } from '../../../state/ducks/coursesDuck';
-import { makeEditCoursePath } from '../../../routes/index';
+
 import {
   DownOutlined,
   UpOutlined,
@@ -15,6 +15,7 @@ import { Button } from 'antd';
 import { GhostLink as Link } from '../../common';
 
 import styled from 'styled-components';
+import { makeEditCoursePath } from '../../../routes';
 
 //Component Styles
 const CourseCard = styled(Card)`
@@ -29,17 +30,16 @@ const CourseViewContainer = props => {
   const [isExpanded, setIsExpanded] = useState(false);
 
   //Props passed from ProgramView Component
-  const { courseName, courseDescription, courseid } = props;
+  const { courseName, courseDescription, courseid, programId } = props;
 
   //Redux State Managers
   const dispatch = useDispatch();
 
-  const course = useSelector(state => state.courses.course);
-  const { modules } = course;
+  const modules = useSelector(state => state.courses.modules[courseid]);
 
   //Dispatch Action to Load Program Info
   useEffect(() => {
-    dispatch(coursesActions.getCourseModulesThunk(courseid));
+    dispatch(coursesActions.getCourseModulesThunk2(courseid));
   }, [courseid, dispatch]);
 
   return (
@@ -51,7 +51,7 @@ const CourseViewContainer = props => {
             <Button onClick={() => setIsExpanded(!isExpanded)}>
               {!isExpanded ? <DownOutlined /> : <UpOutlined />}
             </Button>
-            <Link to={makeEditCoursePath(courseid)}>
+            <Link to={makeEditCoursePath(courseid, programId)}>
               <Button>
                 <EditOutlined />
               </Button>

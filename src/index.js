@@ -12,9 +12,8 @@ import { Provider } from 'react-redux';
 import { store } from './state/index';
 import { LoadingComponent } from './components/common';
 import {
-  CourseForm,
+  CourseFormPage,
   CourseView,
-  ModuleForm,
   ModuleView,
   SettingsPage,
   ProgramForm,
@@ -25,6 +24,7 @@ import {
   DashboardView,
   ProfileEdit,
   DashWrapper,
+  ModuleFormPage,
 } from './components/pages';
 import {
   HOME_PATH,
@@ -106,7 +106,7 @@ function App() {
           path={EDIT_COURSE_PATH}
           component={() => (
             <DashWrapper>
-              <CourseForm />
+              <CourseFormPage />
             </DashWrapper>
           )}
         />
@@ -114,7 +114,7 @@ function App() {
           path={CREATE_COURSE_PATH}
           component={() => (
             <DashWrapper>
-              <CourseForm />
+              <CourseFormPage />
             </DashWrapper>
           )}
         />
@@ -127,7 +127,7 @@ function App() {
           )}
         />
         <SecureRoute path={VIEW_MODULE_PATH} component={ModuleView} />
-        <SecureRoute path={EDIT_MODULE_PATH} component={ModuleForm} />
+        <SecureRoute path={EDIT_MODULE_PATH} component={ModuleFormPage} />
         <SecureRoute
           path={EDIT_PROFILE_PATH}
           component={() => (

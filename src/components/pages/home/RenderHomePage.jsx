@@ -5,7 +5,6 @@ import { userActions } from '../../../state/ducks/userDuck';
 
 /* cSpell:disable */
 function RenderHomePage(props) {
-  const { authService } = props;
   const dispatch = useDispatch();
 
   useEffect(() => {

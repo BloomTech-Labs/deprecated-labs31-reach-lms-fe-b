@@ -14,8 +14,9 @@ export const makeEditProgramPath = programId => `/edit/program/${programId}`;
 
 export const CREATE_COURSE_PATH = '/create/course';
 export const VIEW_COURSE_PATH = '/view/course/:id';
-export const EDIT_COURSE_PATH = '/edit/course/:id';
-export const makeEditCoursePath = courseId => `/edit/course/${courseId}`;
+export const EDIT_COURSE_PATH = '/edit/course/:id/p/:programId';
+export const makeEditCoursePath = (courseId, programId) =>
+  `/edit/course/${courseId}/p/${programId}`;
 export const makeViewCoursePath = courseId => `/view/course/${courseId}`;
 
 export const VIEW_MODULE_PATH = '/view/module/:id';

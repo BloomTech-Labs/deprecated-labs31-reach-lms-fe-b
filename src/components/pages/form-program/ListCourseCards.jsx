@@ -1,5 +1,5 @@
 import React from 'react';
-import { CourseCard } from '../course-form';
+import { CourseCard } from '../form-course';
 
 export default ({ courses, triggerEdit, triggerDelete }) => {
   return (
