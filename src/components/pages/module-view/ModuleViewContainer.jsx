@@ -3,6 +3,13 @@ import { Card } from 'antd';
 import styled from 'styled-components';
 import { Button } from 'antd';
 import { GhostLink as Link } from '../../common';
+import { makeEditModulePath } from '../../../routes';
+import {
+  EditOutlined,
+  DownOutlined,
+  UpOutlined,
+  DeleteOutlined,
+} from '@ant-design/icons';
 
 //Component Styles
 const ModuleCard = styled(Card)`
@@ -24,12 +31,14 @@ const ModuleViewContainer = props => {
       title={moduleName}
       extra={
         <>
-          {/* <Button onClick={() => setIsExpanded(!isExpanded)}>
-              {!isExpanded ? '+' : '-'}
+          <Button onClick={() => setIsExpanded(!isExpanded)}>
+            {!isExpanded ? <DownOutlined /> : <UpOutlined />}
+          </Button>
+          <Link to={makeEditModulePath(moduleId)}>
+            <Button>
+              <EditOutlined />
             </Button>
-            <Link to={`/module/edit/${moduleId}`}>
-              <Button>Edit</Button>
-            </Link> */}
+          </Link>
         </>
       }
     >
