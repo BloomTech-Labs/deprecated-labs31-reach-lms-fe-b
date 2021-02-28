@@ -9,9 +9,9 @@ import {
   modulesReducer,
 } from './ducks';
 
-export const middleware = [thunk];
+export const middlewares = [thunk];
 
-export const createStoreWithMiddleware = applyMiddleware(...middleware)(
+export const createStoreWithMiddleware = applyMiddleware(...middlewares)(
   createStore
 );
 
@@ -22,7 +22,4 @@ export const rootReducer = combineReducers({
   modules: modulesReducer,
 });
 
-export const store = createStoreWithMiddleware(
-  rootReducer,
-  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
-);
+export const store = createStoreWithMiddleware(rootReducer);
