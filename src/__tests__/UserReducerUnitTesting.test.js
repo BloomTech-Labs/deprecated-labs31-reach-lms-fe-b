@@ -1,6 +1,5 @@
-import userReducer, {
+import {
   userInitialState,
-  userActions,
   LOGIN_START,
   LOGIN_SUCCESS,
   LOGIN_FAIL,
@@ -10,6 +9,8 @@ import userReducer, {
   UPDATE_USER_FAIL,
   UPDATE_USER_RESOLVE,
 } from '../state/ducks/userDuck';
+
+import { userReducer } from '../state/ducks';
 
 describe("User Duck Testing", () => {
   test("User reducer with mocked loginThunk test", () => {

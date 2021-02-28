@@ -73,7 +73,7 @@ export const userInitialState = {
 /******************************************************
  * USER REDUCER
  ******************************************************/
-export const userReducer = (state = userInitialState, action) => {
+const userReducer = (state = userInitialState, action) => {
   switch (action.type) {
     // LOGIN
     case LOGIN_START:
