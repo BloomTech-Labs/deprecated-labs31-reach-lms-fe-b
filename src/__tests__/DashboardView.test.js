@@ -1,7 +1,7 @@
 import { DashboardView } from '../components/pages';
 import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
-import { render, waitFor } from '@testing-library/react';
+import { render } from '@testing-library/react';
 import * as reactRedux from 'react-redux';
 import expect from 'expect';
 
@@ -37,7 +37,7 @@ describe('Simple <DashboardView /> test suite', () => {
     useDispatchMock.mockClear();
   });
 
-  test('it handles a loading state', async () => {
+  test('it handles a loading state', () => {
     // when spyOn detects dispatch/selector call, mock dispatch and selector
     // return values
     useDispatchMock.mockReturnValue(jest.fn());
@@ -50,11 +50,8 @@ describe('Simple <DashboardView /> test suite', () => {
       </Router>
     );
 
-    // await for mockThunk to dispatch and assert that expected data is
-    // rendered to the page
-    await waitFor(() => {
-      let name = getByText(/name1/i);
-      expect(name).toBeInTheDocument();
-    });
+    // assert that expected data is rendered to the page
+    let name = getByText(/name1/i);
+    expect(name).toBeInTheDocument();
   });
 });
