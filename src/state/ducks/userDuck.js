@@ -3,15 +3,15 @@ import { axiosAuth } from '../../api/axiosAuth';
 /******************************************************
  * USER ACTION TYPES
  ******************************************************/
-const LOGIN_START = 'LOGIN_START';
-const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
-const LOGIN_FAIL = 'LOGIN_FAIL';
-const LOGIN_RESOLVE = 'LOGIN_RESOLVE';
+export const LOGIN_START = 'LOGIN_START';
+export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
+export const LOGIN_FAIL = 'LOGIN_FAIL';
+export const LOGIN_RESOLVE = 'LOGIN_RESOLVE';
 
-const UPDATE_USER_START = 'UPDATE_USER_START';
-const UPDATE_USER_SUCCESS = 'UPDATE_USER_SUCCESS';
-const UPDATE_USER_FAIL = 'UPDATE_USER_FAIL';
-const UPDATE_USER_RESOLVE = 'UPDATE_USER_RESOLVE';
+export const UPDATE_USER_START = 'UPDATE_USER_START';
+export const UPDATE_USER_SUCCESS = 'UPDATE_USER_SUCCESS';
+export const UPDATE_USER_FAIL = 'UPDATE_USER_FAIL';
+export const UPDATE_USER_RESOLVE = 'UPDATE_USER_RESOLVE';
 
 /******************************************************
  * USER ACTIONS
@@ -59,7 +59,7 @@ export const userActions = {
 /******************************************************
  * USER INITIAL STATE
  ******************************************************/
-const userInitialState = {
+export const userInitialState = {
   user: null, // we don't need to call out individual properties like below... we can just have one big "user" property.
   // but I didn't want to make breaking changes so I'll leave below for now
   userid: '',
