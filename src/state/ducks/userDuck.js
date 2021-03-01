@@ -62,6 +62,7 @@ export const userActions = {
  ******************************************************/
 export const userInitialState = {
   user: null,
+  role: null,
   loggedIn: false,
   status: 'idle',
   error: '',
@@ -79,6 +80,7 @@ const userReducer = (state = userInitialState, action) => {
       return {
         ...state,
         user: action.payload,
+        role: action.payload.roles[0].role.name,
         loggedIn: true,
         status: 'get/success',
       };
