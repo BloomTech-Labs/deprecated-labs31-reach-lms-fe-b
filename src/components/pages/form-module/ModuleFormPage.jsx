@@ -20,6 +20,7 @@ export default props => {
   const dispatch = useDispatch();
 
   const [value, setValue] = useState();
+  const [programToLoad, setProgramToLoad] = useState(null);
   const [treeData, setTreeData] = useState([]);
 
   useEffect(() => {
@@ -29,50 +30,51 @@ export default props => {
   useEffect(() => {
     if (status === 'get-all/success') {
       setTreeData(
-        programs.map(program => ({
-          id: program.programId,
-          pId: 0,
-          title: program.programTitle,
-          value: program.programId,
-        }))
+        programs.map(program => {
+          return {
+            id: program.programId,
+            pId: 0,
+            title: `${program.programName}`,
+            value: program.programId,
+          };
+        })
       );
     }
-  }, [status, setTreeData, programs]);
+    if (status === 'get-courses/success') {
+      setTreeData(
+        treeData.concat(
+          ...programCourses.map(course => ({
+            id: course.courseid,
+            pId: programToLoad,
+            title: course.coursename,
+            value: course.courseid,
+            isLeaf: true,
+          }))
+        )
+      );
+    }
+  }, [status, setTreeData, programs, programToLoad, treeData]);
 
-  useEffect(() => {
-    console.log('TREE DATA', treeData);
-  }, [treeData]);
+  // useEffect(() => {
+  //   console.log('TREE DATA', treeData);
+  // }, [treeData]);
 
   const onFinish = values => {
     dispatch(modulesActions.addModuleThunk({ ...values, moduleId: id }));
   };
 
   const onChange = value => {
-    console.log({ value });
+    // console.log({ value });
     setValue({ value });
   };
 
-  const genTreeNode = (parentId, isLeaf = false) => {
-    const random = Math.random()
-      .toString(36)
-      .substring(2, 6);
-    return {
-      id: random,
-      pId: parentId,
-      value: random,
-      title: isLeaf ? 'Tree Node' : 'Expand to load',
-      isLeaf,
-    };
-  };
-
   const onLoadData = treeNode => {
-    console.log({ treeNode });
+    setProgramToLoad(treeNode.id);
     dispatch(programsActions.getProgramCoursesThunk(treeNode.id));
     return new Promise((resolve, reject) => {
       setTimeout(() => {
-        setTreeData([...treeData]);
-        resolve();
-      }, 300);
+        resolve('foo');
+      }, 10);
     });
   };
 
