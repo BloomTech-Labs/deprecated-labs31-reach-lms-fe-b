@@ -3,6 +3,9 @@ import { Layout, Menu } from 'antd';
 import {
   HomeOutlined,
   LogoutOutlined,
+  ArrowRightOutlined,
+  ArrowLeftOutlined,
+  UnorderedListOutlined,
   SettingOutlined,
   FormOutlined,
 } from '@ant-design/icons';
@@ -42,6 +45,7 @@ const MenuItem = ({ key, to, icon, handleClick, children, ...props }) => {
 
 // Reusable NavBar component that will be used throughout many pages in our app
 const NavBar = ({ logout, ...restProps }) => {
+  const [collapsed, setCollapsed] = useState(false);
   const { pathname } = useLocation();
   const [selectedKey, setSelectedKey] = useState(pathname);
   const { role } = useSelector(state => state.user);
@@ -50,26 +54,51 @@ const NavBar = ({ logout, ...restProps }) => {
     setSelectedKey(e.key);
   };
 
+  const onCollapse = () => {
+    console.log(collapsed);
+    setCollapsed(!collapsed);
+  };
+
   return (
-    <Layout.Sider breakpoint="sm" collapsedWidth="0">
-      <Menu
-        theme="light"
-        mode="inline"
-        selectedKeys={[selectedKey]}
-        handleClick={handleClick}
+    <>
+      <div className="sider-trigger" onClick={onCollapse}>
+        {collapsed ? <UnorderedListOutlined /> : <ArrowLeftOutlined />}
+      </div>
+      <Layout.Sider
+        collapsible
+        trigger={null}
+        collapsed={collapsed}
+        onCollapse={onCollapse}
+        breakpoint="sm"
+        collapsedWidth="0"
       >
-        <MenuItem key="/" to="/" icon={<HomeOutlined />}>
-          Dashboard
-        </MenuItem>
-        {role === 'ADMIN' ? (
-          <>
-            <MenuItem
-              key={CREATE_PROGRAM_PATH}
-              to={CREATE_PROGRAM_PATH}
-              icon={<FormOutlined />}
-            >
-              Create a Program
-            </MenuItem>
+        <Menu
+          theme="light"
+          mode="inline"
+          selectedKeys={[selectedKey]}
+          handleClick={handleClick}
+        >
+          <MenuItem key="/" to="/" icon={<HomeOutlined />}>
+            Dashboard
+          </MenuItem>
+          {role === 'ADMIN' ? (
+            <>
+              <MenuItem
+                key={CREATE_PROGRAM_PATH}
+                to={CREATE_PROGRAM_PATH}
+                icon={<FormOutlined />}
+              >
+                Create a Program
+              </MenuItem>
+              <MenuItem
+                key={CREATE_COURSE_PATH}
+                to={CREATE_COURSE_PATH}
+                icon={<FormOutlined />}
+              >
+                Create Course
+              </MenuItem>
+            </>
+          ) : role === 'TEACHER' ? (
             <MenuItem
               key={CREATE_COURSE_PATH}
               to={CREATE_COURSE_PATH}
@@ -77,29 +106,21 @@ const NavBar = ({ logout, ...restProps }) => {
             >
               Create Course
             </MenuItem>
-          </>
-        ) : role === 'TEACHER' ? (
-          <MenuItem
-            key={CREATE_COURSE_PATH}
-            to={CREATE_COURSE_PATH}
-            icon={<FormOutlined />}
-          >
-            Create Course
-          </MenuItem>
-        ) : null}
+          ) : null}
 
-        <MenuItem
-          key={SETTINGS_PATH}
-          to={SETTINGS_PATH}
-          icon={<SettingOutlined />}
-        >
-          Settings
-        </MenuItem>
-        <MenuItem key="__LOGOUT__" icon={<LogoutOutlined />} onClick={logout}>
-          Logout
-        </MenuItem>
-      </Menu>
-    </Layout.Sider>
+          <MenuItem
+            key={SETTINGS_PATH}
+            to={SETTINGS_PATH}
+            icon={<SettingOutlined />}
+          >
+            Settings
+          </MenuItem>
+          <MenuItem key="__LOGOUT__" icon={<LogoutOutlined />} onClick={logout}>
+            Logout
+          </MenuItem>
+        </Menu>
+      </Layout.Sider>
+    </>
   );
 };
 
