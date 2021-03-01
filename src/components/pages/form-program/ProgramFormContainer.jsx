@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
-import { Button, Form, Space } from 'antd';
-import { CourseForm } from '../form-course';
 import { useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
+import { Button, Form } from 'antd';
+import { FormWrapper } from '../../common';
+import { CourseForm } from '../form-course';
 import { programsActions, coursesActions } from '../../../state/ducks';
 import ProgramFormInnards from './ProgramFormInnards';
 import ListCourseCards from './ListCourseCards';
@@ -105,17 +106,14 @@ export default props => {
   };
 
   return (
-    <Space direction="vertical" align="center" style={{ width: '100%' }}>
+    <>
       <h1>Program Form</h1>
-
       {/* PROGRAM ADD/EDIT FORM */}
-      <Form
+      <FormWrapper
         name="programForm"
         form={form}
         initialValues={program}
         onFinish={onFinish}
-        autoComplete="off"
-        layout="vertical"
       >
         <ProgramFormInnards
           getFieldValue={getFieldValue}
@@ -150,7 +148,7 @@ export default props => {
             Submit
           </Button>
         </Form.Item>
-      </Form>
+      </FormWrapper>
 
       {/* This modal will display if user clicks "ADD COURSE"  */}
       {courseToEdit ? (
@@ -170,6 +168,6 @@ export default props => {
           cancelEdit={cancelEdit}
         />
       )}
-    </Space>
+    </>
   );
 };

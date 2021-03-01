@@ -75,7 +75,7 @@ const GlobalStyle = createGlobalStyle`
     }
 
     //Mobile devices
-    @media(min-width: 320px) {x
+    @media(min-width: 320px) {
 
     } 
 
