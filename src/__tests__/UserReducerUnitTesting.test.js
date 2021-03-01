@@ -33,15 +33,9 @@ describe("User Duck Testing", () => {
 
     // assertions
     expect(userReducer(userInitialState, mockLoginStart).status).toEqual(testPendingStatus);
-    // old state test (to be deleted)
-    expect(userReducer(userInitialState, mockLoginSuccess).userid).toEqual(testUserid);
-    expect(userReducer(userInitialState, mockLoginSuccess).username).toEqual(testUsername);
+    expect(userReducer(userInitialState, mockLoginSuccess).user.userid).toEqual(testUserid);
+    expect(userReducer(userInitialState, mockLoginSuccess).user.username).toEqual(testUsername);
     expect(userReducer(userInitialState, mockLoginSuccess).status).toEqual(testSuccessStatus);
-    // testing for new state shape (need to be uncommented after loginThunk
-    // logic is change
-    // expect(userReducer(userInitialState, mockLoginSuccess).user.userid).toEqual(testUserid);
-    // expect(userReducer(userInitialState, mockLoginSuccess).user.username).toEqual(testUsername);
-    // expect(userReducer(userInitialState, mockLoginSuccess).user.status).toEqual(testSuccessStatus);
     expect(userReducer(userInitialState, mockLoginSuccess).loggedIn).toBeTruthy();
     expect(userReducer(userInitialState, mockLoginFailure).loggedIn).toBeFalsy();
     expect(userReducer(userInitialState, mockLoginFailure).error).toEqual(testErrorMessage);
