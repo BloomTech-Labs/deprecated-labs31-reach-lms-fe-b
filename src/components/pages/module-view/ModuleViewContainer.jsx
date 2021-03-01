@@ -45,6 +45,7 @@ const ModuleViewContainer = props => {
       {/* If expanded button is clicked, show module information, otherwise collapse card */}
       {isExpanded && (
         <>
+          <DeleteOutlined />
           <Description>{moduleDescription}</Description>
           <div>{moduleContent}</div>
         </>
