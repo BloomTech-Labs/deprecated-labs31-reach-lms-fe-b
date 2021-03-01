@@ -10,6 +10,7 @@ import {
   CREATE_PROGRAM_PATH,
   SETTINGS_PATH,
   CREATE_COURSE_PATH,
+  CREATE_MODULE_PATH,
 } from '../../../routes';
 import { Link, useLocation } from 'react-router-dom';
 import styled from 'styled-components';
@@ -76,6 +77,13 @@ const NavBar = ({ logout, ...restProps }) => {
               icon={<FormOutlined />}
             >
               Create Course
+            </MenuItem>
+            <MenuItem
+              key={CREATE_MODULE_PATH}
+              to={CREATE_MODULE_PATH}
+              icon={<FormOutlined />}
+            >
+              Create Module
             </MenuItem>
           </>
         ) : role === 'TEACHER' ? (

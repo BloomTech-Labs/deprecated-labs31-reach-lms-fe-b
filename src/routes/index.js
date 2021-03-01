@@ -14,11 +14,12 @@ export const makeEditProgramPath = programId => `/edit/program/${programId}`;
 
 export const CREATE_COURSE_PATH = '/create/course';
 export const VIEW_COURSE_PATH = '/view/course/:id';
-export const EDIT_COURSE_PATH = '/edit/course/:id/p/:programId';
+export const EDIT_COURSE_PATH = '/edit/program/:programId/course/:id';
 export const makeEditCoursePath = (courseId, programId) =>
-  `/edit/course/${courseId}/p/${programId}`;
+  `/edit/program/${programId}/course/${courseId}`;
 export const makeViewCoursePath = courseId => `/view/course/${courseId}`;
 
+export const CREATE_MODULE_PATH = '/create/module';
 export const VIEW_MODULE_PATH = '/view/module/:id';
 export const EDIT_MODULE_PATH = '/edit/module/:id';
 export const makeViewModulePath = moduleId => `/view/module/${moduleId}`;

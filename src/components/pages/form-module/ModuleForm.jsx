@@ -50,7 +50,7 @@ export default props => {
 
   /**
    * this useEffect is all about actually populating the form data if
-   * there is something with which we should populate it.
+   * there is data with which we should populate it.
    */
   useEffect(() => {
     // if status is "get/success", our getModuleThunk successfully

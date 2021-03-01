@@ -39,6 +39,7 @@ import {
   VIEW_MODULE_PATH,
   EDIT_MODULE_PATH,
   EDIT_PROFILE_PATH,
+  CREATE_MODULE_PATH,
 } from './routes/';
 import 'antd/dist/antd.less';
 import GlobalStyle from './styles/globalStyles';
@@ -128,6 +129,7 @@ function App() {
         />
         <SecureRoute path={VIEW_MODULE_PATH} component={ModuleView} />
         <SecureRoute path={EDIT_MODULE_PATH} component={ModuleFormPage} />
+        <SecureRoute path={CREATE_MODULE_PATH} component={ModuleFormPage} />
         <SecureRoute
           path={EDIT_PROFILE_PATH}
           component={() => (
