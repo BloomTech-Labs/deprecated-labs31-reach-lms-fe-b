@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Card } from 'antd';
-import { ModuleView } from '../';
+import { ModuleView } from '../view-module';
 import { useDispatch, useSelector } from 'react-redux';
 import { coursesActions } from '../../../state/ducks/coursesDuck';
 

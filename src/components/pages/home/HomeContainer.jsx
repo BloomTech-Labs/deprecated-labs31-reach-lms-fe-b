@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { useOktaAuth } from '@okta/okta-react';
-import { DashWrapper } from '../dash-wrapper';
+import { DashWrapper } from '../view-dash-wrapper';
 import RenderHomePage from './RenderHomePage';
 
 function HomeContainer({ LoadingComponent }) {

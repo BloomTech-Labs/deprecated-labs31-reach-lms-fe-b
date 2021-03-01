@@ -2,7 +2,7 @@ import React from 'react';
 import { useParams } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { ModuleForm } from '.';
-import { DashWrapper } from '../dash-wrapper';
+import { DashWrapper } from '../view-dash-wrapper';
 import { modulesActions } from '../../../state/ducks';
 
 export default props => {
