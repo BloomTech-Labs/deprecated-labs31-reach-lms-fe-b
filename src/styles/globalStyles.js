@@ -64,8 +64,18 @@ const GlobalStyle = createGlobalStyle`
       z-index: 3;
     }
 
+    .sider-trigger {
+      position: absolute;
+      height: 30px;
+      top: 5px;
+      right: 0;
+      left: 10px;
+      z-index: 3;
+      cursor: pointer;
+    }
+
     //Mobile devices
-    @media(min-width: 320px) {
+    @media(min-width: 320px) {x
 
     } 
 
