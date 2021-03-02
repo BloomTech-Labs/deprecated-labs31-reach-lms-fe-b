@@ -5,7 +5,7 @@ const GlobalStyle = createGlobalStyle`
         font-size: 62.5%;
     }
     #root{
-      margin: 24px;
+      margin: 20px;
     }
 
     body {
@@ -18,20 +18,36 @@ const GlobalStyle = createGlobalStyle`
         font-weight: 700;
     }
 
-    .card-button {
-      
-      margin:0;
-      padding:.5rem;
-      
-    }
-
    .ant-card-meta-description {
      color: black;
      opacity: .5;
 
    }
 
-    
+    @media (max-width: 575px) {
+      /* .ant-layout-header h1{
+        display: flex;
+        justify-content: flex-start;
+      } */
+
+      .ant-layout-sider-dark{
+        position: absolute;
+        z-index: 3;
+        width: 100vw;
+        right: 0;
+        left: 0;
+        height: 100%;
+      }
+    }
+
+    .ant-layout-sider-dark {
+      background: rgba(0, 0, 0, 0.5);   
+     }
+
+    .ant-layout-content {
+      min-height: 100vh;
+    }
+
     /*
         Remove middle divider on cards for dashboard
         view between main card body and buttons
@@ -55,7 +71,6 @@ const GlobalStyle = createGlobalStyle`
       right: 0;
       left: 0;
       z-index: 3;
-      
     }
 
     .sider-trigger {
@@ -68,30 +83,14 @@ const GlobalStyle = createGlobalStyle`
       cursor: pointer;
     }
 
-    .ant-layout-sider-dark {
-      background: rgba(0, 0, 0, 0.5);   
-    }
-​
-    .ant-layout-content {
-      min-height: 100vh;
-    }
+    //Mobile devices
+    @media(min-width: 320px) {
 
+    } 
 
     //iPads, Tablets
     @media(min-width: 481px) {
 
-    }
-
-    @media (max-width: 575px) {
-
-      .ant-layout-sider-dark{
-        position: absolute;
-        z-index: 3;
-        width: 100vw;
-        right: 0;
-        left: 0;
-        height: 100%;
-      }
     }
 
     //Small screens, laptops 
