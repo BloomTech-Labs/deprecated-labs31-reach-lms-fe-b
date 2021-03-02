@@ -60,11 +60,8 @@ export const userActions = {
  * USER INITIAL STATE
  ******************************************************/
 export const userInitialState = {
-  user: null, // we don't need to call out individual properties like below... we can just have one big "user" property.
-  // but I didn't want to make breaking changes so I'll leave below for now
-  userid: '',
-  username: '',
-  role: '',
+  user: null,
+  role: null,
   loggedIn: false,
   status: 'idle',
   error: '',
@@ -80,11 +77,8 @@ const userReducer = (state = userInitialState, action) => {
       return { ...state, status: 'get/pending' };
     case LOGIN_SUCCESS:
       return {
-        // this needs to be refactored for consistency — let's wait till Shane updates backend tho
         ...state,
-        user: action.payload, // just put all of our payload in as our user info!!
-        userid: action.payload.userid,
-        username: action.payload.username,
+        user: action.payload,
         role: action.payload.roles[0].role.name,
         loggedIn: true,
         status: 'get/success',
