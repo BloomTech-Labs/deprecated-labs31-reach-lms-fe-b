@@ -24,7 +24,6 @@ export const userActions = {
     axiosAuth()
       .get('/users/getuserinfo')
       .then(res => {
-        console.log(res.data);
         dispatch({ type: LOGIN_SUCCESS, payload: res.data });
       })
       .catch(err => {
