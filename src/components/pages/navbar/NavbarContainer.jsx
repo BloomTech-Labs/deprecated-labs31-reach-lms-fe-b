@@ -3,7 +3,6 @@ import { Layout, Menu } from 'antd';
 import {
   HomeOutlined,
   LogoutOutlined,
-  ArrowRightOutlined,
   ArrowLeftOutlined,
   UnorderedListOutlined,
   SettingOutlined,
