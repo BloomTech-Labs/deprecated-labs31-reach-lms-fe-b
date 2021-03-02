@@ -7,7 +7,7 @@ import { Button } from 'antd';
 import { GhostLink as Link } from '../../common';
 import { makeEditProgramPath } from '../../../routes';
 import styled from 'styled-components';
-import { EditOulined, EditOutlined } from '@ant-design/icons';
+import { EditOutlined } from '@ant-design/icons';
 
 //Styled Components
 const TitleContainer = styled.div`

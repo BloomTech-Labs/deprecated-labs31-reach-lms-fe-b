@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Card } from 'antd';
 import styled from 'styled-components';
 import { Button } from 'antd';
-import { GhostLink, GhostLink as Link } from '../../common';
+import { GhostLink as Link } from '../../common';
 import { makeEditModulePath } from '../../../routes';
 import {
   EditOutlined,
