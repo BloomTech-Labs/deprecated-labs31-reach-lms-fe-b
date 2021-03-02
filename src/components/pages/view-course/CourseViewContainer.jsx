@@ -3,7 +3,7 @@ import { Card } from 'antd';
 import { ModuleView } from '../view-module';
 import { useDispatch, useSelector } from 'react-redux';
 import { coursesActions } from '../../../state/ducks/coursesDuck';
-
+import { useUserRole } from '../../hooks';
 import {
   DownOutlined,
   UpOutlined,
@@ -39,6 +39,8 @@ const CourseViewContainer = props => {
 
   const modules = useSelector(state => state.courses.modules[courseid]);
 
+  const { userIsAdmin, userIsTeacher } = useUserRole();
+
   //Dispatch Action to Load Program Info
   useEffect(() => {
     dispatch(coursesActions.getCourseModulesThunk2(courseid));
@@ -61,17 +63,23 @@ const CourseViewContainer = props => {
             >
               {!isExpanded ? <DownOutlined /> : <UpOutlined />}
             </Button>
-            <Link to={makeEditCoursePath(courseid, programId)}>
-              <Button className="card-button">
-                <EditOutlined />
-              </Button>
-            </Link>
-            <Button
-              className="card-button"
-              onClick={() => deleteCourse(courseid)}
-            >
-              <DeleteOutlined />
-            </Button>
+            {// if user is ADMIN -or- TEACHER, they should have
+            // the ability to EDIT or DELETE this course
+            (userIsAdmin() || userIsTeacher()) && (
+              <>
+                <Link to={makeEditCoursePath(courseid, programId)}>
+                  <Button className="card-button">
+                    <EditOutlined />
+                  </Button>
+                </Link>
+                <Button
+                  className="card-button"
+                  onClick={() => deleteCourse(courseid)}
+                >
+                  <DeleteOutlined />
+                </Button>
+              </>
+            )}
           </>
         }
       >
@@ -80,17 +88,15 @@ const CourseViewContainer = props => {
           <>
             <Description>{courseDescription}</Description>
             {/* Maps over course module data and renders ModuleView components*/}
-
-            {[] &&
-              modules?.map(module => (
-                <ModuleView
-                  key={module.moduleId}
-                  moduleId={module.moduleId}
-                  moduleName={module.moduleName}
-                  moduleDescription={module.moduleDescription}
-                  moduleContent={module.moduleContent}
-                />
-              ))}
+            {modules?.map(module => (
+              <ModuleView
+                key={module.moduleId}
+                moduleId={module.moduleId}
+                moduleName={module.moduleName}
+                moduleDescription={module.moduleDescription}
+                moduleContent={module.moduleContent}
+              />
+            ))}
           </>
         )}
       </CourseCard>

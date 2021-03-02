@@ -1,13 +1,19 @@
+// React & Redux dependencies
 import React, { useEffect } from 'react';
-import { CourseView } from '../';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { programsActions } from '../../../state/ducks/programsDuck';
+import { useUserRole } from '../../hooks';
+
+// styled-components and antd
+import styled from 'styled-components';
 import { Button } from 'antd';
+import { EditOutlined } from '@ant-design/icons';
+
+// our components and utils
+import { CourseView } from '../';
 import { GhostLink as Link } from '../../common';
 import { makeEditProgramPath } from '../../../routes';
-import styled from 'styled-components';
-import { EditOutlined } from '@ant-design/icons';
 
 //Styled Components
 const TitleContainer = styled.div`
@@ -30,7 +36,6 @@ const ProgramViewContainer = props => {
 
   //Redux State Managers
   const dispatch = useDispatch();
-
   const {
     programName,
     programDescription,
@@ -38,6 +43,12 @@ const ProgramViewContainer = props => {
     programId,
   } = useSelector(state => state.programs.program);
   const courses = useSelector(state => state.programs.programCourses);
+
+  /**
+   * userIsAdmin is a function that returns a boolean
+   * value denoting whether our user is an admin
+   */
+  const { userIsAdmin } = useUserRole();
 
   //Dispatch Action to Load Program Info
   useEffect(() => {
@@ -53,13 +64,15 @@ const ProgramViewContainer = props => {
           <h2>{programName}</h2>
           <h3>{programType}</h3>
         </div>
-        <div>
-          <Link to={makeEditProgramPath(id)}>
-            <Button>
-              <EditOutlined />
-            </Button>
-          </Link>
-        </div>
+        {userIsAdmin() && (
+          <div>
+            <Link to={makeEditProgramPath(id)}>
+              <Button>
+                <EditOutlined />
+              </Button>
+            </Link>
+          </div>
+        )}
       </TitleContainer>
 
       {/*Course Description Section*/}
@@ -68,16 +81,15 @@ const ProgramViewContainer = props => {
       {/*Render Course Components Section*/}
       <Container>
         <h4>Courses</h4>
-        {[] &&
-          courses.map(courseData => (
-            <CourseView
-              key={courseData.courseid}
-              courseName={courseData.coursename}
-              courseDescription={courseData.coursedescription}
-              courseid={courseData.courseid}
-              programId={programId}
-            />
-          ))}
+        {courses?.map(courseData => (
+          <CourseView
+            key={courseData.courseid}
+            courseName={courseData.coursename}
+            courseDescription={courseData.coursedescription}
+            courseid={courseData.courseid}
+            programId={programId}
+          />
+        ))}
       </Container>
     </ProgramWrapper>
   );
