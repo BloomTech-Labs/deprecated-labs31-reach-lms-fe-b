@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { DashboardView } from '../dashboard-view';
+import { DashboardView } from '../view-dashboard';
 import { useDispatch } from 'react-redux';
 import { userActions } from '../../../state/ducks/userDuck';
 
