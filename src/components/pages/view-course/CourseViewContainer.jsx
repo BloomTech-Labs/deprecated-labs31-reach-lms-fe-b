@@ -48,7 +48,7 @@ const CourseViewContainer = props => {
 
   const deleteCourse = courseid => {
     dispatch(coursesActions.deleteCourseThunk(courseid));
-    history.pushState('/');
+    history.push('/');
   };
 
   return (
