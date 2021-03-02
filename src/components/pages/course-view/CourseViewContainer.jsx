@@ -16,6 +16,7 @@ import { GhostLink as Link } from '../../common';
 
 import styled from 'styled-components';
 import { makeEditCoursePath } from '../../../routes';
+import { useHistory } from 'react-router-dom';
 
 //Component Styles
 const CourseCard = styled(Card)`
@@ -34,6 +35,7 @@ const CourseViewContainer = props => {
 
   //Redux State Managers
   const dispatch = useDispatch();
+  const history = useHistory();
 
   const modules = useSelector(state => state.courses.modules[courseid]);
 
@@ -42,20 +44,34 @@ const CourseViewContainer = props => {
     dispatch(coursesActions.getCourseModulesThunk2(courseid));
   }, [courseid, dispatch]);
 
+  const deleteCourse = courseid => {
+    dispatch(coursesActions.deleteCourseThunk(courseid));
+    history.pushState('/');
+  };
+
   return (
     <>
       <CourseCard
         title={courseName}
         extra={
           <>
-            <Button onClick={() => setIsExpanded(!isExpanded)}>
+            <Button
+              className="card-button"
+              onClick={() => setIsExpanded(!isExpanded)}
+            >
               {!isExpanded ? <DownOutlined /> : <UpOutlined />}
             </Button>
             <Link to={makeEditCoursePath(courseid, programId)}>
-              <Button>
+              <Button className="card-button">
                 <EditOutlined />
               </Button>
             </Link>
+            <Button
+              className="card-button"
+              onClick={() => deleteCourse(courseid)}
+            >
+              <DeleteOutlined />
+            </Button>
           </>
         }
       >
