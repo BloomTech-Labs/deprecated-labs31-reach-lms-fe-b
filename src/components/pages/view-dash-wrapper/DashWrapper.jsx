@@ -7,7 +7,8 @@ import { useOktaAuth } from '@okta/okta-react';
 import styled from 'styled-components';
 
 const LocationInfo = styled.div`
-  text-align: center;
+  margin: 24px;
+  text-align: left;
   background-color: white;
 `;
 

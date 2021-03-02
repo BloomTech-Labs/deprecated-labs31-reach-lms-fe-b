@@ -4,11 +4,19 @@ import { ModuleView } from '../view-module';
 import { useDispatch, useSelector } from 'react-redux';
 import { coursesActions } from '../../../state/ducks/coursesDuck';
 
+import {
+  DownOutlined,
+  UpOutlined,
+  EditOutlined,
+  DeleteOutlined,
+} from '@ant-design/icons';
+
 import { Button } from 'antd';
 import { GhostLink as Link } from '../../common';
 
 import styled from 'styled-components';
 import { makeEditCoursePath } from '../../../routes';
+import { useHistory } from 'react-router-dom';
 
 //Component Styles
 const CourseCard = styled(Card)`
@@ -27,6 +35,7 @@ const CourseViewContainer = props => {
 
   //Redux State Managers
   const dispatch = useDispatch();
+  const history = useHistory();
 
   const modules = useSelector(state => state.courses.modules[courseid]);
 
@@ -35,18 +44,34 @@ const CourseViewContainer = props => {
     dispatch(coursesActions.getCourseModulesThunk2(courseid));
   }, [courseid, dispatch]);
 
+  const deleteCourse = courseid => {
+    dispatch(coursesActions.deleteCourseThunk(courseid));
+    history.pushState('/');
+  };
+
   return (
     <>
       <CourseCard
         title={courseName}
         extra={
           <>
-            <Button onClick={() => setIsExpanded(!isExpanded)}>
-              {!isExpanded ? '+' : '-'}
+            <Button
+              className="card-button"
+              onClick={() => setIsExpanded(!isExpanded)}
+            >
+              {!isExpanded ? <DownOutlined /> : <UpOutlined />}
             </Button>
             <Link to={makeEditCoursePath(courseid, programId)}>
-              <Button>Edit</Button>
+              <Button className="card-button">
+                <EditOutlined />
+              </Button>
             </Link>
+            <Button
+              className="card-button"
+              onClick={() => deleteCourse(courseid)}
+            >
+              <DeleteOutlined />
+            </Button>
           </>
         }
       >
@@ -55,6 +80,7 @@ const CourseViewContainer = props => {
           <>
             <Description>{courseDescription}</Description>
             {/* Maps over course module data and renders ModuleView components*/}
+
             {[] &&
               modules?.map(module => (
                 <ModuleView
