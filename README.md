@@ -35,13 +35,6 @@ You can find the backend project deployed at: https://reach-team-b-be.herokuapp.
 #### [Back end](https://github.com/Lambda-School-Labs/reach-lms-be-b) built using:
 Java Spring Framework
 
-#### 🚫 back end framework goes here
-
-- point one
-- point two
-- point three
-
-
 # APIs
 
 ## Authentication API here
