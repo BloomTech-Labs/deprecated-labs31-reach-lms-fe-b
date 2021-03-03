@@ -29,6 +29,7 @@ You can find the backend project deployed at: https://reach-team-b-be.herokuapp.
 - Mobile Friendly
 - Create, Read, Update, Delete - Programs, Courses and Modules
 - Separate Dashboard views and functionality per role: Admin, Teacher, Student
+- Update account settings
 
 #### Front end deployed to `AWS Amplify`
 
