@@ -5,7 +5,7 @@ For steps on how to work with this repository [please see here](https://docs.lab
 # Reach Learning Management System
 
 You can find the frontend project deployed at: https://b.reachlms.dev/ <br>
-You can find the backend project deployed at: https://reach-team-b-be.herokuapp.com/swagger-ui.html
+You can find the backend project deployed at: https://reach-team-b-be.herokuapp.com/
 
 ## Contributors
 |                                          [Wayne Abbruscato](https://github.com/Callisto1981)                                                            |                                                       [Seth Bradshaw](https://github.com/seth-bradshaw)                                                    |                                                      [Sara Cearc](https://github.com/cearc-sara)                                                       |                                                       [Christopher Girvin](https://github.com/)                                               |                                                      [Matias Iturbide](https://github.com/JDMTias)                                                 |                                                      [Chaz Kiker](https://github.com/chazkiker2/)                                                     |                                         [Brendan Lai-Tong](https://github.com/kai-blt/)                                                             |                                         [Shane Slone](https://github.com/shaneslone)                                                                   |                            
