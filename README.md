@@ -20,6 +20,8 @@ You can find the backend project deployed at: https://reach-team-b-be.herokuapp.
 
 ![MIT](https://img.shields.io/packagist/l/doctrine/orm.svg)
 ![React](https://img.shields.io/badge/react-v16.7.0--alpha.2-blue.svg)
+![Redux](https://img.shields.io/badge/Redux-4.0.5-yellow)
+![Redux-Thunk](https://img.shields.io/badge/Redux--Thunk-2.3.0-orange)
 ![AntDesign](https://img.shields.io/badge/AntDesign-4.4.3-blue)
 ![styled-components](https://img.shields.io/badge/styled--components-5.2.1-orange)
 ![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square)
