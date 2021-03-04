@@ -33,32 +33,56 @@ export default props => {
   const hideCourseModal = () => setModalVisible(false);
 
   const onFinish = values => {
+    // get the list of our existing courses from form state
+    // if undefined, we'll default to an empty array
     const existingCourses = getFieldValue('courses') || [];
 
     if (id) {
+      // if our program has an ID, it exists in database.
+      // as such, we want to edit this program.
       const validEditedProgram = {
-        ...values,
-        courses: existingCourses,
-        programId: parseInt(id),
+        ...values, // spread the values coming in from form.submit
+        courses: existingCourses, // make sure to put our existing courses in here
+        programId: parseInt(id), // toss our ID in as our programId
         students: program.students || [],
         teachers: program.teachers || [],
       };
+
+      // finally, we'll dispatch our thunk for PATCH Program
       dispatch(editProgramThunk(validEditedProgram));
     } else {
+      // otherwise we are creating a new course
       const validProgram = {
-        ...values,
-        courses: existingCourses,
-        students: [],
-        teachers: [],
+        ...values, // spread the values coming in from form.submit
+        courses: existingCourses, // make sure to put our existing courses in here
+        students: [], // defaulting to no students
+        teachers: [], // defaulting to no teachers
       };
+
+      // finally, we'll dispatch our thunk for POST Program
       dispatch(addProgramThunk(validProgram));
     }
   };
 
-  const onCourseAdd = newClass => {
+  const onCourseAdd = newCourse => {
+    if (newCourse?.courseid && id) {
+      // if the newCourse has a `courseid` and our program has an id,
+      // we want to actually post this new course with a program association
+      dispatch(
+        coursesActions.addCourseThunk({
+          ...newCourse,
+          program: { programId: id },
+        })
+      );
+    }
+
+    // no matter what, we want to set up our form state to hold
+    // the list of courses so that we can allow the user to actually EDIT or DELETE them
     setFieldsValue({
-      courses: [...getFieldValue('courses'), newClass],
+      courses: [...getFieldValue('courses'), newCourse],
     });
+
+    // and finally, we'll close the CourseForm modal and let the user look at the ProgramForm again
     hideCourseModal();
   };
 
