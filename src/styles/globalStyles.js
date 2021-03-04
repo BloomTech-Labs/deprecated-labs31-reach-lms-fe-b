@@ -1,11 +1,16 @@
 import { createGlobalStyle } from 'styled-components';
 
 const GlobalStyle = createGlobalStyle`
+    
+    /*-------------------------------
+    -           Base CSS            - 
+    --------------------------------*/
     html {
         font-size: 62.5%;
     }
+
     #root{
-      margin: 20px;
+      margin: 24px;
     }
 
     body {
@@ -18,27 +23,14 @@ const GlobalStyle = createGlobalStyle`
         font-weight: 700;
     }
 
-   .ant-card-meta-description {
-     color: black;
-     opacity: .5;
 
-   }
-
-    @media (max-width: 575px) {
-      /* .ant-layout-header h1{
-        display: flex;
-        justify-content: flex-start;
-      } */
-
-      .ant-layout-sider-dark{
-        position: absolute;
-        z-index: 3;
-        width: 100vw;
-        right: 0;
-        left: 0;
-        height: 100%;
-      }
-    }
+    /*-------------------------------
+    - Dashboard and View Cards CSS  - 
+    --------------------------------*/
+    .ant-card-meta-description {
+      color: black;
+      opacity: .5;
+    }    
 
     .ant-layout-sider-dark {
       background: rgba(0, 0, 0, 0.5);   
@@ -48,22 +40,29 @@ const GlobalStyle = createGlobalStyle`
       min-height: 100vh;
     }
 
-    /*
-        Remove middle divider on cards for dashboard
-        view between main card body and buttons
-     */
+    /* Remove middle divider on cards for dashboard 
+    view between main card body and buttons */
     .ant-card-actions {
       border-top: none;
     }
 
-    /*
-        Remove dividers between buttons for cards
-        on main dashboard view
-     */
+    /* Style edit/delete/collapse buttons */
+    .card-button {      
+      margin:0;
+      padding:.5rem;
+    }
+
+    /* Remove dividers between buttons for cards
+    on main dashboard view */
     .ant-card-actions > li:not(:last-child) {
       border-right: none;
     }
 
+
+    /*-------------------------------
+    -        Side Navbar Styles     - 
+    --------------------------------*/
+    //positions side nav
     .ant-layout-sider-zero-width-trigger {
       position: absolute;
       height: 30px;
@@ -73,6 +72,7 @@ const GlobalStyle = createGlobalStyle`
       z-index: 3;
     }
 
+    //positions hamburger icon
     .sider-trigger {
       position: absolute;
       height: 30px;
@@ -83,6 +83,10 @@ const GlobalStyle = createGlobalStyle`
       cursor: pointer;
     }
 
+
+    /*-------------------------------
+    -           Breakpoints         - 
+    --------------------------------*/
     //Mobile devices
     @media(min-width: 320px) {
 
@@ -91,6 +95,17 @@ const GlobalStyle = createGlobalStyle`
     //iPads, Tablets
     @media(min-width: 481px) {
 
+    }
+
+    @media (max-width: 575px) {
+      .ant-layout-sider-dark {
+        position: absolute;
+        z-index: 3;
+        width: 100vw;
+        right: 0;
+        left: 0;
+        height: 100%;
+      }
     }
 
     //Small screens, laptops 

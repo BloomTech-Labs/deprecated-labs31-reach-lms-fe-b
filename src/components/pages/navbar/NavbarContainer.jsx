@@ -54,7 +54,6 @@ const NavBar = ({ logout, ...restProps }) => {
   };
 
   const onCollapse = () => {
-    console.log(collapsed);
     setCollapsed(!collapsed);
   };
 
