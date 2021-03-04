@@ -249,7 +249,7 @@ export default props => {
 
   /**
    * *************************************************
-   * FINALLY THE RETURN LOGIC
+   * FINALLY, THE RETURN LOGIC
    * *************************************************
    */
   if (isWrapped) {

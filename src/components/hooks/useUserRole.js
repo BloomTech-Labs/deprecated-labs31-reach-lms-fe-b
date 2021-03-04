@@ -49,6 +49,7 @@ export const useUserRole = () => {
   return { userIsAdmin, userIsTeacher, userIsStudent };
 };
 
+// EXAMPLE USE CASE OF useUserRole hook !!
 /*
 const ExampleComponent = props => {
 
